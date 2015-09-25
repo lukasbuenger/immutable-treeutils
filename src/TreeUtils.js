@@ -88,6 +88,11 @@ export default class TreeUtils {
 	 * #### *method* nodes()
 	 *
 	 * An iterator of all nodes in the tree.
+	 * ```js
+	 * for(var nodePath of treeUtils.nodes(state)) {
+	 *    console.log(treeUtils.id(state, nodePath));
+	 * }
+	 * ```
 	 *
 	 * ###### Signature:
 	 * ```
@@ -101,7 +106,7 @@ export default class TreeUtils {
 	 * * `path` - The key path that points at the root of the (sub)tree whose descendants you want to iterate. Default: The `TreeUtils` object's `rootPath`.
 	 *
 	 * ###### Returns:
-	 * An **unordered(!!!)** [Iterator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Iteration_protocols) of all nodes in the tree.
+	 * An **unordered** [Iterator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Iteration_protocols) of all nodes in the tree.
 	 */
 	*nodes(state, path) {
 		let stack = List.of(path || this._rootPath);
@@ -127,7 +132,7 @@ export default class TreeUtils {
 	 *
 	 * ###### *method* find()
 	 *
-	 * Returns the key path to the first node for which `compatator` returns `true`. Uses >nodes internally and as >nodes is an **unordered** >Iterator, you should probably use this to find unique occurences of data.
+	 * Returns the key path to the first node for which `compatator` returns `true`. Uses >nodes internally and as >nodes is an **unordered** Iterator, you should probably use this to find unique occurences of data.
 	 * ```js
 	 * treeUtils.find(state, node => node.get('name') === 'Me in Paris');
 	 * // Seq ["childNodes", 0, "childNodes", 0]

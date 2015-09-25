@@ -212,6 +212,10 @@ The unique identifier of the node at the given key path.
 #### *method* nodes()
 
 An iterator of all nodes in the tree.
+```js
+for(var nodePath of treeUtils.nodes(state)) {
+   console.log(treeUtils.id(state, nodePath));
+}
 
 ###### Signature:
 ```
@@ -225,7 +229,7 @@ nodes(
 * `path` - The key path that points at the root of the (sub)tree whose descendants you want to iterate. Default: The `TreeUtils` object's `rootPath`.
 
 ###### Returns:
-An **unordered(!!!)** [Iterator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Iteration_protocols) of all nodes in the tree.
+An **unordered** [Iterator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Iteration_protocols) of all nodes in the tree.
 	 
 
 - - - 
@@ -235,7 +239,7 @@ An **unordered(!!!)** [Iterator](https://developer.mozilla.org/de/docs/Web/JavaS
 
 ###### *method* find()
 
-Returns the key path to the first node for which `compatator` returns `true`. Uses [nodes](#TreeUtils-nodes) internally and as [nodes](#TreeUtils-nodes) is an **unordered** >Iterator, you should probably use this to find unique occurences of data.
+Returns the key path to the first node for which `compatator` returns `true`. Uses [nodes](#TreeUtils-nodes) internally and as [nodes](#TreeUtils-nodes) is an **unordered** Iterator, you should probably use this to find unique occurences of data.
 ```js
 treeUtils.find(state, node => node.get('name') === 'Me in Paris');
 // Seq ["childNodes", 0, "childNodes", 0]
@@ -283,7 +287,7 @@ filter(
 ###### Arguments:
 * `comparator` - A function that gets passed a node and should return whether it fits the criteria or not.
 * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
-```
+
 
 ###### Returns:
 A [List](http://facebook.github.io/immutable-js/docs/#/List) of all the key paths that point at nodes for which `comparator` returned `true`.
@@ -587,6 +591,8 @@ Returns an [List](http://facebook.github.io/immutable-js/docs/#/List) of all key
 
 
 
+#### *method* position()
+
 This method is a very naive attempt to calculate a unqiue numeric position descriptor that can be used to compare two nodes for their absolute position in the tree.
 ```js
 treeUtils.position(state, 'node-4') > treeUtils.position(state, 'node-3');
@@ -594,8 +600,6 @@ treeUtils.position(state, 'node-4') > treeUtils.position(state, 'node-3');
 ```
 
 Please note that `position` should not get used to do any comparison with the root node.
-
-#### *method* position()
 
 ###### Signature;
 ```js
@@ -771,8 +775,8 @@ npm run update-dependencies
 
 ## Roadmap
 
-- [ ] API Docs
-- [ ] Annotate source [Flow](http://flowtype)
+- [ ] Investigate possibilities of adding mutation helpers.
+- [ ] Annotate source [Flow](http://flowtype).
 
 ## License
 
