@@ -1,0 +1,44 @@
+{
+  "name": "immutable-treeutils",
+  "version": "0.1.0",
+  "description": "Functional tree traversal helpers for ImmutableJS data structures",
+  "main": "lib/TreeUtils.js",
+  "scripts": {
+    "build": "babel src/ --out-dir lib/",
+    "lint": "eslint src/ && eslint tests/",
+    "docs": "babel-node scripts/docs.js",
+    "update-dependencies": "npm-check-updates -u && rm -rf node_modules/ && npm install && npm test",
+    "test": "babel-node scripts/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukasbuenger/immutable-treeutils.git"
+  },
+  "keywords": [
+    "immutable",
+    "tree"
+  ],
+  "author": {
+    "name": "Lukas Bünger",
+    "url": "https://github.com/lukasbuenger"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukasbuenger/immutable-treeutils/issues"
+  },
+  "homepage": "https://github.com/lukasbuenger/immutable-treeutils",
+  "devDependencies": {
+    "acorn": "^2.1.0",
+    "babel": "^5.8.19",
+    "babel-eslint": "^4.0.5",
+    "eslint": "^1.0.0",
+    "glob": "^5.0.14",
+    "jasmine": "^2.3.1",
+    "jasmine-spec-reporter": "^2.4.0",
+    "mustache": "^2.1.3",
+    "npm-check-updates": "^2.0.1"
+  },
+  "dependencies": {
+    "immutable": "^3.7.5"
+  }
+}
