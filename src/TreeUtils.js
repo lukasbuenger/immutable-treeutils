@@ -131,7 +131,7 @@ export default class TreeUtils {
 	 * @id TreeUtils-find
 	 * @lookup find
 	 *
-	 * ###### *method* find()
+	 * #### *method* find()
 	 *
 	 * Returns the key path to the first node for which `compatator` returns `true`. Uses >nodes internally and as >nodes is an **unordered** Iterator, you should probably use this to find unique occurences of data.
 	 * ```js
@@ -247,7 +247,7 @@ export default class TreeUtils {
 	 *
 	 */
 	byArbitrary(state, idOrKeyPath) {
-		return Seq.isSeq(idOrKeyPath) ? idOrKeyPath : this.getById(state, idOrKeyPath);
+		return Seq.isSeq(idOrKeyPath) ? idOrKeyPath : this.byId(state, idOrKeyPath);
 	}
 
 	/**
