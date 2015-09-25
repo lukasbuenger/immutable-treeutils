@@ -235,7 +235,7 @@ export default class TreeUtils {
 	 *
 	 * Returns `idOrKeyPath` if it is a >Immutable.Seq, else returns the result of >byId for `idOrKeyPath`. This is used in all other functions that work on a unique identifiers in order to reduce the number of lookup operations.
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * byArbitrary(
 	 *    state: Immutable.Iterable,
@@ -256,7 +256,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* nextSibling()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * nextSibling(
 	 *    state: Immutable.Iterable,
@@ -282,7 +282,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* previousSibling()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * previousSibling(
 	 *    state: Immutable.Iterable,
@@ -307,7 +307,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* firstChild()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * firstChild(
 	 *    state: Immutable.Iterable,
@@ -331,7 +331,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* lastChild()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * lastChild(
 	 *    state: Immutable.Iterable,
@@ -356,7 +356,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* siblings()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * siblings(
 	 *    state: Immutable.Iterable,
@@ -389,7 +389,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* childNodes()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * childNodes(
 	 *    state: Immutable.Iterable,
@@ -419,7 +419,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* childAt()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * childAt(
 	 *    state: Immutable.Iterable,
@@ -444,7 +444,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* descendants()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * descendants(
 	 *    state: Immutable.Iterable,
@@ -468,7 +468,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* childIndex()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * childIndex(
 	 *    state: Immutable.Iterable,
@@ -489,7 +489,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* hasChildNodes()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * hasChildNodes(
 	 *    state: Immutable.Iterable,
@@ -512,7 +512,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* numChildNodes()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * numChildNodes(
 	 *    state: Immutable.Iterable,
@@ -535,7 +535,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* parent()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * parent(
 	 *    state: Immutable.Iterable,
@@ -559,7 +559,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* ancestors()
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * ancestors(
 	 *    state: Immutable.Iterable,
@@ -595,7 +595,7 @@ export default class TreeUtils {
 	 *
 	 * Please note that `position` should not get used to do any comparison with the root node.
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * position(
 	 *    state: Immutable.Iterable,
@@ -642,7 +642,7 @@ export default class TreeUtils {
 	 * // 'node-6'
 	 * ```
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * right(
 	 *    state: Immutable.Iterable,
@@ -708,7 +708,7 @@ export default class TreeUtils {
 	 * ```
 	 *
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * left(
 	 *    state: Immutable.Iterable,
@@ -766,7 +766,7 @@ export default class TreeUtils {
 	 * // 'node-6'
 	 * ```
 	 *
-	 * ###### Signature;
+	 * ###### Signature:
 	 * ```js
 	 * lastDescendant(
 	 *    state: Immutable.Iterable,
