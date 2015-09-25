@@ -1,7 +1,7 @@
 Immutable TreeUtils
 ===================
 
-0.1.0
+0.1.1
 
 This CommonJS module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
@@ -130,7 +130,7 @@ let data = Immutable.fromJS({
 ## Docs
 
 - - - 
-<sub>[See Source](https://github.com/lukasbuenger/immutable-cursors/tree/v0.1.0/src/TreeUtils.js)</sub>
+<sub>[See Source](https://github.com/lukasbuenger/immutable-cursors/tree/v0.1.1/src/TreeUtils.js)</sub>
 - - - 
 <a id="TreeUtils"></a>
 
