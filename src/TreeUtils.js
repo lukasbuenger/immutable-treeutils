@@ -88,6 +88,7 @@ export default class TreeUtils {
 	 * #### *method* nodes()
 	 *
 	 * An iterator of all nodes in the tree.
+	 *
 	 * ```js
 	 * for(var nodePath of treeUtils.nodes(state)) {
 	 *    console.log(treeUtils.id(state, nodePath));
