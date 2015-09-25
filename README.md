@@ -328,7 +328,7 @@ The key path to the node with id === `id`.
 
 Returns `idOrKeyPath` if it is a [Seq](http://facebook.github.io/immutable-js/docs/#/Seq), else returns the result of [byId](#TreeUtils-byId) for `idOrKeyPath`. This is used in all other functions that work on a unique identifiers in order to reduce the number of lookup operations.
 
-###### Signature;
+###### Signature:
 ```js
 byArbitrary(
    state: Immutable.Iterable,
@@ -347,7 +347,7 @@ The key path pointing at the node found for id === `idOrKeyPath` or, if is a [Se
 
 #### *method* nextSibling()
 
-###### Signature;
+###### Signature:
 ```js
 nextSibling(
    state: Immutable.Iterable,
@@ -366,7 +366,7 @@ Returns the next sibling node of the node at `idOrKeyPath`
 
 #### *method* previousSibling()
 
-###### Signature;
+###### Signature:
 ```js
 previousSibling(
    state: Immutable.Iterable,
@@ -385,7 +385,7 @@ Returns the previous sibling node of the node at `idOrKeyPath`
 
 #### *method* firstChild()
 
-###### Signature;
+###### Signature:
 ```js
 firstChild(
    state: Immutable.Iterable,
@@ -404,7 +404,7 @@ Returns the first child node of the node at `idOrKeyPath`
 
 #### *method* lastChild()
 
-###### Signature;
+###### Signature:
 ```js
 lastChild(
    state: Immutable.Iterable,
@@ -423,7 +423,7 @@ Returns the last child node of the node at `idOrKeyPath`
 
 #### *method* siblings()
 
-###### Signature;
+###### Signature:
 ```js
 siblings(
    state: Immutable.Iterable,
@@ -442,7 +442,7 @@ Returns a [List](http://facebook.github.io/immutable-js/docs/#/List) of key path
 
 #### *method* childNodes()
 
-###### Signature;
+###### Signature:
 ```js
 childNodes(
    state: Immutable.Iterable,
@@ -461,7 +461,7 @@ Returns a [List](http://facebook.github.io/immutable-js/docs/#/List) of all chil
 
 #### *method* childAt()
 
-###### Signature;
+###### Signature:
 ```js
 childAt(
    state: Immutable.Iterable,
@@ -481,7 +481,7 @@ Returns the child node at position of `index` of the node at `idOrKeyPath`
 
 #### *method* descendants()
 
-###### Signature;
+###### Signature:
 ```js
 descendants(
    state: Immutable.Iterable,
@@ -500,7 +500,7 @@ Returns a list of key paths pointing at all descendants of the node at `idOrKeyP
 
 #### *method* childIndex()
 
-###### Signature;
+###### Signature:
 ```js
 childIndex(
    state: Immutable.Iterable,
@@ -519,7 +519,7 @@ Returns the index at which the node at `idOrKeyPath` is positioned in its parent
 
 #### *method* hasChildNodes()
 
-###### Signature;
+###### Signature:
 ```js
 hasChildNodes(
    state: Immutable.Iterable,
@@ -538,7 +538,7 @@ Returns whether the node at `idOrKeyPath` has children.
 
 #### *method* numChildNodes()
 
-###### Signature;
+###### Signature:
 ```js
 numChildNodes(
    state: Immutable.Iterable,
@@ -557,7 +557,7 @@ Returns the number of child nodes the node at `idOrKeyPath` has.
 
 #### *method* parent()
 
-###### Signature;
+###### Signature:
 ```js
 parent(
    state: Immutable.Iterable,
@@ -576,7 +576,7 @@ Returns the key path to the parent of the node at `idOrKeyPath`.
 
 #### *method* ancestors()
 
-###### Signature;
+###### Signature:
 ```js
 ancestors(
    state: Immutable.Iterable,
@@ -603,7 +603,7 @@ treeUtils.position(state, 'node-4') > treeUtils.position(state, 'node-3');
 
 Please note that `position` should not get used to do any comparison with the root node.
 
-###### Signature;
+###### Signature:
 ```js
 position(
    state: Immutable.Iterable,
@@ -643,7 +643,7 @@ while (nodePath) {
 // 'node-6'
 ```
 
-###### Signature;
+###### Signature:
 ```js
 right(
    state: Immutable.Iterable,
@@ -684,7 +684,7 @@ while (nodePath) {
 ```
 
 
-###### Signature;
+###### Signature:
 ```js
 left(
    state: Immutable.Iterable,
@@ -724,7 +724,7 @@ treeUtils.lastDescendant(state, 'root');
 // 'node-6'
 ```
 
-###### Signature;
+###### Signature:
 ```js
 lastDescendant(
    state: Immutable.Iterable,
