@@ -54,7 +54,7 @@ let content = state.getIn(treeUtils.nextSibling(state, 'node-id').concat('name')
 
 ### Working with cursors
 
-[TreeUtils](#TreeUtils) works just fine with cursor libraries like [contrib/cursor](https://github.com/facebook/immutable-js/tree/master/contrib/cursor) or [immutable-cursors](github.com/lukasbuenger/immutable-cursors), because cursors actually implement [ImmutableJS](http://facebook.github.io/immutable-js/) interfaces.
+[TreeUtils](#TreeUtils) works just fine with cursor libraries like [contrib/cursor](https://github.com/facebook/immutable-js/tree/master/contrib/cursor) or [immutable-cursors](https://github.com/lukasbuenger/immutable-cursors), because cursors actually implement [ImmutableJS](http://facebook.github.io/immutable-js/) interfaces.
 
 ### Tree mutation
 
@@ -239,7 +239,7 @@ An **unordered** [Iterator](https://developer.mozilla.org/de/docs/Web/JavaScript
 
 
 
-###### *method* find()
+#### *method* find()
 
 Returns the key path to the first node for which `compatator` returns `true`. Uses [nodes](#TreeUtils-nodes) internally and as [nodes](#TreeUtils-nodes) is an **unordered** Iterator, you should probably use this to find unique occurences of data.
 ```js
