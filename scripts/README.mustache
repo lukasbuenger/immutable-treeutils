@@ -76,6 +76,8 @@ Install the package from [npm](https://www.npmjs.com/package/immutable-treeutils
 npm install immutable-tree
 ```
 
+**Note:** This library relies on *ES6 generators* so you need either an environment that supports them or to include some polyfill like [regenerator](https://github.com/facebook/regenerator) or [babel's polyfill](https://babeljs.io/docs/usage/polyfill/) before importing `immutable-treeutils`;
+
 Import the module and provide some state. Examples in the docs below refer to this data structure:
 
 ```javascript
