@@ -755,11 +755,7 @@ export default class TreeUtils {
 	 *
 	 * #### *method* lastDescendant()
 	 *
-	 * Returns the key path to the next node to the left. The next left node is either:
-	 * * The last descendant of the previous sibling node.
-	 * * The previous sibling node.
-	 * * The parent node.
-	 * * undefined
+	 * Returns the key path to the most right node in the given subtree (keypath). The last child of the most deep descendant, if that makes any sense. Look at the example:
 	 *
 	 * ```js
 	 * treeUtils.lastDescendant(state, 'root');

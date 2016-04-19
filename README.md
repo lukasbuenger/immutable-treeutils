@@ -1,7 +1,7 @@
 Immutable TreeUtils
 ===================
 
-0.1.1
+0.1.3
 
 This CommonJS module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
@@ -58,7 +58,7 @@ let content = state.getIn(treeUtils.nextSibling(state, 'node-id').concat('name')
 
 ### Tree mutation
 
-[TreeUtils](#TreeUtils) currently doesn't provide mutation helpers. It might in the future, but I have to give that some thought first. However, simple mutation functions can easily be implemented. An insert function could look something like this:
+[TreeUtils](#TreeUtils) doesn't provide mutation helpers, because IMHO the varietiy of use cases and implementations ist just too huge to spec a sensible API for that kind of thing. However, simple mutation functions can easily be implemented. An insert function could look something like this:
 ```js
 function insert(state, newNode, parentId, index) {
 	return state.updateIn(
@@ -132,7 +132,7 @@ let data = Immutable.fromJS({
 ## Docs
 
 - - - 
-<sub>[See Source](https://github.com/lukasbuenger/immutable-cursors/tree/v0.1.1/src/TreeUtils.js)</sub>
+<sub>[See Source](https://github.com/lukasbuenger/immutable-cursors/tree/v0.1.3/src/TreeUtils.js)</sub>
 - - - 
 <a id="TreeUtils"></a>
 
@@ -715,11 +715,7 @@ Alias of [firstChild](#TreeUtils-firstChild).
 
 #### *method* lastDescendant()
 
-Returns the key path to the next node to the left. The next left node is either:
-* The last descendant of the previous sibling node.
-* The previous sibling node.
-* The parent node.
-* undefined
+Returns the key path to the most right node in the given subtree (keypath). The last child of the most deep descendant, if that makes any sense. Look at the example:
 
 ```js
 treeUtils.lastDescendant(state, 'root');
@@ -778,6 +774,10 @@ npm run update-dependencies
 ```
 
 ## Changelog
+
+##### 0.1.3
+
+- Minor fixes in API docs. Updated dependencies.
 
 ##### 0.1.2
 
