@@ -1,5 +1,7 @@
 import { Seq, List } from 'immutable';
 
+const exists = value => value !== null && typeof value !== 'undefined';
+
 /**
  * @id TreeUtils
  * @lookup TreeUtils
@@ -372,7 +374,7 @@ export default class TreeUtils {
 			index = Number(keyPath.last()),
 			parentChildren = keyPath.skipLast(1),
 			item = state.getIn(parentChildren);
-		if (typeof item !== 'undefined') {
+		if (exists(item)) {
 			let result = List();
 			for (let i of item.keys()) {
 				if (i !== index) {
@@ -403,7 +405,7 @@ export default class TreeUtils {
 	childNodes(state, idOrKeyPath) {
 		let keyPath = this.byArbitrary(state, idOrKeyPath).concat(this._childNodesKey),
 			item = state.getIn(keyPath);
-		if (typeof item !== 'undefined') {
+		if (exists(item)) {
 			let l = item.size,
 				result = List();
 			for (let i = 0; i < l; i++) {
@@ -503,7 +505,7 @@ export default class TreeUtils {
 	hasChildNodes(state, idOrKeyPath) {
 		let keyPath = this.byArbitrary(state, idOrKeyPath).concat(this._childNodesKey),
 			item = state.getIn(keyPath);
-		return typeof item !== 'undefined' && item.size > 0;
+		return exists(item) && item.size > 0;
 	}
 
 	/**
@@ -526,7 +528,7 @@ export default class TreeUtils {
 	numChildNodes(state, idOrKeyPath) {
 		let keyPath = this.byArbitrary(state, idOrKeyPath).concat(this._childNodesKey),
 			item = state.getIn(keyPath);
-		return typeof item !== 'undefined' ? item.size : 0;
+		return exists(item) ? item.size : 0;
 	}
 
 	/**
