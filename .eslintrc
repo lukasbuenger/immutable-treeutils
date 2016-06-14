@@ -2,22 +2,28 @@
   "parser": "babel-eslint",
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jasmine": true
   },
   "rules": {
-    "strict": [2, "never"],
+    "strict": [2],
+    "curly": [2],
     "quotes": [2, "single"],
     "eol-last": [0],
-    "no-mixed-requires": [0],
-    "no-underscore-dangle": [0],
-    "no-trailing-spaces": [0]
-  },
-  "globals": {
-    "jasmine": true,
-    "describe": true,
-    "it": true,
-    "expect": true,
-    "beforeEach": true,
-    "spyOn"
+    "semi": [2, "always"],
+    "no-mixed-requires": [2],
+    "eqeqeq": [2],
+
+    "no-catch-shadow": 2,
+    "no-delete-var": 2,
+    "no-label-var": 2,
+    "no-shadow": 2,
+    "no-shadow-restricted-names": 2,
+    "no-undef": 2,
+    "no-undef-init": 2,
+    "no-undefined": 2,
+    "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
+    "no-use-before-define": 2,
+    "no-trailing-spaces": [2]
   }
 }
