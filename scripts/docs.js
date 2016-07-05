@@ -24,6 +24,11 @@ const links = [
 		url: 'http://facebook.github.io/immutable-js/docs/#/Seq'
 	},
 	{
+		name: 'Record',
+		lookup: 'Immutable.Record',
+		url: 'http://facebook.github.io/immutable-js/docs/#/Record'
+	},
+	{
 		name: 'List',
 		lookup: 'Immutable.List',
 		url: 'http://facebook.github.io/immutable-js/docs/#/List'

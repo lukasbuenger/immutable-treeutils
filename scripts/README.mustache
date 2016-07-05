@@ -172,6 +172,11 @@ npm run update-dependencies
 
 ## Changelog
 
+##### 0.1.5
+
+- Dependencies updated.
+- All methods that need to evaluate whether a value exists or not check not only for `undefined` but for `null` as well now. Some methods were broken if you e.g. were using `null` as default value on >Immutable.Record definitions, which by some people is considered best practise.
+
 ##### 0.1.4
 
 - Dependencies updated. Added tests for the transpiled source (trivial).

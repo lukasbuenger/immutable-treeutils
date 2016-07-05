@@ -1,7 +1,7 @@
 Immutable TreeUtils
 ===================
 
-0.1.4
+0.1.5
 
 This CommonJS module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
@@ -132,7 +132,7 @@ let data = Immutable.fromJS({
 ## Docs
 
 - - - 
-<sub>[See Source](https://github.com/lukasbuenger/immutable-cursors/tree/v0.1.4/src/TreeUtils.js)</sub>
+<sub>[See Source](https://github.com/lukasbuenger/immutable-cursors/tree/v0.1.5/src/TreeUtils.js)</sub>
 - - - 
 <a id="TreeUtils"></a>
 
@@ -774,6 +774,11 @@ npm run update-dependencies
 ```
 
 ## Changelog
+
+##### 0.1.5
+
+- Dependencies updated.
+- All methods that need to evaluate whether a value exists or not check not only for `undefined` but for `null` as well now. Some methods were broken if you e.g. were using `null` as default value on [Record](http://facebook.github.io/immutable-js/docs/#/Record) definitions, which by some people is considered best practise.
 
 ##### 0.1.4
 
