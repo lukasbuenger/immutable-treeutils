@@ -98,7 +98,7 @@ glob('src/*.js', {}, (er, fileNames) => {
 
 				return memo.concat(
 					'- - - \n<sub>[See Source](',
-					'https://github.com/lukasbuenger/immutable-cursors/tree/v' + pkg.version + '/' + item.fileName,
+					'https://github.com/lukasbuenger/immutable-treeutils/tree/v' + pkg.version + '/' + item.fileName,
 					')</sub>\n',
 					comments
 				);
