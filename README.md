@@ -73,7 +73,7 @@ function insert(state, newNode, parentId, index) {
 Install the package from [npm](https://www.npmjs.com/package/immutable-treeutils):
 
 ```
-npm install immutable-tree
+npm install immutable-treeutils
 ```
 
 **Note:** This library relies on *ES6 generators* so you need either an environment that supports them or to include some polyfill like [regenerator](https://github.com/facebook/regenerator) or [babel's polyfill](https://babeljs.io/docs/usage/polyfill/) before importing `immutable-treeutils`;
@@ -89,7 +89,7 @@ let treeUtils = new TreeUtils();
 let data = Immutable.fromJS({
 	id: 'root',
 	name: 'My Documents',
-	type: 'folder'
+	type: 'folder',
 	childNodes: [
 		{
 			id: 'node-1',
