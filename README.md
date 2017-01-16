@@ -89,7 +89,7 @@ let treeUtils = new TreeUtils();
 let data = Immutable.fromJS({
 	id: 'root',
 	name: 'My Documents',
-	type: 'folder'
+	type: 'folder',
 	childNodes: [
 		{
 			id: 'node-1',
