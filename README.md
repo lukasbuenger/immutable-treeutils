@@ -73,7 +73,7 @@ function insert(state, newNode, parentId, index) {
 Install the package from [npm](https://www.npmjs.com/package/immutable-treeutils):
 
 ```
-npm install immutable-treeutils
+npm install immutable-tree
 ```
 
 **Note:** This library relies on *ES6 generators* so you need either an environment that supports them or to include some polyfill like [regenerator](https://github.com/facebook/regenerator) or [babel's polyfill](https://babeljs.io/docs/usage/polyfill/) before importing `immutable-treeutils`;
@@ -89,7 +89,7 @@ let treeUtils = new TreeUtils();
 let data = Immutable.fromJS({
 	id: 'root',
 	name: 'My Documents',
-	type: 'folder',
+	type: 'folder'
 	childNodes: [
 		{
 			id: 'node-1',
@@ -253,13 +253,16 @@ treeUtils.find(state, node => node.get('name') === 'Me in Paris');
 ```js
 find(
    state: Immutable.Iterable,
-   comparator: Function,
+   comparator: (
+        node: Immutable.Iterable, 
+        keyPath: Immutable.Seq<string|number>
+    ): boolean,
    path?: Immutable.Seq<string|number>
 ): Immutable.Seq<string|number>
 ```
 
 ###### Arguments:
-* `comparator` - A function that gets passed a node and should return whether it fits the criteria or not.
+* `comparator` - A function that gets passed a `node` and a `keyPath` and should return whether it fits the criteria or not.
 * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 
 ###### Returns:
@@ -283,13 +286,16 @@ treeUtils.filter(node => node.get('type') === 'folder');
 ```js
 filter(
     state: Immutable.Iterable,
-    comparator: Function,
+    comparator: (
+        node: Immutable.Iterable, 
+        keyPath: Immutable.Seq<string|number>
+    ): boolean,
     path?: Immutable.Seq<string|number>
 ): List<Immutable.Seq<string|number>>
 ```
 
 ###### Arguments:
-* `comparator` - A function that gets passed a node and should return whether it fits the criteria or not.
+* `comparator` - A function that gets passed a `node` and a `keyPath` and should return whether it fits the criteria or not.
 * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 
 
