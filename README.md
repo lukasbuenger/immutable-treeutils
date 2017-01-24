@@ -1,7 +1,7 @@
 Immutable TreeUtils
 ===================
 
-0.1.6
+0.1.7
 
 This CommonJS module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
@@ -89,7 +89,7 @@ let treeUtils = new TreeUtils();
 let data = Immutable.fromJS({
 	id: 'root',
 	name: 'My Documents',
-	type: 'folder'
+	type: 'folder',
 	childNodes: [
 		{
 			id: 'node-1',
@@ -132,7 +132,7 @@ let data = Immutable.fromJS({
 ## API Docs
 
 - - - 
-<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v0.1.6/src/TreeUtils.js)</sub>
+<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v0.1.7/src/TreeUtils.js)</sub>
 - - - 
 <a id="TreeUtils"></a>
 
@@ -254,7 +254,7 @@ treeUtils.find(state, node => node.get('name') === 'Me in Paris');
 find(
    state: Immutable.Iterable,
    comparator: (
-        node: Immutable.Iterable, 
+        node: Immutable.Iterable,
         keyPath: Immutable.Seq<string|number>
     ): boolean,
    path?: Immutable.Seq<string|number>
@@ -262,7 +262,7 @@ find(
 ```
 
 ###### Arguments:
-* `comparator` - A function that gets passed a `node` and a `keyPath` and should return whether it fits the criteria or not.
+* `comparator` - A function that gets passed a `node` and its `keyPath` and should return whether it fits the criteria or not.
 * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 
 ###### Returns:
@@ -287,7 +287,7 @@ treeUtils.filter(state, node => node.get('type') === 'folder');
 filter(
     state: Immutable.Iterable,
     comparator: (
-        node: Immutable.Iterable, 
+        node: Immutable.Iterable,
         keyPath: Immutable.Seq<string|number>
     ): boolean,
     path?: Immutable.Seq<string|number>
@@ -295,7 +295,7 @@ filter(
 ```
 
 ###### Arguments:
-* `comparator` - A function that gets passed a `node` and a `keyPath` and should return whether it fits the criteria or not.
+* `comparator` - A function that gets passed a `node` and its `keyPath` and should return whether it fits the criteria or not.
 * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 
 
@@ -780,6 +780,13 @@ npm run update-dependencies
 ```
 
 ## Changelog
+
+##### 0.1.7
+
+- Dependencies updated.
+- Fix several documentation typos and errors (npm install command :blush:) courtesy of [Jürgen Schlieber](https://github.com/jschlieber) and [Love Luang](https://github.com/luangch).
+- Comparator functions used with [find](#TreeUtils-find) or [filter](#TreeUtils-filter) receive the key path to the current node as second parameter courtesy of [Jürgen Schlieber](https://github.com/jschlieber).
+- Fix test script to conform [jasmine-spec-reporter](https://github.com/bcaudan/jasmine-spec-reporter/)s new module structure.
 
 ##### 0.1.6
 
