@@ -175,7 +175,7 @@ export default class TreeUtils {
 	 *
 	 * Returns an >Immutable.List of key paths pointing at the nodes for which `comparator` returned `true`.
 	 * ```js
-	 * treeUtils.filter(node => node.get('type') === 'folder');
+	 * treeUtils.filter(state, node => node.get('type') === 'folder');
 	 * //List [ Seq[], Seq["childNodes", 0], Seq["childNodes", 1] ]
 	 * ```
 	 *

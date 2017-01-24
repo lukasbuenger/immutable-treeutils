@@ -278,7 +278,7 @@ The key path to the first node for which `comparator` returned `true`.
 
 Returns an [List](http://facebook.github.io/immutable-js/docs/#/List) of key paths pointing at the nodes for which `comparator` returned `true`.
 ```js
-treeUtils.filter(node => node.get('type') === 'folder');
+treeUtils.filter(state, node => node.get('type') === 'folder');
 //List [ Seq[], Seq["childNodes", 0], Seq["childNodes", 1] ]
 ```
 
