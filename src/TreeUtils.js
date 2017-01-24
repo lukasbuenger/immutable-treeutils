@@ -146,7 +146,7 @@ export default class TreeUtils {
 	 * find(
 	 *    state: Immutable.Iterable,
 	 *    comparator: (
-	 *         node: Immutable.Iterable, 
+	 *         node: Immutable.Iterable,
 	 *         keyPath: Immutable.Seq<string|number>
 	 *     ): boolean,
 	 *    path?: Immutable.Seq<string|number>
@@ -154,7 +154,7 @@ export default class TreeUtils {
 	 * ```
 	 *
 	 * ###### Arguments:
-	 * * `comparator` - A function that gets passed a `node` and a `keyPath` and should return whether it fits the criteria or not.
+	 * * `comparator` - A function that gets passed a `node` and its `keyPath` and should return whether it fits the criteria or not.
 	 * * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 	 *
 	 * ###### Returns:
@@ -184,7 +184,7 @@ export default class TreeUtils {
 	 * filter(
 	 *     state: Immutable.Iterable,
 	 *     comparator: (
-	 *         node: Immutable.Iterable, 
+	 *         node: Immutable.Iterable,
 	 *         keyPath: Immutable.Seq<string|number>
 	 *     ): boolean,
 	 *     path?: Immutable.Seq<string|number>
@@ -192,7 +192,7 @@ export default class TreeUtils {
 	 * ```
 	 *
 	 * ###### Arguments:
-	 * * `comparator` - A function that gets passed a `node` and a `keyPath` and should return whether it fits the criteria or not.
+	 * * `comparator` - A function that gets passed a `node` and its `keyPath` and should return whether it fits the criteria or not.
 	 * * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 	 *
 	 *
