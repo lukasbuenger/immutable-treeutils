@@ -1,6 +1,6 @@
 import path from 'path';
 import Jasmine from 'jasmine';
-import SpecReporter from 'jasmine-spec-reporter';
+import { SpecReporter } from 'jasmine-spec-reporter';
 
 
 let noop = function () {},
