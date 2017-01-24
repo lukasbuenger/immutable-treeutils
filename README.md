@@ -89,7 +89,7 @@ let treeUtils = new TreeUtils();
 let data = Immutable.fromJS({
 	id: 'root',
 	name: 'My Documents',
-	type: 'folder',
+	type: 'folder'
 	childNodes: [
 		{
 			id: 'node-1',
@@ -253,13 +253,16 @@ treeUtils.find(state, node => node.get('name') === 'Me in Paris');
 ```js
 find(
    state: Immutable.Iterable,
-   comparator: Function,
+   comparator: (
+        node: Immutable.Iterable, 
+        keyPath: Immutable.Seq<string|number>
+    ): boolean,
    path?: Immutable.Seq<string|number>
 ): Immutable.Seq<string|number>
 ```
 
 ###### Arguments:
-* `comparator` - A function that gets passed a node and should return whether it fits the criteria or not.
+* `comparator` - A function that gets passed a `node` and a `keyPath` and should return whether it fits the criteria or not.
 * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 
 ###### Returns:
@@ -275,7 +278,7 @@ The key path to the first node for which `comparator` returned `true`.
 
 Returns an [List](http://facebook.github.io/immutable-js/docs/#/List) of key paths pointing at the nodes for which `comparator` returned `true`.
 ```js
-treeUtils.filter(node => node.get('type') === 'folder');
+treeUtils.filter(state, node => node.get('type') === 'folder');
 //List [ Seq[], Seq["childNodes", 0], Seq["childNodes", 1] ]
 ```
 
@@ -283,13 +286,16 @@ treeUtils.filter(node => node.get('type') === 'folder');
 ```js
 filter(
     state: Immutable.Iterable,
-    comparator: Function,
+    comparator: (
+        node: Immutable.Iterable, 
+        keyPath: Immutable.Seq<string|number>
+    ): boolean,
     path?: Immutable.Seq<string|number>
 ): List<Immutable.Seq<string|number>>
 ```
 
 ###### Arguments:
-* `comparator` - A function that gets passed a node and should return whether it fits the criteria or not.
+* `comparator` - A function that gets passed a `node` and a `keyPath` and should return whether it fits the criteria or not.
 * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 
 

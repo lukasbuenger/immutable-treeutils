@@ -145,13 +145,16 @@ export default class TreeUtils {
 	 * ```js
 	 * find(
 	 *    state: Immutable.Iterable,
-	 *    comparator: Function,
+	 *    comparator: (
+	 *         node: Immutable.Iterable, 
+	 *         keyPath: Immutable.Seq<string|number>
+	 *     ): boolean,
 	 *    path?: Immutable.Seq<string|number>
 	 * ): Immutable.Seq<string|number>
 	 * ```
 	 *
 	 * ###### Arguments:
-	 * * `comparator` - A function that gets passed a node and should return whether it fits the criteria or not.
+	 * * `comparator` - A function that gets passed a `node` and a `keyPath` and should return whether it fits the criteria or not.
 	 * * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 	 *
 	 * ###### Returns:
@@ -159,7 +162,7 @@ export default class TreeUtils {
 	 */
 	find(state, comparator, path) {
 		for (let keyPath of this.nodes(state, path)) {
-			if (comparator(state.getIn(keyPath)) === true) {
+			if (comparator(state.getIn(keyPath), keyPath) === true) {
 				return keyPath;
 			}
 		}
@@ -172,7 +175,7 @@ export default class TreeUtils {
 	 *
 	 * Returns an >Immutable.List of key paths pointing at the nodes for which `comparator` returned `true`.
 	 * ```js
-	 * treeUtils.filter(node => node.get('type') === 'folder');
+	 * treeUtils.filter(state, node => node.get('type') === 'folder');
 	 * //List [ Seq[], Seq["childNodes", 0], Seq["childNodes", 1] ]
 	 * ```
 	 *
@@ -180,13 +183,16 @@ export default class TreeUtils {
 	 * ```js
 	 * filter(
 	 *     state: Immutable.Iterable,
-	 *     comparator: Function,
+	 *     comparator: (
+	 *         node: Immutable.Iterable, 
+	 *         keyPath: Immutable.Seq<string|number>
+	 *     ): boolean,
 	 *     path?: Immutable.Seq<string|number>
 	 * ): List<Immutable.Seq<string|number>>
 	 * ```
 	 *
 	 * ###### Arguments:
-	 * * `comparator` - A function that gets passed a node and should return whether it fits the criteria or not.
+	 * * `comparator` - A function that gets passed a `node` and a `keyPath` and should return whether it fits the criteria or not.
 	 * * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 	 *
 	 *
@@ -196,7 +202,7 @@ export default class TreeUtils {
 	filter(state, comparator, path) {
 		let result = List();
 		for (let keyPath of this.nodes(state, path)) {
-			if (comparator(state.getIn(keyPath)) === true) {
+			if (comparator(state.getIn(keyPath), keyPath) === true) {
 				result = result.push(keyPath);
 			}
 		}
