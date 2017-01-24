@@ -102,6 +102,15 @@ describe('class `TreeUtils`', () => {
 			expect(getValue(keyPath6.toJS())).toEqual('7');
 		});
 
+		it('passes the current node\'s key path as second argument to the comparator', () => {
+
+			const findSameKeyPath = (seq) =>
+				utils.find(state, (node, keyPath) =>
+					Immutable.is(seq, keyPath)
+				);
+			expect(utils.id(state, findSameKeyPath(Seq.of('data', 'childNodes', 1, 'childNodes', 0)))).toEqual('4');
+		});
+
 		it('accepts an optional parameter `path` to restrict the haystack to a subtree.', () => {
 
 			let keyPath = findKeyPathById('3', Seq.of('data', 'childNodes', 1, 'childNodes', 0 ));
@@ -134,6 +143,21 @@ describe('class `TreeUtils`', () => {
 			]);
 			expect(keyPaths2.toArray().map(m => getValue(m.toJS()))).toEqual(['4', '6']);
 
+		});
+
+		it('passes the current node\'s key path as second argument to the comparator', () => {
+
+			const filterDescendants = (seq) =>
+				utils.filter(state, (node, keyPath) =>
+					Immutable.is(seq, keyPath.take(seq.size))
+				);
+			expect(filterDescendants(Seq.of('data', 'childNodes', 1)).toJS()).toEqual([
+				[ 'data', 'childNodes', 1 ],
+				[ 'data', 'childNodes', 1, 'childNodes', 0 ],
+				[ 'data', 'childNodes', 1, 'childNodes', 1 ],
+				[ 'data', 'childNodes', 1, 'childNodes', 0, 'childNodes', 0 ],
+				[ 'data', 'childNodes', 1, 'childNodes', 1, 'childNodes', 0 ]
+			]);
 		});
 
 		it('accepts an optional parameter `path` to restrict the haystack to a subtree.', () => {
