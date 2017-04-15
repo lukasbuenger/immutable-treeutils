@@ -1,7 +1,7 @@
 Immutable TreeUtils
 ===================
 
-0.1.8
+0.1.9
 
 This CommonJS module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
@@ -131,9 +131,10 @@ let data = Immutable.fromJS({
 
 ## API Docs
 
-- - - 
-<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v0.1.8/src/TreeUtils.js)</sub>
-- - - 
+
+					- - - 
+<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v0.1.9/src/TreeUtils.js,
+					)</sub>- - - 
 <a id="TreeUtils"></a>
 
 
@@ -153,6 +154,12 @@ const treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'));
 
 ```js
 const treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'), '__id', '__children');
+```
+
+**With custom *no result*-default**
+
+```js
+const treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'), 'id', 'children', false);
 ```
 
 **Note**
@@ -780,6 +787,14 @@ npm run update-dependencies
 ```
 
 ## Changelog
+
+##### 0.1.9
+- **API changes**:
+	- [TreeUtils](#TreeUtils) constructor accepts a `none` parameter to customize the result of queries with no results.
+- ESLint rules changed to a somehow customized version of the well-established [AirBnB](https://github.com/airbnb/javascript) ruleset.
+- Code base refactored according to the new linting rules.
+- Build tests refactored to ES5.
+- Dependencies updated.
 
 ##### 0.1.8
 - Support default export in pre-ES2015 environments courtesy of [Jürgen Schlieber](https://github.com/jschlieber).
