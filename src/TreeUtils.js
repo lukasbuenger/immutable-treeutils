@@ -1,6 +1,7 @@
 import { Seq, List } from 'immutable';
 
 const exists = value => value !== null && typeof value !== 'undefined';
+const NONE = undefined;
 
 /**
  * @id TreeUtils
@@ -46,10 +47,11 @@ const exists = value => value !== null && typeof value !== 'undefined';
  */
 export default class TreeUtils {
 
-	constructor(rootPath = Seq(), idKey = 'id', childNodesKey = 'childNodes') {
-		this._rootPath = rootPath;
-		this._idKey = idKey;
-		this._childNodesKey = childNodesKey;
+	constructor(rootPath = Seq(), idKey = 'id', childNodesKey = 'childNodes', none = NONE) {
+		this.rootPath = rootPath;
+		this.idKey = idKey;
+		this.childNodesKey = childNodesKey;
+		this.none = none;
 	}
 
 	/**
@@ -80,7 +82,7 @@ export default class TreeUtils {
 	 *
 	 */
 	id(state, keyPath) {
-		return state.getIn(keyPath.concat(this._idKey));
+		return state.getIn(keyPath.concat(this.idKey));
 	}
 
 	/**
@@ -111,19 +113,19 @@ export default class TreeUtils {
 	 * ###### Returns:
 	 * An **unordered** [Iterator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Iteration_protocols) of all nodes in the tree.
 	 */
-	*nodes(state, path) {
-		let stack = List.of(path || this._rootPath);
+	* nodes(state, path) {
+		let stack = List.of(path || this.rootPath);
 		while (stack.size > 0) {
-			let keyPath = stack.first();
+			const keyPath = stack.first();
 			yield keyPath;
 
 			stack = stack.shift();
 
-			let item = state.getIn(keyPath),
-				childNodes = item.get(this._childNodesKey);
+			const item = state.getIn(keyPath);
+			const childNodes = item.get(this.childNodesKey);
 			if (childNodes && childNodes.size > 0) {
-				for (let i of item.get(this._childNodesKey).keys()) {
-					stack = stack.push(keyPath.concat(this._childNodesKey, i));
+				for (const i of item.get(this.childNodesKey).keys()) {
+					stack = stack.push(keyPath.concat(this.childNodesKey, i));
 				}
 			}
 		}
@@ -161,11 +163,12 @@ export default class TreeUtils {
 	 * The key path to the first node for which `comparator` returned `true`.
 	 */
 	find(state, comparator, path) {
-		for (let keyPath of this.nodes(state, path)) {
+		for (const keyPath of this.nodes(state, path)) {
 			if (comparator(state.getIn(keyPath), keyPath) === true) {
 				return keyPath;
 			}
 		}
+		return this.none;
 	}
 	/**
 	 * @id TreeUtils-filter
@@ -201,7 +204,7 @@ export default class TreeUtils {
 	 */
 	filter(state, comparator, path) {
 		let result = List();
-		for (let keyPath of this.nodes(state, path)) {
+		for (const keyPath of this.nodes(state, path)) {
 			if (comparator(state.getIn(keyPath), keyPath) === true) {
 				result = result.push(keyPath);
 			}
@@ -232,7 +235,7 @@ export default class TreeUtils {
 	 * The key path to the node with id === `id`.
 	 */
 	byId(state, id) {
-		return this.find(state, item => item.get(this._idKey) === id);
+		return this.find(state, item => item.get(this.idKey) === id);
 	}
 
 	/**
@@ -255,7 +258,9 @@ export default class TreeUtils {
 	 *
 	 */
 	byArbitrary(state, idOrKeyPath) {
-		return Seq.isSeq(idOrKeyPath) ? idOrKeyPath : this.byId(state, idOrKeyPath);
+		return Seq.isSeq(idOrKeyPath)
+			? idOrKeyPath
+			: this.byId(state, idOrKeyPath);
 	}
 
 	/**
@@ -276,12 +281,13 @@ export default class TreeUtils {
 	 * Returns the next sibling node of the node at `idOrKeyPath`
 	 */
 	nextSibling(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath),
-			index = Number(keyPath.last()),
-			nextSiblingPath = keyPath.skipLast(1).concat(index + 1);
+		const keyPath = this.byArbitrary(state, idOrKeyPath);
+		const index = Number(keyPath.last());
+		const nextSiblingPath = keyPath.skipLast(1).concat(index + 1);
 		if (state.hasIn(nextSiblingPath)) {
 			return nextSiblingPath;
 		}
+		return this.none;
 	}
 
 	/**
@@ -302,11 +308,12 @@ export default class TreeUtils {
 	 * Returns the previous sibling node of the node at `idOrKeyPath`
 	 */
 	previousSibling(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath),
-			index = Number(keyPath.last());
+		const keyPath = this.byArbitrary(state, idOrKeyPath);
+		const index = Number(keyPath.last());
 		if (index > 0) {
 			return keyPath.skipLast(1).concat(index - 1);
 		}
+		return this.none;
 	}
 
 	/**
@@ -327,10 +334,13 @@ export default class TreeUtils {
 	 * Returns the first child node of the node at `idOrKeyPath`
 	 */
 	firstChild(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath).concat([this._childNodesKey, 0]);
+		const keyPath = this
+			.byArbitrary(state, idOrKeyPath)
+			.concat([this.childNodesKey, 0]);
 		if (state.hasIn(keyPath)) {
 			return keyPath;
 		}
+		return this.none;
 	}
 
 	/**
@@ -351,11 +361,14 @@ export default class TreeUtils {
 	 * Returns the last child node of the node at `idOrKeyPath`
 	 */
 	lastChild(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath).concat([this._childNodesKey]),
-			item = state.getIn(keyPath);
+		const keyPath = this
+			.byArbitrary(state, idOrKeyPath)
+			.concat([this.childNodesKey]);
+		const item = state.getIn(keyPath);
 		if (item && item.size > 0) {
 			return keyPath.concat([item.size - 1]);
 		}
+		return this.none;
 	}
 
 	/**
@@ -376,19 +389,20 @@ export default class TreeUtils {
 	 * Returns a >Immutable.List of key paths pointing at the sibling nodes of the node at `idOrKeyPath`
 	 */
 	siblings(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath),
-			index = Number(keyPath.last()),
-			parentChildren = keyPath.skipLast(1),
-			item = state.getIn(parentChildren);
+		const keyPath = this.byArbitrary(state, idOrKeyPath);
+		const index = Number(keyPath.last());
+		const parentChildren = keyPath.skipLast(1);
+		const item = state.getIn(parentChildren);
 		if (exists(item)) {
 			let result = List();
-			for (let i of item.keys()) {
+			for (const i of item.keys()) {
 				if (i !== index) {
 					result = result.push(parentChildren.concat(i));
 				}
 			}
 			return result;
 		}
+		return this.none;
 	}
 
 	/**
@@ -409,16 +423,19 @@ export default class TreeUtils {
 	 * Returns a >Immutable.List of all child nodes of the node at `idOrKeyPath`
 	 */
 	childNodes(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath).concat(this._childNodesKey),
-			item = state.getIn(keyPath);
+		const keyPath = this
+			.byArbitrary(state, idOrKeyPath)
+			.concat(this.childNodesKey);
+		const item = state.getIn(keyPath);
 		if (exists(item)) {
-			let l = item.size,
-				result = List();
-			for (let i = 0; i < l; i++) {
+			const l = item.size;
+			let result = List();
+			for (let i = 0; i < l; i += 1) {
 				result = result.push(keyPath.concat(i));
 			}
 			return result;
 		}
+		return this.none;
 	}
 
 	/**
@@ -440,10 +457,13 @@ export default class TreeUtils {
 	 * Returns the child node at position of `index` of the node at `idOrKeyPath`
 	 */
 	childAt(state, idOrKeyPath, index) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath).concat(this._childNodesKey, index);
+		const keyPath = this
+			.byArbitrary(state, idOrKeyPath)
+			.concat(this.childNodesKey, index);
 		if (state.hasIn(keyPath)) {
 			return keyPath;
 		}
+		return this.none;
 	}
 
 	/**
@@ -464,9 +484,9 @@ export default class TreeUtils {
 	 * Returns a list of key paths pointing at all descendants of the node at `idOrKeyPath`
 	 */
 	descendants(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath);
+		const keyPath = this.byArbitrary(state, idOrKeyPath);
 		return this.filter(state, (item) => {
-			return item.get(this._idKey) !== this.id(state, keyPath);
+			return item.get(this.idKey) !== this.id(state, keyPath);
 		}, keyPath);
 	}
 
@@ -509,8 +529,10 @@ export default class TreeUtils {
 	 * Returns whether the node at `idOrKeyPath` has children.
 	 */
 	hasChildNodes(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath).concat(this._childNodesKey),
-			item = state.getIn(keyPath);
+		const keyPath = this
+			.byArbitrary(state, idOrKeyPath)
+			.concat(this.childNodesKey);
+		const item = state.getIn(keyPath);
 		return exists(item) && item.size > 0;
 	}
 
@@ -532,8 +554,10 @@ export default class TreeUtils {
 	 * Returns the number of child nodes the node at `idOrKeyPath` has.
 	 */
 	numChildNodes(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath).concat(this._childNodesKey),
-			item = state.getIn(keyPath);
+		const keyPath = this
+			.byArbitrary(state, idOrKeyPath)
+			.concat(this.childNodesKey);
+		const item = state.getIn(keyPath);
 		return exists(item) ? item.size : 0;
 	}
 
@@ -555,10 +579,11 @@ export default class TreeUtils {
 	 * Returns the key path to the parent of the node at `idOrKeyPath`.
 	 */
 	parent(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath);
+		const keyPath = this.byArbitrary(state, idOrKeyPath);
 		if (keyPath && keyPath.size) {
 			return keyPath.slice(0, -2);
 		}
+		return this.none;
 	}
 
 	/**
@@ -579,14 +604,19 @@ export default class TreeUtils {
 	 * Returns an >Immutable.List of all key paths that point at direct ancestors of the node at `idOrKeyPath`.
 	 */
 	ancestors(state, idOrKeyPath) {
-		return this.byArbitrary(state, idOrKeyPath).reduceRight((memo, value, index, keyPath) => {
-			if ((index - this._rootPath.size) % 2 === 0 && index >= this._rootPath.size) {
-				return memo.push(
-					keyPath.takeLast(index).reverse().toSetSeq()
-				);
-			}
-			return memo;
-		}, List());
+		return this
+			.byArbitrary(state, idOrKeyPath)
+			.reduceRight((memo, value, index, keyPath) => {
+				if (
+					(index - this.rootPath.size) % 2 === 0
+					&& index >= this.rootPath.size
+				) {
+					return memo.push(
+						keyPath.takeLast(index).reverse().toSetSeq(),
+					);
+				}
+				return memo;
+			}, List());
 	}
 
 	/**
@@ -615,12 +645,15 @@ export default class TreeUtils {
 	 * Returns a unique numeric value that represents the absolute position of the node at `idOrKeyPath`.
 	 */
 	position(state, idOrKeyPath) {
-		return Number('1.'+this.byArbitrary(state, idOrKeyPath).reduceRight((memo, value, index) => {
-			if (index >= this._rootPath.size && index % 2 === 0) {
-				return value.toString() + memo;
-			}
-			return memo;
-		}, ''));
+		const order = this
+			.byArbitrary(state, idOrKeyPath)
+			.reduceRight((memo, value, index) => {
+				if (index >= this.rootPath.size && index % 2 === 0) {
+					return value.toString() + memo;
+				}
+				return memo;
+			}, '');
+		return Number(`1.${order}`);
 	}
 
 	/**
@@ -662,30 +695,30 @@ export default class TreeUtils {
 	 * Returns the key path to the node to the right of the one at `idOrKeyPath`.
 	 */
 	right(state, idOrKeyPath) {
-		let l = this._rootPath.size,
-			keyPath = this.byArbitrary(state, idOrKeyPath),
-			firstChild = this.firstChild(state, keyPath);
+		const l = this.rootPath.size;
+		const keyPath = this.byArbitrary(state, idOrKeyPath);
+		const firstChild = this.firstChild(state, keyPath);
 
 		if (firstChild) {
 			return firstChild;
 		}
 
-		let nextSibling = this.nextSibling(state, keyPath);
+		const nextSibling = this.nextSibling(state, keyPath);
 		if (nextSibling) {
 			return nextSibling;
 		}
 
-		let parent = this.parent(state, keyPath),
-			nextSiblingOfParent;
+		let parent = this.parent(state, keyPath);
+		let nextSiblingOfParent;
 
-		while(parent && parent.size >= l) {
+		while (parent && parent.size >= l) {
 			nextSiblingOfParent = this.nextSibling(state, parent);
 			if (nextSiblingOfParent) {
 				return nextSiblingOfParent;
 			}
 			parent = this.parent(state, parent);
 		}
-
+		return this.none;
 	}
 
 	/**
@@ -728,8 +761,8 @@ export default class TreeUtils {
 	 * Returns the key path to the node to the right of the one at `idOrKeyPath`.
 	 */
 	left(state, idOrKeyPath) {
-		let keyPath = this.byArbitrary(state, idOrKeyPath),
-			lastChild = this.previousSibling(state, keyPath);
+		const keyPath = this.byArbitrary(state, idOrKeyPath);
+		let lastChild = this.previousSibling(state, keyPath);
 
 		while (lastChild) {
 			if (!this.hasChildNodes(state, lastChild)) {
@@ -738,11 +771,13 @@ export default class TreeUtils {
 			lastChild = this.lastChild(state, lastChild);
 		}
 
-		let parent = this.parent(state, keyPath);
+		const parent = this.parent(state, keyPath);
 
-		if(parent && parent.size >= this._rootPath.size) {
+		if (parent && parent.size >= this.rootPath.size) {
 			return parent;
 		}
+
+		return this.none;
 	}
 
 	/**
@@ -783,7 +818,7 @@ export default class TreeUtils {
 	 */
 	lastDescendant(state, idOrKeyPath) {
 		let keyPath = this.lastChild(state, idOrKeyPath);
-		while(keyPath && this.hasChildNodes(state, keyPath)) {
+		while (keyPath && this.hasChildNodes(state, keyPath)) {
 			keyPath = this.lastChild(state, keyPath);
 		}
 		return keyPath;
