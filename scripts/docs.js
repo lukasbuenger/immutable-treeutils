@@ -108,9 +108,9 @@ glob('src/*.js', {}, (er, fileNames) => {
 			const comments = item.comments;
 
 			if (comments.length > 0) {
-				return memo.concat(`
-					- - - \n<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v${pkg.version}/${item.fileName},
-					)</sub>`,
+				return memo.concat(`- - -
+<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v${pkg.version}/${item.fileName})</sub>
+`,
 					comments,
 				);
 			}

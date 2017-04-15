@@ -131,10 +131,9 @@ let data = Immutable.fromJS({
 
 ## API Docs
 
-
-					- - - 
-<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v0.1.9/src/TreeUtils.js,
-					)</sub>- - - 
+- - -
+<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v0.1.9/src/TreeUtils.js)</sub>
+- - - 
 <a id="TreeUtils"></a>
 
 
