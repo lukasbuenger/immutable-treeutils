@@ -24,6 +24,12 @@ const NONE = undefined;
  * const treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'), '__id', '__children');
  * ```
  *
+ * **With custom *no result*-default**
+ *
+ * ```js
+ * const treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'), 'id', 'children', false);
+ * ```
+ *
  * **Note**
  * The first argument of every method of a `TreeUtils` object is the state you want to analyse. I won't mention / explain it again in method descriptions bellow. The argument `idOrKeyPath` also appears in most signatures, its purpose is thoroughly explained in the docs of >byArbitrary.
  *
