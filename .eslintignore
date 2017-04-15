@@ -1,0 +1,2 @@
+tests/ES5Spec.js
+node_modules/**/*.*
