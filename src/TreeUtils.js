@@ -611,9 +611,7 @@ export default class TreeUtils {
 					(index - this.rootPath.size) % 2 === 0
 					&& index >= this.rootPath.size
 				) {
-					return memo.push(
-						keyPath.takeLast(index).reverse().toSetSeq(),
-					);
+					return memo.push(keyPath.takeLast(index).reverse().toSetSeq());
 				}
 				return memo;
 			}, List());
