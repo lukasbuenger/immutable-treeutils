@@ -1,12 +1,11 @@
-import path from 'path';
-import Jasmine from 'jasmine';
-import { SpecReporter } from 'jasmine-spec-reporter';
+const path = require('path');
+const Jasmine = require('jasmine');
+const { SpecReporter } = require('jasmine-spec-reporter');
 
+const noop = () => {};
+const jrunner = new Jasmine();
 
-let noop = function () {},
-	jrunner = new Jasmine();
-
-jrunner.configureDefaultReporter({print: noop});
+jrunner.configureDefaultReporter({ print: noop });
 jasmine.getEnv().addReporter(new SpecReporter({
 	displayStacktrace: 'summary',
 	displayFailuresSummary: true,
@@ -18,19 +17,19 @@ jasmine.getEnv().addReporter(new SpecReporter({
 	colors: {
 		success: 'green',
 		failure: 'red',
-		skipped: 'cyan'
+		skipped: 'cyan',
 	},
 	prefixes: {
 		success: '✓ ',
 		failure: '✗ ',
-		pending: '- '
+		pending: '- ',
 	},
-	customProcessors: []
+	customProcessors: [],
 }));
 
 jrunner.projectBaseDir = '';
 jrunner.specDir = '';
 jrunner.addSpecFiles([
-	path.resolve('tests/*Spec.js')
+	path.resolve('tests/*Spec.js'),
 ]);
 jrunner.execute();
