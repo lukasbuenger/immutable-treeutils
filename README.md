@@ -1,7 +1,7 @@
 Immutable TreeUtils
 ===================
 
-0.1.9
+0.1.10
 
 This CommonJS module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
@@ -132,7 +132,7 @@ let data = Immutable.fromJS({
 ## API Docs
 
 - - -
-<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v0.1.9/src/TreeUtils.js)</sub>
+<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v0.1.10/src/TreeUtils.js)</sub>
 - - - 
 <a id="TreeUtils"></a>
 
@@ -170,7 +170,8 @@ The first argument of every method of a `TreeUtils` object is the state you want
 new TreeUtils(
    rootPath?: immutable.Seq,
    idKey?: string,
-   childNodesKey?: string
+   childNodesKey?: string,
+   nonValue?: any
 )
 ```
 
@@ -178,6 +179,7 @@ new TreeUtils(
 * `rootPath` - The path to the substate of your [ImmutableJS](http://facebook.github.io/immutable-js/) state that represents the root node of your tree. Default: `Immutable.Seq()`.
 * `idKey` - The name of the key that points at unique identifiers of all nodes in your tree . Default: `'id'`.
 * `childNodesKey` - The name of the key at which child nodes can be found. Default: `'childNodes'`.
+* `noneValue` - The value that will get returned if a query doesn't return any results. Default: `undefined`.
 
 ###### Returns:
 * A new `TreeUtils` object
@@ -786,6 +788,9 @@ npm run update-dependencies
 ```
 
 ## Changelog
+
+##### 0.1.10
+- Docs updated.
 
 ##### 0.1.9
 - **API changes**:

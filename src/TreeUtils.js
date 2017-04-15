@@ -39,7 +39,8 @@ const NONE = undefined;
  * new TreeUtils(
  *    rootPath?: immutable.Seq,
  *    idKey?: string,
- *    childNodesKey?: string
+ *    childNodesKey?: string,
+ *    nonValue?: any
  * )
  * ```
  *
@@ -47,6 +48,7 @@ const NONE = undefined;
  * * `rootPath` - The path to the substate of your >ImmutableJS state that represents the root node of your tree. Default: `Immutable.Seq()`.
  * * `idKey` - The name of the key that points at unique identifiers of all nodes in your tree . Default: `'id'`.
  * * `childNodesKey` - The name of the key at which child nodes can be found. Default: `'childNodes'`.
+ * * `noneValue` - The value that will get returned if a query doesn't return any results. Default: `undefined`.
  *
  * ###### Returns:
  * * A new `TreeUtils` object
