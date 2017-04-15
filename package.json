@@ -1,6 +1,6 @@
 {
   "name": "immutable-treeutils",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Functional tree traversal helpers for ImmutableJS data structures",
   "main": "lib/TreeUtils.js",
   "scripts": {
@@ -28,19 +28,23 @@
   },
   "homepage": "https://github.com/lukasbuenger/immutable-treeutils",
   "devDependencies": {
-    "acorn": "^4.0.4",
-    "babel-cli": "^6.22.2",
-    "babel-core": "^6.22.1",
-    "babel-eslint": "^7.1.1",
+    "acorn": "^5.0.3",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.2",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-polyfill": "^6.22.0",
-    "babel-preset-es2015": "^6.22.0",
-    "eslint": "^3.14.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "glob": "^7.1.1",
     "jasmine": "^2.5.3",
-    "jasmine-spec-reporter": "^3.2.0",
+    "jasmine-spec-reporter": "^4.0.0",
     "mustache": "^2.3.0",
-    "npm-check-updates": "^2.8.9"
+    "npm-check-updates": "^2.10.5"
   },
   "dependencies": {
     "immutable": "^3.8.1"
