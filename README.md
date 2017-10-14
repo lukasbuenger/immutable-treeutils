@@ -2,6 +2,7 @@ Immutable TreeUtils
 ===================
 
 0.1.11
+![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=master)
 
 This module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
@@ -131,7 +132,7 @@ let data = Immutable.fromJS({
 
 - - -
 <sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v0.1.11/index.js)</sub>
-- - -
+- - - 
 <a id="TreeUtils"></a>
 
 
@@ -181,9 +182,9 @@ new TreeUtils(
 
 ###### Returns:
 * A new `TreeUtils` object
+ 
 
-
-- - -
+- - - 
 <a id="TreeUtils-id"></a>
 
 
@@ -210,9 +211,9 @@ id(
 ###### Returns:
 The unique identifier of the node at the given key path.
 
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-nodes"></a>
 
 
@@ -240,9 +241,9 @@ nodes(
 
 ###### Returns:
 An **unordered** [Iterator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Iteration_protocols) of all nodes in the tree.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-find"></a>
 
 
@@ -273,9 +274,9 @@ find(
 
 ###### Returns:
 The key path to the first node for which `comparator` returned `true`.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-filter"></a>
 
 
@@ -307,9 +308,9 @@ filter(
 
 ###### Returns:
 A [List](http://facebook.github.io/immutable-js/docs/#/List) of all the key paths that point at nodes for which `comparator` returned `true`.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-byId"></a>
 
 
@@ -331,9 +332,9 @@ id(
 
 ###### Returns:
 The key path to the node with id === `id`.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-byArbitrary"></a>
 
 
@@ -352,9 +353,9 @@ byArbitrary(
 ###### Returns:
 The key path pointing at the node found for id === `idOrKeyPath` or, if is a [Seq](http://facebook.github.io/immutable-js/docs/#/Seq), the `idOrKeyPath` itself.
 
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-nextSibling"></a>
 
 
@@ -371,9 +372,9 @@ nextSibling(
 
 ###### Returns:
 Returns the next sibling node of the node at `idOrKeyPath`
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-previousSibling"></a>
 
 
@@ -390,9 +391,9 @@ previousSibling(
 
 ###### Returns:
 Returns the previous sibling node of the node at `idOrKeyPath`
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-firstChild"></a>
 
 
@@ -409,9 +410,9 @@ firstChild(
 
 ###### Returns:
 Returns the first child node of the node at `idOrKeyPath`
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-lastChild"></a>
 
 
@@ -428,9 +429,9 @@ lastChild(
 
 ###### Returns:
 Returns the last child node of the node at `idOrKeyPath`
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-siblings"></a>
 
 
@@ -447,9 +448,9 @@ siblings(
 
 ###### Returns:
 Returns a [List](http://facebook.github.io/immutable-js/docs/#/List) of key paths pointing at the sibling nodes of the node at `idOrKeyPath`
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-childNodes"></a>
 
 
@@ -466,9 +467,9 @@ childNodes(
 
 ###### Returns:
 Returns a [List](http://facebook.github.io/immutable-js/docs/#/List) of all child nodes of the node at `idOrKeyPath`
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-childAt"></a>
 
 
@@ -486,9 +487,9 @@ childAt(
 
 ###### Returns:
 Returns the child node at position of `index` of the node at `idOrKeyPath`
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-descendants"></a>
 
 
@@ -505,9 +506,9 @@ descendants(
 
 ###### Returns:
 Returns a list of key paths pointing at all descendants of the node at `idOrKeyPath`
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-childIndex"></a>
 
 
@@ -524,9 +525,9 @@ childIndex(
 
 ###### Returns:
 Returns the index at which the node at `idOrKeyPath` is positioned in its parent child nodes list.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-hasChildNodes"></a>
 
 
@@ -543,9 +544,9 @@ hasChildNodes(
 
 ###### Returns:
 Returns whether the node at `idOrKeyPath` has children.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-numChildNodes"></a>
 
 
@@ -562,9 +563,9 @@ numChildNodes(
 
 ###### Returns:
 Returns the number of child nodes the node at `idOrKeyPath` has.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-parent"></a>
 
 
@@ -581,9 +582,9 @@ parent(
 
 ###### Returns:
 Returns the key path to the parent of the node at `idOrKeyPath`.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-ancestors"></a>
 
 
@@ -600,9 +601,9 @@ ancestors(
 
 ###### Returns:
 Returns an [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point at direct ancestors of the node at `idOrKeyPath`.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-position"></a>
 
 
@@ -627,9 +628,9 @@ position(
 
 ###### Returns:
 Returns a unique numeric value that represents the absolute position of the node at `idOrKeyPath`.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-right"></a>
 
 
@@ -667,9 +668,9 @@ right(
 
 ###### Returns:
 Returns the key path to the node to the right of the one at `idOrKeyPath`.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-left"></a>
 
 
@@ -708,9 +709,9 @@ left(
 
 ###### Returns:
 Returns the key path to the node to the right of the one at `idOrKeyPath`.
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-firstDescendant"></a>
 
 
@@ -718,9 +719,9 @@ Returns the key path to the node to the right of the one at `idOrKeyPath`.
 #### *method* firstDescendant()
 
 Alias of [firstChild](#TreeUtils-firstChild).
+	 
 
-
-- - -
+- - - 
 <a id="TreeUtils-lastDescendant"></a>
 
 
@@ -744,7 +745,7 @@ lastDescendant(
 
 ###### Returns:
 Returns the key path to the last descendant of the node at `idOrKeyPath`.
-
+	 
 
 
 
