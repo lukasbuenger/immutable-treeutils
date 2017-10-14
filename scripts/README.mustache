@@ -3,9 +3,9 @@ Immutable TreeUtils
 
 {{ pkg.version }}
 
-This CommonJS module is a collection of helpers to access and traverse >ImmutableJS tree data structure with a DOM-inspired interface.
+This module is a collection of helpers to access and traverse >ImmutableJS tree data structure with a DOM-inspired interface.
 
-It is written in ES2015, the ES5/ES3 distribution is built with [Babel](babeljs.io).
+It is written in ES2015 and requires Node >= 6 or [any environment that supports generators](https://kangax.github.io/compat-table/es6/). If you somehow have to transpile to ES5 or below, make sure you provide a compatibily runtime (e.g. https://www.npmjs.com/package/regenerator-runtime).
 
 It imposes some very basic conventions on your data structure, but I tried to make everything as low-level and configurable as possible. Still, a few
 conditions that need to be met remain:
@@ -75,8 +75,6 @@ Install the package from [npm](https://www.npmjs.com/package/immutable-treeutils
 ```
 npm install immutable-treeutils
 ```
-
-**Note:** This library relies on *ES6 generators* so you need either an environment that supports them or to include some polyfill like [regenerator](https://github.com/facebook/regenerator) or [babel's polyfill](https://babeljs.io/docs/usage/polyfill/) before importing `immutable-treeutils`;
 
 Import the module and provide some state. Examples in the docs below refer to this data structure:
 
