@@ -2,6 +2,7 @@ Immutable TreeUtils
 ===================
 
 0.1.11
+
 ![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=master)
 
 This module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
