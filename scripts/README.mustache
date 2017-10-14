@@ -138,24 +138,9 @@ Get the source:
 git clone https://github.com/lukasbuenger/immutable-cursors
 ```
 
-Install dependencies:
-```
-npm install
-```
-
-Lint the code:
-```
-npm run lint
-```
-
 Run the tests:
 ```
 npm test
-```
-
-Build ES5/ES3:
-```
-npm run build
 ```
 
 Build the docs / README:
@@ -168,7 +153,20 @@ Update all local dependencies:
 npm run update-dependencies
 ```
 
+There's a pre-commit hook in place that keeps things in line with the [Prettier](https://github.com/prettier/prettier) guidelines.
+
+
 ## Changelog
+
+##### 0.1.11
+- *Requires Node >= 6 or any environment that supports ES6, especially generators.*
+- Removed dependencies on all Babel and ESLint related packages and config files.
+- File structure flattened.
+- Docs: Removed hint regarding the generators issue, removed the babel reference.
+- Dependencies updated.
+
+
+
 
 ##### 0.1.10
 - Docs updated.

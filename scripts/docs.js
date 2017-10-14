@@ -36,7 +36,7 @@ const links = [
   }
 ];
 
-glob("src/*.js", {}, (er, fileNames) => {
+glob("index.js", {}, (er, fileNames) => {
   if (er) {
     console.error(er);
   } else {
