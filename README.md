@@ -13,7 +13,7 @@ conditions that need to be met remain:
 * Child nodes have to be stored in an [List](http://facebook.github.io/immutable-js/docs/#/List) under a key that is the the same for all nodes containing children.
 
 ##### Please note: 1.0.0 is out and has breaking changes.
-Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/1.0.0/CHANGELOG.md) for further information and migration instructions.
+Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.0.0/CHANGELOG.md) for further information and migration instructions.
 
 ## Getting started
 
@@ -778,8 +778,8 @@ There's a pre-commit hook in place that keeps things in line with the [Prettier]
 
 ## Changelog
 
-See [CHANGELOG](https://github.com/lukasbuenger/immutable-treeutils/blob/1.0.0/CHANGELOG.md)
+See [CHANGELOG](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.0.0/CHANGELOG.md)
 
 ## License
 
-See [LICENSE](https://github.com/lukasbuenger/immutable-treeutils/blob/1.0.0/LICENSE).
+See [LICENSE](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.0.0/LICENSE).
