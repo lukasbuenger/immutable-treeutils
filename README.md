@@ -755,9 +755,11 @@ Returns the key path to the last descendant of the node at `idOrKeyPath`.
 
 ## Development
 
-Get the source:
+Setup:
 ```
 git clone https://github.com/lukasbuenger/immutable-cursors
+npm install
+npm install immutable # peer dependency
 ```
 
 Run the tests:
