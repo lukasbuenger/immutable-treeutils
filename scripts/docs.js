@@ -1,14 +1,48 @@
-const { parse } = require("acorn");
-const glob = require("glob");
-const fs = require("fs");
-const Mustache = require("mustache");
+var parse = require("acorn").parse;
+var glob = require("glob");
+var fs = require("fs");
+var Mustache = require("mustache");
 
-const pkg = require("../package");
+var pkg = require("../package");
 
-const tagExp = /@[a-z]+ (_|-|[a-zA-Z0-9]|\.)+/g;
-const asteriskAndNewLineExp = /(^\*)?\n( )?(\t+)? \*( )?/g;
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill
+if (typeof Object.assign != "function") {
+  // Must be writable: true, enumerable: false, configurable: true
+  Object.defineProperty(Object, "assign", {
+    value: function assign(target, varArgs) {
+      // .length of function is 2
+      "use strict";
+      if (target == null) {
+        // TypeError if undefined or null
+        throw new TypeError("Cannot convert undefined or null to object");
+      }
 
-const links = [
+      var to = Object(target);
+
+      for (var index = 1; index < arguments.length; index++) {
+        var nextSource = arguments[index];
+
+        if (nextSource != null) {
+          // Skip over if undefined or null
+          for (var nextKey in nextSource) {
+            // Avoid bugs when hasOwnProperty is shadowed
+            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+              to[nextKey] = nextSource[nextKey];
+            }
+          }
+        }
+      }
+      return to;
+    },
+    writable: true,
+    configurable: true
+  });
+}
+
+var tagExp = /@[a-z]+ (_|-|[a-zA-Z0-9]|\.)+/g;
+var asteriskAndNewLineExp = /(^\*)?\n( )?(\t+)? \*( )?/g;
+
+var links = [
   {
     name: "TreeUtils",
     lookup: "ImmutableJS",
@@ -36,28 +70,28 @@ const links = [
   }
 ];
 
-glob("index.js", {}, (er, fileNames) => {
+glob("index.js", {}, function(er, fileNames) {
   if (er) {
     console.error(er);
   } else {
-    const refs = [];
-    const parsed = fileNames.map(fileName => {
-      const data = fs.readFileSync(fileName, "utf8");
-      let comments = "";
+    var refs = [];
+    var parsed = fileNames.map(function(fileName) {
+      var data = fs.readFileSync(fileName, "utf8");
+      var comments = "";
       try {
         parse(data, {
           ecmaVersion: 6,
           sourceType: "module",
-          onComment: (block, commentText) => {
-            let text = commentText;
+          onComment: function(block, commentText) {
+            var text = commentText;
             if (block) {
-              let attributes;
-              let attributeMatch = tagExp.exec(text);
+              var attributes;
+              var attributeMatch = tagExp.exec(text);
               while (attributeMatch) {
                 if (!attributes) {
                   attributes = {};
                 }
-                const parts = attributeMatch[0].split(" ");
+                var parts = attributeMatch[0].split(" ");
                 attributes[parts[0].substr(1)] = parts[1];
                 attributeMatch = tagExp.exec(text);
               }
@@ -69,7 +103,7 @@ glob("index.js", {}, (er, fileNames) => {
               comments = comments.concat(
                 "- - - \n",
                 attributes && attributes.id
-                  ? `<a id="${attributes.id}"></a>`
+                  ? '<a id="'.concat(attributes.id, '"></a>')
                   : "",
                 text,
                 "\n\n"
@@ -82,55 +116,63 @@ glob("index.js", {}, (er, fileNames) => {
         throw e.stack;
       }
       return {
-        comments,
-        fileName
+        comments: comments,
+        fileName: fileName
       };
     });
 
-    const linkPatterns = links.reduce((memo, link) => {
-      return Object.assign({}, memo, {
-        [link.lookup]: `[${link.name}](${link.url})`
-      });
+    var linkPatterns = links.reduce(function(memo, link) {
+      var newObj = {};
+      newObj[link.lookup] = "[".concat(link.name, "](", link.url, ")");
+      return Object.assign({}, memo, newObj);
     }, {});
-    const refPatterns = refs.reduce((memo, ref) => {
+    var refPatterns = refs.reduce(function(memo, ref) {
       if (ref.id && ref.lookup) {
-        return Object.assign({}, memo, {
-          [ref.lookup]: `[${ref.name || ref.lookup}](#${ref.id})`
-        });
+        var newObj = {};
+        newObj[ref.lookup] = "[".concat(
+          ref.name || ref.lookup,
+          "](#",
+          ref.id,
+          ")"
+        );
+        return Object.assign({}, memo, newObj);
       }
       return memo;
     }, {});
 
-    const concatenatedComments = parsed.reduce((memo, item) => {
-      const comments = item.comments;
+    var concatenatedComments = parsed.reduce(function(memo, item) {
+      var comments = item.comments;
 
       if (comments.length > 0) {
         return memo.concat(
-          `- - -
-<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v${pkg.version}/${item.fileName})</sub>
-`,
+          "- - -\n",
+          "<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v",
+          pkg.version,
+          "/",
+          item.fileName,
+          ")</sub>\n",
           comments
         );
       }
       return memo;
     }, "");
 
-    const template = fs.readFileSync("scripts/README.mustache", "utf8");
-    let rendered = Mustache.render(template, {
-      pkg,
+    var template = fs.readFileSync("scripts/README.mustache", "utf8");
+    var rendered = Mustache.render(template, {
+      pkg: pkg,
       docs: concatenatedComments
     });
 
-    Object.keys(linkPatterns).forEach(key => {
+    Object.keys(linkPatterns).forEach(function(key) {
       rendered = rendered.replace(
-        new RegExp(`>\\b${key}\\b`, "g"),
+        new RegExp(">\\b".concat(key, "\\b"), "g"),
         linkPatterns[key]
       );
     });
 
-    Object.keys(refPatterns).forEach(key => {
+    Object.keys(refPatterns).forEach(function(key) {
       rendered = rendered.replace(
-        new RegExp(`>\\b${key}\\b`, "g"),
+        new RegExp(">\\b".concat(key, "\\b"), "g"),
         refPatterns[key]
       );
     });

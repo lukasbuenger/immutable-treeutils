@@ -5,9 +5,7 @@ Immutable TreeUtils
 
 ![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=master)
 
-This module is a collection of helpers to access and traverse >ImmutableJS tree data structure with a DOM-inspired interface.
-
-It is written in ES2015 and requires Node >= 6 or [any environment that supports generators](https://kangax.github.io/compat-table/es6/). If you somehow have to transpile to ES5 or below, make sure you provide a compatibily runtime (e.g. https://www.npmjs.com/package/regenerator-runtime).
+This CommonJS module is a collection of helpers to access and traverse >ImmutableJS tree data structure with a DOM-inspired interface.
 
 It imposes some very basic conventions on your data structure, but I tried to make everything as low-level and configurable as possible. Still, a few
 conditions that need to be met remain:
@@ -15,6 +13,9 @@ conditions that need to be met remain:
 * A tree can have only one root node.
 * Every node has to provide a unique identifier value under a key that is the same for all nodes in the tree.
 * Child nodes have to be stored in an >Immutable.List under a key that is the the same for all nodes containing children.
+
+**Please note: 1.0.0 is out and has breaking changes.**
+Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/{{ pkg.version }}/CHANGELOG.md) for further information and migration instructions.
 
 ## Getting started
 
@@ -81,8 +82,10 @@ npm install immutable-treeutils
 Import the module and provide some state. Examples in the docs below refer to this data structure:
 
 ```javascript
-import Immutable from 'immutable';
-import TreeUtils from 'immutable-treeutils';
+const Immutable = require('immutable');
+// import Immutable from 'immutable';
+const TreeUtils = require('immutable-treeutils');
+// import TreeUtils from 'immutable-treeutils';
 
 let treeUtils = new TreeUtils();
 
@@ -135,9 +138,11 @@ let data = Immutable.fromJS({
 
 ## Development
 
-Get the source:
+Setup:
 ```
 git clone https://github.com/lukasbuenger/immutable-cursors
+npm install
+npm install immutable # peer dependency
 ```
 
 Run the tests:
@@ -155,67 +160,12 @@ Update all local dependencies:
 npm run update-dependencies
 ```
 
-There's a pre-commit hook in place that keeps things in line with the [Prettier](https://github.com/prettier/prettier) guidelines.
+There's a pre-commit hook in place that keeps things in line with the [Prettier](https://github.com/prettier/prettier) guidelines. Please note that Node >= 4.2 is required for the pre-commit hooks ([lint-staged](https://github.com/okonet/lint-staged), [husky](https://github.com/typicode/husky))
 
+## Changelog
 
-## Changelog
-
-##### 0.1.11
-- *Requires Node >= 6 or any environment that supports ES6, especially generators.*
-- Removed dependencies on all Babel and ESLint related packages and config files.
-- File structure flattened.
-- Docs: Removed hint regarding the generators issue, removed the babel reference.
-- Dependencies updated.
-
-
-
-
-##### 0.1.10
-- Docs updated.
-
-##### 0.1.9
-- **API changes**:
-	- >TreeUtils constructor accepts a `none` parameter to customize the result of queries with no results.
-- ESLint rules changed to a somehow customized version of the well-established [AirBnB](https://github.com/airbnb/javascript) ruleset.
-- Code base refactored according to the new linting rules.
-- Build tests refactored to ES5.
-- Dependencies updated.
-
-##### 0.1.8
-- Support default export in pre-ES2015 environments courtesy of [Jürgen Schlieber](https://github.com/jschlieber).
-
-##### 0.1.7
-
-- Dependencies updated.
-- Fix several documentation typos and errors (npm install command :blush:) courtesy of [Jürgen Schlieber](https://github.com/jschlieber) and [Love Luang](https://github.com/luangch).
-- Comparator functions used with >find or >filter receive the key path to the current node as second parameter courtesy of [Jürgen Schlieber](https://github.com/jschlieber).
-- Fix test script to conform [jasmine-spec-reporter](https://github.com/bcaudan/jasmine-spec-reporter/)s new module structure.
-
-##### 0.1.6
-
-- Dependencies updated.
-- Docs: Fix typos and source links.
-
-##### 0.1.5
-
-- Dependencies updated.
-- All methods that need to evaluate whether a value exists or not check not only for `undefined` but for `null` as well now. Some methods were broken if you e.g. were using `null` as default value on >Immutable.Record definitions, which by some people is considered best practise.
-
-##### 0.1.4
-
-- Dependencies updated. Added tests for the transpiled source (trivial).
-
-##### 0.1.3
-
-- Minor fixes in API docs. Updated dependencies.
-
-##### 0.1.2
-
-- Migration to Babel 6 courtesy of [Kei Takashima](https://github.com/keit).
-- README hint to use environment with generators enabled courtesy of [Emanuele Ingrosso](https://github.com/ingro).
-- Further updated dependencies, most notably ImmutableJS.
-- Added estraverse-fb to devDependencies (https://github.com/eslint/eslint/issues/5476).
+See [CHANGELOG](https://github.com/lukasbuenger/immutable-treeutils/blob/{{ pkg.version }}/CHANGELOG.md)
 
 ## License
 
-See [LICENSE](LICENSE) file.
+See [LICENSE](https://github.com/lukasbuenger/immutable-treeutils/blob/{{ pkg.version }}/LICENSE).

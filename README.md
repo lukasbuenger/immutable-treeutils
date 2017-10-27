@@ -1,13 +1,11 @@
 Immutable TreeUtils
 ===================
 
-0.1.11
+1.0.0
 
 ![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=master)
 
-This module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
-
-It is written in ES2015 and requires Node >= 6 or [any environment that supports generators](https://kangax.github.io/compat-table/es6/). If you somehow have to transpile to ES5 or below, make sure you provide a compatibily runtime (e.g. https://www.npmjs.com/package/regenerator-runtime).
+This CommonJS module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
 It imposes some very basic conventions on your data structure, but I tried to make everything as low-level and configurable as possible. Still, a few
 conditions that need to be met remain:
@@ -15,6 +13,9 @@ conditions that need to be met remain:
 * A tree can have only one root node.
 * Every node has to provide a unique identifier value under a key that is the same for all nodes in the tree.
 * Child nodes have to be stored in an [List](http://facebook.github.io/immutable-js/docs/#/List) under a key that is the the same for all nodes containing children.
+
+**Please note: 1.0.0 is out and has breaking changes.**
+Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/1.0.0/CHANGELOG.md) for further information and migration instructions.
 
 ## Getting started
 
@@ -81,8 +82,10 @@ npm install immutable-treeutils
 Import the module and provide some state. Examples in the docs below refer to this data structure:
 
 ```javascript
-import Immutable from 'immutable';
-import TreeUtils from 'immutable-treeutils';
+const Immutable = require('immutable');
+// import Immutable from 'immutable';
+const TreeUtils = require('immutable-treeutils');
+// import TreeUtils from 'immutable-treeutils';
 
 let treeUtils = new TreeUtils();
 
@@ -132,7 +135,7 @@ let data = Immutable.fromJS({
 ## API Docs
 
 - - -
-<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v0.1.11/index.js)</sub>
+<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v1.0.0/index.js)</sub>
 - - - 
 <a id="TreeUtils"></a>
 
@@ -146,19 +149,19 @@ A collection of functional tree traversal helper functions for [ImmutableJS](htt
 **Example**
 
 ```js
-const treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'));
+var treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'));
 ```
 
 **With custom key accessors**
 
 ```js
-const treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'), '__id', '__children');
+var treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'), '__id', '__children');
 ```
 
 **With custom *no result*-default**
 
 ```js
-const treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'), 'id', 'children', false);
+var treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'), 'id', 'children', false);
 ```
 
 **Note**
@@ -212,7 +215,7 @@ id(
 ###### Returns:
 The unique identifier of the node at the given key path.
 
-	 
+ 
 
 - - - 
 <a id="TreeUtils-nodes"></a>
@@ -221,12 +224,12 @@ The unique identifier of the node at the given key path.
 
 #### *method* nodes()
 
-An iterator of all nodes in the tree.
 
 ```js
-for(var nodePath of treeUtils.nodes(state)) {
-   console.log(treeUtils.id(state, nodePath));
-}
+treeUtils.nodes(state).forEach(
+  keyPath =>
+    console.log(treeUtils.id(state, keyPath));
+)
 ```
 
 ###### Signature:
@@ -234,15 +237,15 @@ for(var nodePath of treeUtils.nodes(state)) {
 nodes(
     state: Immutable.Iterable,
     path?: Immutable.Seq<string|number>
-): Iterator
+): Immutable.List<Immutable.Seq<string|number>>
 ```
 
 ###### Arguments:
 * `path` - The key path that points at the root of the (sub)tree whose descendants you want to iterate. Default: The `TreeUtils` object's `rootPath`.
 
 ###### Returns:
-An **unordered** [Iterator](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Iteration_protocols) of all nodes in the tree.
-	 
+An **unordered** >List of all key paths that point to nodes in the tree.
+ 
 
 - - - 
 <a id="TreeUtils-find"></a>
@@ -251,7 +254,7 @@ An **unordered** [Iterator](https://developer.mozilla.org/de/docs/Web/JavaScript
 
 #### *method* find()
 
-Returns the key path to the first node for which `compatator` returns `true`. Uses [nodes](#TreeUtils-nodes) internally and as [nodes](#TreeUtils-nodes) is an **unordered** Iterator, you should probably use this to find unique occurences of data.
+Returns the key path to the first node for which `compatator` returns `true`. Uses [nodes](#TreeUtils-nodes) internally and as [nodes](#TreeUtils-nodes) is an **unordered** List, you should probably use this to find unique occurences of data.
 ```js
 treeUtils.find(state, node => node.get('name') === 'Me in Paris');
 // Seq ["childNodes", 0, "childNodes", 0]
@@ -275,7 +278,7 @@ find(
 
 ###### Returns:
 The key path to the first node for which `comparator` returned `true`.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-filter"></a>
@@ -309,7 +312,7 @@ filter(
 
 ###### Returns:
 A [List](http://facebook.github.io/immutable-js/docs/#/List) of all the key paths that point at nodes for which `comparator` returned `true`.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-byId"></a>
@@ -333,7 +336,7 @@ id(
 
 ###### Returns:
 The key path to the node with id === `id`.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-byArbitrary"></a>
@@ -354,7 +357,7 @@ byArbitrary(
 ###### Returns:
 The key path pointing at the node found for id === `idOrKeyPath` or, if is a [Seq](http://facebook.github.io/immutable-js/docs/#/Seq), the `idOrKeyPath` itself.
 
-	 
+ 
 
 - - - 
 <a id="TreeUtils-nextSibling"></a>
@@ -373,7 +376,7 @@ nextSibling(
 
 ###### Returns:
 Returns the next sibling node of the node at `idOrKeyPath`
-	 
+ 
 
 - - - 
 <a id="TreeUtils-previousSibling"></a>
@@ -392,7 +395,7 @@ previousSibling(
 
 ###### Returns:
 Returns the previous sibling node of the node at `idOrKeyPath`
-	 
+ 
 
 - - - 
 <a id="TreeUtils-firstChild"></a>
@@ -411,7 +414,7 @@ firstChild(
 
 ###### Returns:
 Returns the first child node of the node at `idOrKeyPath`
-	 
+ 
 
 - - - 
 <a id="TreeUtils-lastChild"></a>
@@ -430,7 +433,7 @@ lastChild(
 
 ###### Returns:
 Returns the last child node of the node at `idOrKeyPath`
-	 
+ 
 
 - - - 
 <a id="TreeUtils-siblings"></a>
@@ -449,7 +452,7 @@ siblings(
 
 ###### Returns:
 Returns a [List](http://facebook.github.io/immutable-js/docs/#/List) of key paths pointing at the sibling nodes of the node at `idOrKeyPath`
-	 
+ 
 
 - - - 
 <a id="TreeUtils-childNodes"></a>
@@ -468,7 +471,7 @@ childNodes(
 
 ###### Returns:
 Returns a [List](http://facebook.github.io/immutable-js/docs/#/List) of all child nodes of the node at `idOrKeyPath`
-	 
+ 
 
 - - - 
 <a id="TreeUtils-childAt"></a>
@@ -488,7 +491,7 @@ childAt(
 
 ###### Returns:
 Returns the child node at position of `index` of the node at `idOrKeyPath`
-	 
+ 
 
 - - - 
 <a id="TreeUtils-descendants"></a>
@@ -507,7 +510,7 @@ descendants(
 
 ###### Returns:
 Returns a list of key paths pointing at all descendants of the node at `idOrKeyPath`
-	 
+ 
 
 - - - 
 <a id="TreeUtils-childIndex"></a>
@@ -526,7 +529,7 @@ childIndex(
 
 ###### Returns:
 Returns the index at which the node at `idOrKeyPath` is positioned in its parent child nodes list.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-hasChildNodes"></a>
@@ -545,7 +548,7 @@ hasChildNodes(
 
 ###### Returns:
 Returns whether the node at `idOrKeyPath` has children.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-numChildNodes"></a>
@@ -564,7 +567,7 @@ numChildNodes(
 
 ###### Returns:
 Returns the number of child nodes the node at `idOrKeyPath` has.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-parent"></a>
@@ -583,7 +586,7 @@ parent(
 
 ###### Returns:
 Returns the key path to the parent of the node at `idOrKeyPath`.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-ancestors"></a>
@@ -602,7 +605,7 @@ ancestors(
 
 ###### Returns:
 Returns an [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point at direct ancestors of the node at `idOrKeyPath`.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-position"></a>
@@ -629,7 +632,7 @@ position(
 
 ###### Returns:
 Returns a unique numeric value that represents the absolute position of the node at `idOrKeyPath`.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-right"></a>
@@ -645,7 +648,7 @@ Returns the key path to the next node to the right. The next right node is eithe
 * undefined
 
 ```js
-let nodePath = treeUtils.byId(state, 'root');
+var nodePath = treeUtils.byId(state, 'root');
 while (nodePath) {
    console.log(nodePath);
    nodePath = treeUtils.right(state, nodePath);
@@ -669,7 +672,7 @@ right(
 
 ###### Returns:
 Returns the key path to the node to the right of the one at `idOrKeyPath`.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-left"></a>
@@ -685,7 +688,7 @@ Returns the key path to the next node to the left. The next left node is either:
 * undefined
 
 ```js
-let nodePath = treeUtils.lastDescendant(state, 'root');
+var nodePath = treeUtils.lastDescendant(state, 'root');
 while (nodePath) {
    console.log(nodePath);
    nodePath = treeUtils.left(state, nodePath);
@@ -710,7 +713,7 @@ left(
 
 ###### Returns:
 Returns the key path to the node to the right of the one at `idOrKeyPath`.
-	 
+ 
 
 - - - 
 <a id="TreeUtils-firstDescendant"></a>
@@ -720,7 +723,7 @@ Returns the key path to the node to the right of the one at `idOrKeyPath`.
 #### *method* firstDescendant()
 
 Alias of [firstChild](#TreeUtils-firstChild).
-	 
+ 
 
 - - - 
 <a id="TreeUtils-lastDescendant"></a>
@@ -746,7 +749,7 @@ lastDescendant(
 
 ###### Returns:
 Returns the key path to the last descendant of the node at `idOrKeyPath`.
-	 
+ 
 
 
 
@@ -772,67 +775,12 @@ Update all local dependencies:
 npm run update-dependencies
 ```
 
-There's a pre-commit hook in place that keeps things in line with the [Prettier](https://github.com/prettier/prettier) guidelines.
+There's a pre-commit hook in place that keeps things in line with the [Prettier](https://github.com/prettier/prettier) guidelines. Please note that Node >= 4.2 is required for the pre-commit hooks ([lint-staged](https://github.com/okonet/lint-staged), [husky](https://github.com/typicode/husky))
 
+## Changelog
 
-## Changelog
-
-##### 0.1.11
-- *Requires Node >= 6 or any environment that supports ES6, especially generators.*
-- Removed dependencies on all Babel and ESLint related packages and config files.
-- File structure flattened.
-- Docs: Removed hint regarding the generators issue, removed the babel reference.
-- Dependencies updated.
-
-
-
-
-##### 0.1.10
-- Docs updated.
-
-##### 0.1.9
-- **API changes**:
-	- [TreeUtils](#TreeUtils) constructor accepts a `none` parameter to customize the result of queries with no results.
-- ESLint rules changed to a somehow customized version of the well-established [AirBnB](https://github.com/airbnb/javascript) ruleset.
-- Code base refactored according to the new linting rules.
-- Build tests refactored to ES5.
-- Dependencies updated.
-
-##### 0.1.8
-- Support default export in pre-ES2015 environments courtesy of [Jürgen Schlieber](https://github.com/jschlieber).
-
-##### 0.1.7
-
-- Dependencies updated.
-- Fix several documentation typos and errors (npm install command :blush:) courtesy of [Jürgen Schlieber](https://github.com/jschlieber) and [Love Luang](https://github.com/luangch).
-- Comparator functions used with [find](#TreeUtils-find) or [filter](#TreeUtils-filter) receive the key path to the current node as second parameter courtesy of [Jürgen Schlieber](https://github.com/jschlieber).
-- Fix test script to conform [jasmine-spec-reporter](https://github.com/bcaudan/jasmine-spec-reporter/)s new module structure.
-
-##### 0.1.6
-
-- Dependencies updated.
-- Docs: Fix typos and source links.
-
-##### 0.1.5
-
-- Dependencies updated.
-- All methods that need to evaluate whether a value exists or not check not only for `undefined` but for `null` as well now. Some methods were broken if you e.g. were using `null` as default value on [Record](http://facebook.github.io/immutable-js/docs/#/Record) definitions, which by some people is considered best practise.
-
-##### 0.1.4
-
-- Dependencies updated. Added tests for the transpiled source (trivial).
-
-##### 0.1.3
-
-- Minor fixes in API docs. Updated dependencies.
-
-##### 0.1.2
-
-- Migration to Babel 6 courtesy of [Kei Takashima](https://github.com/keit).
-- README hint to use environment with generators enabled courtesy of [Emanuele Ingrosso](https://github.com/ingro).
-- Further updated dependencies, most notably ImmutableJS.
-- Added estraverse-fb to devDependencies (https://github.com/eslint/eslint/issues/5476).
+See [CHANGELOG](https://github.com/lukasbuenger/immutable-treeutils/blob/1.0.0/CHANGELOG.md)
 
 ## License
 
-See [LICENSE](LICENSE) file.
+See [LICENSE](https://github.com/lukasbuenger/immutable-treeutils/blob/1.0.0/LICENSE).

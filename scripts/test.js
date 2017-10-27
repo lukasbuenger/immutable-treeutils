@@ -1,11 +1,13 @@
-const path = require("path");
-const Jasmine = require("jasmine");
-const { SpecReporter } = require("jasmine-spec-reporter");
+var path = require("path");
+var Jasmine = require("jasmine");
+var SpecReporter = require("jasmine-spec-reporter").SpecReporter;
 
-const noop = () => {};
-const jrunner = new Jasmine();
+var noop = function() {};
+var jrunner = new Jasmine();
 
-jrunner.configureDefaultReporter({ print: noop });
+jrunner.configureDefaultReporter({
+  print: noop
+});
 jasmine.getEnv().addReporter(
   new SpecReporter({
     displayStacktrace: "summary",
