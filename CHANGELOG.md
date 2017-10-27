@@ -28,7 +28,6 @@ utils.nodes(state).forEach(keyPath => {
 
 Other changes:
 - Backport to ES5: source, tests and scripts.
-- Immutable is now a peer dependency.
 - No longer enforce a Node version.
 
 ### 0.1.11

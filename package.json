@@ -6,28 +6,36 @@
   "main": "index.js",
   "scripts": {
     "docs": "node scripts/docs.js",
-    "precommit": "npm run docs && lint-staged",
+    "precommit":
+      "npm run docs && lint-staged",
     "update-dependencies":
       "ncu -a && rm -rf node_modules/ && npm install && npm test",
     "test": "node scripts/test.js"
   },
   "lint-staged": {
-    "*.{js,json,css}": ["prettier --write", "git add"]
+    "*.{js,json,css}": [
+      "prettier --print-width 40 --write",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lukasbuenger/immutable-treeutils.git"
+    "url":
+      "git+https://github.com/lukasbuenger/immutable-treeutils.git"
   },
   "keywords": ["immutable", "tree"],
   "author": {
     "name": "Lukas Bünger",
-    "url": "https://github.com/lukasbuenger"
+    "url":
+      "https://github.com/lukasbuenger"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lukasbuenger/immutable-treeutils/issues"
+    "url":
+      "https://github.com/lukasbuenger/immutable-treeutils/issues"
   },
-  "homepage": "https://github.com/lukasbuenger/immutable-treeutils",
+  "homepage":
+    "https://github.com/lukasbuenger/immutable-treeutils",
   "devDependencies": {
     "acorn": "^5.1.2",
     "glob": "^7.1.2",
@@ -39,7 +47,7 @@
     "npm-check-updates": "^2.13.0",
     "prettier": "^1.7.4"
   },
-  "peerDependencies": {
+  "dependencies": {
     "immutable": ">=3.8"
   }
 }
