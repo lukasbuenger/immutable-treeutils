@@ -8,6 +8,7 @@ In **0.1.11** I tried to just enforce a modern enough Node version to keep the g
 
 In the end and given the fact that TreeUtils is actually a very small and single-minded piece of software that doesn't really need the fancy new stuff, it seemed to be more reasonable to take the code back to the least common denominator (Node 0.12, VERY old browsers) than hassling my way through transpiler/build chain hell.
 
+I want to apologize for the messed up **0.1.11** release and hope TreeUtils still works for you.
 
 ###### Breaking:
 

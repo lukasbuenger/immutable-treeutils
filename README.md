@@ -1,9 +1,7 @@
 Immutable TreeUtils
 ===================
 
-1.0.0
-
-![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=master)
+1.0.0 | ![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=v1.0.0)
 
 This CommonJS module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
@@ -14,7 +12,7 @@ conditions that need to be met remain:
 * Every node has to provide a unique identifier value under a key that is the same for all nodes in the tree.
 * Child nodes have to be stored in an [List](http://facebook.github.io/immutable-js/docs/#/List) under a key that is the the same for all nodes containing children.
 
-**Please note: 1.0.0 is out and has breaking changes.**
+##### Please note: 1.0.0 is out and has breaking changes.
 Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/1.0.0/CHANGELOG.md) for further information and migration instructions.
 
 ## Getting started
@@ -57,7 +55,7 @@ let content = state.getIn(treeUtils.nextSibling(state, 'node-id').concat('name')
 
 ### Working with cursors
 
-[TreeUtils](#TreeUtils) works just fine with cursor libraries like [contrib/cursor](https://github.com/facebook/immutable-js/tree/master/contrib/cursor) or [immutable-cursors](https://github.com/lukasbuenger/immutable-cursors), because cursors actually implement [ImmutableJS](http://facebook.github.io/immutable-js/) interfaces.
+[TreeUtils](#TreeUtils) works just fine with cursor libraries like [immutable-cursor](https://github.com/redbadger/immutable-cursor) because cursors actually implement [ImmutableJS](http://facebook.github.io/immutable-js/) interfaces.
 
 ### Tree mutation
 
