@@ -14,7 +14,7 @@
   },
   "lint-staged": {
     "*.{js,json}": [
-      "prettier --print-width 40 --write",
+      "prettier --single-quote --no-semi --print-width 40 --write",
       "git add"
     ]
   },
