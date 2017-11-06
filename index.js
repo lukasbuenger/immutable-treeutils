@@ -144,6 +144,7 @@ TreeUtils.prototype.nodes = function(
   state,
   path
 ) {
+  var childNodesKey = this.childNodesKey
   var result = List()
   var stack = List.of(
     path || this.rootPath
@@ -156,22 +157,23 @@ TreeUtils.prototype.nodes = function(
 
     var item = state.getIn(keyPath)
     var childNodes = item.get(
-      this.childNodesKey
+      childNodesKey
     )
     if (
       childNodes &&
       childNodes.size > 0
     ) {
-      for (var i of item
-        .get(this.childNodesKey)
-        .keys()) {
-        stack = stack.push(
-          keyPath.concat(
-            this.childNodesKey,
-            i
+      item
+        .get(childNodesKey)
+        .keySeq()
+        .forEach(function(i) {
+          stack = stack.push(
+            keyPath.concat(
+              childNodesKey,
+              i
+            )
           )
-        )
-      }
+        })
     }
   }
 
