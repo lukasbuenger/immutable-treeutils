@@ -1,5 +1,8 @@
 # Changelog
 
+### 1.0.1
+- Remove `for...of` loop in `nodes` method. Fixes #10.
+
 ### 1.0.0
 
 This is mainly a backport to good old ES5 in order to definitely get rid of Babel et al. The reasoning behind this is, that 90% of the maintenance work I did on this library was somehow related to runtime environments that the Babel build of TreeUtils was incompatible with.

@@ -1,6 +1,6 @@
 {
   "name": "immutable-treeutils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description":
     "Functional tree traversal helpers for ImmutableJS data structures",
   "main": "index.js",
