@@ -1,7 +1,7 @@
 Immutable TreeUtils
 ===================
 
-1.0.1 | ![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=v1.0.1)
+1.1.1 | ![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=v1.1.1)
 
 This CommonJS module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
@@ -13,7 +13,7 @@ conditions that need to be met remain:
 * Child nodes have to be stored in an [List](http://facebook.github.io/immutable-js/docs/#/List) under a key that is the the same for all nodes containing children.
 
 ##### Please note: 1.0.0 is out and has breaking changes.
-Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.0.1/CHANGELOG.md) for further information and migration instructions.
+Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.1.1/CHANGELOG.md) for further information and migration instructions.
 
 ## Getting started
 
@@ -133,7 +133,7 @@ let data = Immutable.fromJS({
 ## API Docs
 
 - - -
-<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v1.0.1/index.js)</sub>
+<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v1.1.1/index.js)</sub>
 - - - 
 <a id="TreeUtils"></a>
 
@@ -606,23 +606,23 @@ An [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths t
  
 
 - - - 
-<a id="TreeUtils-depth"></a>*
-* 
-* 
-*
-* #### *method* depth()
-*
-* ###### Signature:
-* ```js
-* depth(
-*    state: Immutable.Iterable,
-*    idOrKeyPath: string|Immutable.Seq<string|number>,
-* ): number
-* ```
-*
-* ###### Returns:
-* A numeric representation of the depth of the node at `idOrKeyPath`
+<a id="TreeUtils-depth"></a>
 
+
+
+#### *method* depth()
+
+###### Signature:
+```js
+depth(
+   state: Immutable.Iterable,
+   idOrKeyPath: string|Immutable.Seq<string|number>,
+): number
+```
+
+###### Returns:
+A numeric representation of the depth of the node at `idOrKeyPath`
+ 
 
 - - - 
 <a id="TreeUtils-position"></a>
@@ -797,8 +797,8 @@ There's a pre-commit hook in place that keeps things in line with the [Prettier]
 
 ## Changelog
 
-See [CHANGELOG](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.0.1/CHANGELOG.md)
+See [CHANGELOG](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.1.1/CHANGELOG.md)
 
 ## License
 
-See [LICENSE](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.0.1/LICENSE).
+See [LICENSE](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.1.1/LICENSE).
