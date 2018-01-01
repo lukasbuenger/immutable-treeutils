@@ -1,19 +1,19 @@
 {
   "name": "immutable-treeutils",
-  "version": "1.1.1",
+  "version": "1.1.0",
   "description":
     "Functional tree traversal helpers for ImmutableJS data structures",
   "main": "index.js",
   "scripts": {
     "docs": "node scripts/docs.js",
-    "precommit":
-      "npm run docs && lint-staged",
+    "precommit": "lint-staged",
     "update-dependencies":
       "ncu -a && rm -rf node_modules/ && npm install && npm test",
     "test": "node scripts/test.js"
   },
   "lint-staged": {
     "*.{js,json}": [
+      "npm run docs",
       "prettier --single-quote --no-semi --print-width 40 --write",
       "git add"
     ]
