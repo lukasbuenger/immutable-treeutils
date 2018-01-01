@@ -763,7 +763,7 @@ TreeUtils.prototype.parent = function(
  * ```
  *
  * ###### Returns:
- * Returns an >Immutable.List of all key paths that point at direct ancestors of the node at `idOrKeyPath`.
+ * An >Immutable.List of all key paths that point at direct ancestors of the node at `idOrKeyPath`.
  */
 TreeUtils.prototype.ancestors = function(
   state,
@@ -795,6 +795,35 @@ TreeUtils.prototype.ancestors = function(
     return memo
   },
   List())
+}
+
+/**
+* @id TreeUtils-depth
+* @lookup depth
+*
+* #### *method* depth()
+*
+* ###### Signature:
+* ```js
+* depth(
+*    state: Immutable.Iterable,
+*    idOrKeyPath: string|Immutable.Seq<string|number>,
+* ): number
+* ```
+*
+* ###### Returns:
+* A numeric representation of the depth of the node at `idOrKeyPath`
+*/
+TreeUtils.prototype.depth = function(
+  state,
+  idOrKeyPath
+) {
+  return Math.floor(
+    this.byArbitrary(
+      state,
+      idOrKeyPath
+    ).skip(this.rootPath.size).size / 2
+  )
 }
 
 /**

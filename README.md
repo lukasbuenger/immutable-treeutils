@@ -242,7 +242,7 @@ nodes(
 * `path` - The key path that points at the root of the (sub)tree whose descendants you want to iterate. Default: The `TreeUtils` object's `rootPath`.
 
 ###### Returns:
-An **unordered** >List of all key paths that point to nodes in the tree.
+An **unordered** [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point to nodes in the tree.
  
 
 - - - 
@@ -643,7 +643,7 @@ Returns the key path to the next node to the right. The next right node is eithe
 * The first child node.
 * The next sibling.
 * The next sibling of the first ancestor that in fact has a next sibling.
-* undefined
+* The none value
 
 ```js
 var nodePath = treeUtils.byId(state, 'root');
@@ -683,7 +683,7 @@ Returns the key path to the next node to the left. The next left node is either:
 * The last descendant of the previous sibling node.
 * The previous sibling node.
 * The parent node.
-* undefined
+* The none value
 
 ```js
 var nodePath = treeUtils.lastDescendant(state, 'root');

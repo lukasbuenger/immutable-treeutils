@@ -885,6 +885,23 @@ describe('class `TreeUtils`', function() {
     })
   })
 
+  describe('method `depth`', function() {
+    it('returns a number representing the depth of the node at `id`', function() {
+      expect(
+        utils.depth(state, '7')
+      ).toEqual(3)
+      expect(
+        utils.depth(state, '6')
+      ).toEqual(2)
+      expect(
+        utils.depth(state, '3')
+      ).toEqual(1)
+      expect(
+        utils.depth(state, '1')
+      ).toEqual(0)
+    })
+  })
+
   describe('method `descendants`', function() {
     it('returns a list of all key paths that represent child nodes of the item at `id`', function() {
       var keyPaths = utils.descendants(
