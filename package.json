@@ -1,6 +1,6 @@
 {
   "name": "immutable-treeutils",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "description":
     "Functional tree traversal helpers for ImmutableJS data structures",
   "main": "index.js",
@@ -37,15 +37,15 @@
   "homepage":
     "https://github.com/lukasbuenger/immutable-treeutils",
   "devDependencies": {
-    "acorn": "^5.1.2",
+    "acorn": "^5.3.0",
     "glob": "^7.1.2",
     "husky": "^0.14.3",
     "jasmine": "^2.8.0",
     "jasmine-spec-reporter": "^4.2.1",
-    "lint-staged": "^4.3.0",
+    "lint-staged": "^6.0.0",
     "mustache": "^2.3.0",
-    "npm-check-updates": "^2.13.0",
-    "prettier": "^1.7.4"
+    "npm-check-updates": "^2.14.0",
+    "prettier": "^1.9.2"
   },
   "dependencies": {
     "immutable": ">=3.8"

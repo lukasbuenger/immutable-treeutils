@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.1.1
+- **API changes**:
+  - Introduce new method `depth`.
+- Minor fixes in docs.
+- Dependencies updated.
+
 ### 1.0.1
 - Remove `for...of` loop in `nodes` method. Fixes #10.
 
