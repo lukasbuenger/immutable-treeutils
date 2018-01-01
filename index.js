@@ -798,22 +798,22 @@ TreeUtils.prototype.ancestors = function(
 }
 
 /**
-* @id TreeUtils-depth
-* @lookup depth
-*
-* #### *method* depth()
-*
-* ###### Signature:
-* ```js
-* depth(
-*    state: Immutable.Iterable,
-*    idOrKeyPath: string|Immutable.Seq<string|number>,
-* ): number
-* ```
-*
-* ###### Returns:
-* A numeric representation of the depth of the node at `idOrKeyPath`
-*/
+ * @id TreeUtils-depth
+ * @lookup depth
+ *
+ * #### *method* depth()
+ *
+ * ###### Signature:
+ * ```js
+ * depth(
+ *    state: Immutable.Iterable,
+ *    idOrKeyPath: string|Immutable.Seq<string|number>,
+ * ): number
+ * ```
+ *
+ * ###### Returns:
+ * A numeric representation of the depth of the node at `idOrKeyPath`
+ */
 TreeUtils.prototype.depth = function(
   state,
   idOrKeyPath

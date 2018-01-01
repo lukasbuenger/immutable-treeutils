@@ -602,8 +602,27 @@ ancestors(
 ```
 
 ###### Returns:
-Returns an [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point at direct ancestors of the node at `idOrKeyPath`.
+An [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point at direct ancestors of the node at `idOrKeyPath`.
  
+
+- - - 
+<a id="TreeUtils-depth"></a>*
+* 
+* 
+*
+* #### *method* depth()
+*
+* ###### Signature:
+* ```js
+* depth(
+*    state: Immutable.Iterable,
+*    idOrKeyPath: string|Immutable.Seq<string|number>,
+* ): number
+* ```
+*
+* ###### Returns:
+* A numeric representation of the depth of the node at `idOrKeyPath`
+
 
 - - - 
 <a id="TreeUtils-position"></a>
