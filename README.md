@@ -303,7 +303,7 @@ nodes(
 
 ###### Returns:
 
-An **unordered** [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point to nodes in the tree.
+An **unordered** [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point to nodes in the tree, including the root of the (sub)tree.
 
 ---
 
