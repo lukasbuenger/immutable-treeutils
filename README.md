@@ -1,7 +1,7 @@
 Immutable TreeUtils
 ===================
 
-1.1.0 | ![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=v1.1.0)
+1.2.0 | ![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=v1.2.0)
 
 This CommonJS module is a collection of helpers to access and traverse [ImmutableJS](http://facebook.github.io/immutable-js/) tree data structure with a DOM-inspired interface.
 
@@ -12,8 +12,8 @@ conditions that need to be met remain:
 * Every node has to provide a unique identifier value under a key that is the same for all nodes in the tree.
 * Child nodes have to be stored in an [List](http://facebook.github.io/immutable-js/docs/#/List) under a key that is the the same for all nodes containing children.
 
-Supports and tested against versions `^4.0.0-rc.9 || >=3.8`.
-Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.1.0/CHANGELOG.md) for further information and migration instructions.
+Supports and tested against ImmutableJS versions `^4.0.0-rc.9 || >=3.8`.
+Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.2.0/CHANGELOG.md) for further information and migration instructions.
 
 ## Getting started
 
@@ -31,14 +31,14 @@ map.getIn(['a', 'b']);
 We could say that the key path to the value `'c'` is `['a', 'b']`.
 Instead of an array you can also use [Seq](http://facebook.github.io/immutable-js/docs/#/Seq) objects to describe key paths:
 ```js
-map.getIn(Immutable.Seq.of('a', 'b'));
+map.getIn(Immutable.Seq(['a', 'b']));
 // 'c'
 ```
 
 This might feel a little over the top at first but comes with a few advantages that are pivotal to [TreeUtils](#TreeUtils).
 As a matter of fact, all the functions in this lib, that give you a node or a collection of nodes don't return the actual [ImmutableJS](http://facebook.github.io/immutable-js/) values but the key paths to the substate where the resulting node(s) are located. A lot of operations become very trivial with key paths. Let's look at the [parent](#TreeUtils-parent) function. Determining the parent of a given node represented by a key path is as simple as this:
 ```js
-let nodePath = Immutable.Seq.of('data', 'childNodes', 0, 'childNodes', 1);
+let nodePath = Immutable.Seq(['data', 'childNodes', 0, 'childNodes', 1]);
 let parentPath = nodePath.skipLast(2);
 ```
 
@@ -133,7 +133,7 @@ let data = Immutable.fromJS({
 ## API Docs
 
 - - -
-<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v1.1.0/index.js)</sub>
+<sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v1.2.0/index.js)</sub>
 - - - 
 <a id="TreeUtils"></a>
 
@@ -807,7 +807,7 @@ Returns the key path to the last descendant of the node at `idOrKeyPath`.
 
 Setup:
 ```
-git clone https://github.com/lukasbuenger/immutable-cursors
+git clone https://github.com/lukasbuenger/immutable-treeutils
 npm install
 ```
 
@@ -830,8 +830,8 @@ There's a pre-commit hook in place that keeps things in line with the [Prettier]
 
 ## Changelog
 
-See [CHANGELOG](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.1.0/CHANGELOG.md)
+See [CHANGELOG](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.2.0/CHANGELOG.md)
 
 ## License
 
-See [LICENSE](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.1.0/LICENSE).
+See [LICENSE](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.2.0/LICENSE).

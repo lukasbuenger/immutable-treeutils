@@ -1,13 +1,25 @@
 # Changelog
 
+### 1.2
+
+* Supports `immutable 4.0.0-rc.*`
+* In order to support multiple versions, ImmutableJS is now only listed as peer dependency.
+* **API changes**:
+  * Introduce new method `walk`.
+* Test setup for multiple versions.
+* Docs updated.
+* Dependencies updated.
+
 ### 1.1.1
-- **API changes**:
-  - Introduce new method `depth`.
-- Minor fixes in docs.
-- Dependencies updated.
+
+* **API changes**:
+  * Introduce new method `depth`.
+* Minor fixes in docs.
+* Dependencies updated.
 
 ### 1.0.1
-- Remove `for...of` loop in `nodes` method. Fixes #10.
+
+* Remove `for...of` loop in `nodes` method. Fixes #10.
 
 ### 1.0.0
 
@@ -24,12 +36,15 @@ I want to apologize for the messed up **0.1.11** release and hope TreeUtils stil
 The tree method `nodes` returns an Immutable.List instead of an Iterator.
 
 So instead of
+
 ```
 for (let keyPath of utils.nodes(state)) {
   // ...
 }
 ```
+
 you would
+
 ```
 utils.nodes(state).forEach(keyPath => {
   // ...
@@ -37,61 +52,62 @@ utils.nodes(state).forEach(keyPath => {
 ```
 
 Other changes:
-- Backport to ES5: source, tests and scripts.
-- No longer enforce a Node version.
+
+* Backport to ES5: source, tests and scripts.
+* No longer enforce a Node version.
 
 ### 0.1.11
-- *Requires Node >= 6 or any environment that supports ES6, especially generators.*
-- Removed dependencies on all Babel and ESLint related packages and config files.
-- File structure flattened.
-- Docs: Removed hint regarding the generators issue, removed the babel reference.
-- Dependencies updated.
 
-
-
+* _Requires Node >= 6 or any environment that supports ES6, especially generators._
+* Removed dependencies on all Babel and ESLint related packages and config files.
+* File structure flattened.
+* Docs: Removed hint regarding the generators issue, removed the babel reference.
+* Dependencies updated.
 
 ### 0.1.10
-- Docs updated.
+
+* Docs updated.
 
 ### 0.1.9
-- **API changes**:
-	- [TreeUtils](#TreeUtils) constructor accepts a `none` parameter to customize the result of queries with no results.
-- ESLint rules changed to a somehow customized version of the well-established [AirBnB](https://github.com/airbnb/javascript) ruleset.
-- Code base refactored according to the new linting rules.
-- Build tests refactored to ES5.
-- Dependencies updated.
+
+* **API changes**: - [TreeUtils](#TreeUtils) constructor accepts a `none` parameter to customize the result of queries with no results.
+* ESLint rules changed to a somehow customized version of the well-established [AirBnB](https://github.com/airbnb/javascript) ruleset.
+* Code base refactored according to the new linting rules.
+* Build tests refactored to ES5.
+* Dependencies updated.
 
 ### 0.1.8
-- Support default export in pre-ES2015 environments courtesy of [Jürgen Schlieber](https://github.com/jschlieber).
+
+* Support default export in pre-ES2015 environments courtesy of [Jürgen Schlieber](https://github.com/jschlieber).
 
 ### 0.1.7
 
-- Dependencies updated.
-- Fix several documentation typos and errors (npm install command :blush:) courtesy of [Jürgen Schlieber](https://github.com/jschlieber) and [Love Luang](https://github.com/luangch).
-- Comparator functions used with [find](#TreeUtils-find) or [filter](#TreeUtils-filter) receive the key path to the current node as second parameter courtesy of [Jürgen Schlieber](https://github.com/jschlieber).
-- Fix test script to conform [jasmine-spec-reporter](https://github.com/bcaudan/jasmine-spec-reporter/)s new module structure.
+* Dependencies updated.
+* Fix several documentation typos and errors (npm install command :blush:) courtesy of [Jürgen Schlieber](https://github.com/jschlieber) and [Love Luang](https://github.com/luangch).
+* Comparator functions used with [find](#TreeUtils-find) or [filter](#TreeUtils-filter) receive the key path to the current node as second parameter courtesy of [Jürgen Schlieber](https://github.com/jschlieber).
+* Fix test script to conform [jasmine-spec-reporter](https://github.com/bcaudan/jasmine-spec-reporter/)s new module structure.
 
 ### 0.1.6
 
-- Dependencies updated.
-- Docs: Fix typos and source links.
+* Dependencies updated.
+* Docs: Fix typos and source links.
 
 ### 0.1.5
 
-- Dependencies updated.
-- All methods that need to evaluate whether a value exists or not check not only for `undefined` but for `null` as well now. Some methods were broken if you e.g. were using `null` as default value on [Record](http://facebook.github.io/immutable-js/docs/#/Record) definitions, which by some people is considered best practise.
+* Dependencies updated.
+* All methods that need to evaluate whether a value exists or not check not only for `undefined` but for `null` as well now. Some methods were broken if you e.g. were using `null` as default value on [Record](http://facebook.github.io/immutable-js/docs/#/Record) definitions, which by some people is considered best practise.
 
 ### 0.1.4
 
-- Dependencies updated. Added tests for the transpiled source (trivial).
+* Dependencies updated. Added tests for the transpiled source (trivial).
 
 ### 0.1.3
 
-- Minor fixes in API docs. Updated dependencies.
+* Minor fixes in API docs. Updated dependencies.
 
 ### 0.1.2
 
-- Migration to Babel 6 courtesy of [Kei Takashima](https://github.com/keit).
-- README hint to use environment with generators enabled courtesy of [Emanuele Ingrosso](https://github.com/ingro).
-- Further updated dependencies, most notably ImmutableJS.
-- Added estraverse-fb to devDependencies (https://github.com/eslint/eslint/issues/5476).
+* Migration to Babel 6 courtesy of [Kei Takashima](https://github.com/keit).
+* README hint to use environment with generators enabled courtesy of [Emanuele Ingrosso](https://github.com/ingro).
+* Further updated dependencies, most notably ImmutableJS.
+* Added estraverse-fb to devDependencies (https://github.com/eslint/eslint/issues/5476).

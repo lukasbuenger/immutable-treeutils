@@ -12,7 +12,7 @@ conditions that need to be met remain:
 * Every node has to provide a unique identifier value under a key that is the same for all nodes in the tree.
 * Child nodes have to be stored in an >Immutable.List under a key that is the the same for all nodes containing children.
 
-Supports and tested against versions `^4.0.0-rc.9 || >=3.8`.
+Supports and tested against ImmutableJS versions `^4.0.0-rc.9 || >=3.8`.
 Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/v{{ pkg.version }}/CHANGELOG.md) for further information and migration instructions.
 
 ## Getting started
@@ -31,14 +31,14 @@ map.getIn(['a', 'b']);
 We could say that the key path to the value `'c'` is `['a', 'b']`.
 Instead of an array you can also use >Immutable.Seq objects to describe key paths:
 ```js
-map.getIn(Immutable.Seq.of('a', 'b'));
+map.getIn(Immutable.Seq(['a', 'b']));
 // 'c'
 ```
 
 This might feel a little over the top at first but comes with a few advantages that are pivotal to >TreeUtils.
 As a matter of fact, all the functions in this lib, that give you a node or a collection of nodes don't return the actual >ImmutableJS values but the key paths to the substate where the resulting node(s) are located. A lot of operations become very trivial with key paths. Let's look at the >parent function. Determining the parent of a given node represented by a key path is as simple as this:
 ```js
-let nodePath = Immutable.Seq.of('data', 'childNodes', 0, 'childNodes', 1);
+let nodePath = Immutable.Seq(['data', 'childNodes', 0, 'childNodes', 1]);
 let parentPath = nodePath.skipLast(2);
 ```
 
@@ -138,7 +138,7 @@ let data = Immutable.fromJS({
 
 Setup:
 ```
-git clone https://github.com/lukasbuenger/immutable-cursors
+git clone https://github.com/lukasbuenger/immutable-treeutils
 npm install
 ```
 
