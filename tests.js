@@ -1,7 +1,6 @@
 var Immutable = require('immutable')
 var Seq = Immutable.Seq
 var fromJS = Immutable.fromJS
-var toJS = Immutable.toJS
 var is = Immutable.is
 var TreeUtils = require('./index')
 
@@ -55,7 +54,7 @@ describe('class `TreeUtils`', function() {
   }
   var state = fromJS(fixtures)
   var utils = new TreeUtils(
-    Seq.of('data')
+    Seq(['data'])
   )
 
   var getValue = function(keyPath) {
@@ -65,7 +64,7 @@ describe('class `TreeUtils`', function() {
   describe('constructor', function() {
     it('accepts a custom `none` argument', function() {
       var customUtils = new TreeUtils(
-        Seq.of('data'),
+        Seq(['data']),
         'id',
         'childNodes',
         false
@@ -146,13 +145,13 @@ describe('class `TreeUtils`', function() {
 
       var keyPath3 = findKeyPathById(
         '4',
-        Seq.of(
+        Seq([
           'data',
           'childNodes',
           1,
           'childNodes',
           0
-        )
+        ])
       )
       expect(keyPath3.toJS()).toEqual([
         'data',
@@ -167,7 +166,7 @@ describe('class `TreeUtils`', function() {
 
       var keyPath4 = findKeyPathById(
         '5',
-        Seq.of(
+        Seq([
           'data',
           'childNodes',
           1,
@@ -175,7 +174,7 @@ describe('class `TreeUtils`', function() {
           0,
           'childNodes',
           0
-        )
+        ])
       )
       expect(keyPath4.toJS()).toEqual([
         'data',
@@ -192,13 +191,13 @@ describe('class `TreeUtils`', function() {
 
       var keyPath5 = findKeyPathById(
         '6',
-        Seq.of(
+        Seq([
           'data',
           'childNodes',
           1,
           'childNodes',
           1
-        )
+        ])
       )
       expect(keyPath5.toJS()).toEqual([
         'data',
@@ -213,7 +212,7 @@ describe('class `TreeUtils`', function() {
 
       var keyPath6 = findKeyPathById(
         '7',
-        Seq.of(
+        Seq([
           'data',
           'childNodes',
           1,
@@ -221,7 +220,7 @@ describe('class `TreeUtils`', function() {
           1,
           'childNodes',
           0
-        )
+        ])
       )
       expect(keyPath6.toJS()).toEqual([
         'data',
@@ -252,13 +251,13 @@ describe('class `TreeUtils`', function() {
         utils.id(
           state,
           findSameKeyPath(
-            Seq.of(
+            Seq([
               'data',
               'childNodes',
               1,
               'childNodes',
               0
-            )
+            ])
           )
         )
       ).toEqual('4')
@@ -267,13 +266,13 @@ describe('class `TreeUtils`', function() {
     it('accepts an optional parameter `path` to restrict the haystack to a subtree.', function() {
       var keyPath = findKeyPathById(
         '3',
-        Seq.of(
+        Seq([
           'data',
           'childNodes',
           1,
           'childNodes',
           0
-        )
+        ])
       )
       expect(keyPath).toBeUndefined()
     })
@@ -306,7 +305,15 @@ describe('class `TreeUtils`', function() {
             return m.toJS()
           })
       ).toEqual([
-        ['data', 'childNodes', 0],
+        [
+          'data',
+          'childNodes',
+          1,
+          'childNodes',
+          1,
+          'childNodes',
+          0
+        ],
         [
           'data',
           'childNodes',
@@ -316,15 +323,7 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ],
-        [
-          'data',
-          'childNodes',
-          1,
-          'childNodes',
-          1,
-          'childNodes',
-          0
-        ]
+        ['data', 'childNodes', 0]
       ])
       expect(
         keyPaths
@@ -332,7 +331,7 @@ describe('class `TreeUtils`', function() {
           .map(function(m) {
             return getValue(m.toJS())
           })
-      ).toEqual(['2', '5', '7'])
+      ).toEqual(['7', '5', '2'])
 
       var keyPaths2 = filterKeyPathByType(
         'listItem'
@@ -349,14 +348,14 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           1,
           'childNodes',
-          0
+          1
         ],
         [
           'data',
           'childNodes',
           1,
           'childNodes',
-          1
+          0
         ]
       ])
 
@@ -366,7 +365,7 @@ describe('class `TreeUtils`', function() {
           .map(function(m) {
             return getValue(m.toJS())
           })
-      ).toEqual(['4', '6'])
+      ).toEqual(['6', '4'])
     })
 
     it("passes the current node's key path as second argument to the comparator", function() {
@@ -385,21 +384,10 @@ describe('class `TreeUtils`', function() {
       }
       expect(
         filterDescendants(
-          Seq.of(
-            'data',
-            'childNodes',
-            1
-          )
+          Seq(['data', 'childNodes', 1])
         ).toJS()
       ).toEqual([
         ['data', 'childNodes', 1],
-        [
-          'data',
-          'childNodes',
-          1,
-          'childNodes',
-          0
-        ],
         [
           'data',
           'childNodes',
@@ -412,7 +400,7 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           1,
           'childNodes',
-          0,
+          1,
           'childNodes',
           0
         ],
@@ -421,7 +409,14 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           1,
           'childNodes',
+          0
+        ],
+        [
+          'data',
+          'childNodes',
           1,
+          'childNodes',
+          0,
           'childNodes',
           0
         ]
@@ -431,13 +426,13 @@ describe('class `TreeUtils`', function() {
     it('accepts an optional parameter `path` to restrict the haystack to a subtree.', function() {
       var keyPaths = filterKeyPathByType(
         'paragraph',
-        Seq.of(
+        Seq([
           'data',
           'childNodes',
           1,
           'childNodes',
           0
-        )
+        ])
       )
       expect(
         keyPaths
@@ -920,13 +915,6 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           1,
           'childNodes',
-          0
-        ],
-        [
-          'data',
-          'childNodes',
-          1,
-          'childNodes',
           1
         ],
         [
@@ -934,7 +922,7 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           1,
           'childNodes',
-          0,
+          1,
           'childNodes',
           0
         ],
@@ -943,7 +931,14 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           1,
           'childNodes',
+          0
+        ],
+        [
+          'data',
+          'childNodes',
           1,
+          'childNodes',
+          0,
           'childNodes',
           0
         ]
@@ -955,7 +950,7 @@ describe('class `TreeUtils`', function() {
           .map(function(m) {
             return getValue(m.toJS())
           })
-      ).toEqual(['4', '6', '5', '7'])
+      ).toEqual(['6', '7', '4', '5'])
     })
   })
 
