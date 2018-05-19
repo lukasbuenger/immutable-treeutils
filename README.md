@@ -1,4 +1,5 @@
-# Immutable TreeUtils
+Immutable TreeUtils
+===================
 
 1.1.0 | ![Travis status](https://travis-ci.org/lukasbuenger/immutable-treeutils.svg?branch=v1.1.0)
 
@@ -23,52 +24,31 @@ You probably should feel comfortable working with [ImmutableJS](http://facebook.
 As you already know, with [ImmutableJS](http://facebook.github.io/immutable-js/) we retrieve nested values like this:
 
 ```js
-let map = Immutable.Map({
-  a: { b: 'c' }
-})
-map.getIn(['a', 'b'])
+let map = Immutable.Map({a: { b: 'c' }});
+map.getIn(['a', 'b']);
 // 'c'
 ```
-
 We could say that the key path to the value `'c'` is `['a', 'b']`.
 Instead of an array you can also use [Seq](http://facebook.github.io/immutable-js/docs/#/Seq) objects to describe key paths:
-
 ```js
-map.getIn(Immutable.Seq.of('a', 'b'))
+map.getIn(Immutable.Seq.of('a', 'b'));
 // 'c'
 ```
 
 This might feel a little over the top at first but comes with a few advantages that are pivotal to [TreeUtils](#TreeUtils).
 As a matter of fact, all the functions in this lib, that give you a node or a collection of nodes don't return the actual [ImmutableJS](http://facebook.github.io/immutable-js/) values but the key paths to the substate where the resulting node(s) are located. A lot of operations become very trivial with key paths. Let's look at the [parent](#TreeUtils-parent) function. Determining the parent of a given node represented by a key path is as simple as this:
-
 ```js
-let nodePath = Immutable.Seq.of(
-  'data',
-  'childNodes',
-  0,
-  'childNodes',
-  1
-)
-let parentPath = nodePath.skipLast(2)
+let nodePath = Immutable.Seq.of('data', 'childNodes', 0, 'childNodes', 1);
+let parentPath = nodePath.skipLast(2);
 ```
 
 The actual retrieval of the [ImmutableJS](http://facebook.github.io/immutable-js/) values is left to you, but you will notice that working with key paths can be quite fun. Imagine you want to get value at key `content` of the next sibling of a given node. You could do this like so:
-
 ```js
-let keyPath = treeUtils.nextSibling(
-  state,
-  'node-id'
-)
-let content = state.getIn(
-  keyPath.concat('content')
-)
+let keyPath = treeUtils.nextSibling(state, 'node-id');
+let content = state.getIn(keyPath.concat('content'));
 
 // or even shorter
-let content = state.getIn(
-  treeUtils
-    .nextSibling(state, 'node-id')
-    .concat('name')
-)
+let content = state.getIn(treeUtils.nextSibling(state, 'node-id').concat('name'));
 ```
 
 **Please note, that while ImmutableJS works well with Arrays as key paths, [TreeUtils](#TreeUtils) will only accept [Seq](http://facebook.github.io/immutable-js/docs/#/Seq) objects as valid key paths.**
@@ -80,25 +60,12 @@ let content = state.getIn(
 ### Tree mutation
 
 [TreeUtils](#TreeUtils) doesn't provide mutation helpers, because IMHO the varietiy of use cases and implementations ist just too huge to spec a sensible API for that kind of thing. However, simple mutation functions can easily be implemented. An insert function could look something like this:
-
 ```js
-function insert(
-  state,
-  newNode,
-  parentId,
-  index
-) {
-  return state.updateIn(
-    tree
-      .getById(state, parentId)
-      .concat('childNodes'),
-    childNodes =>
-      childNodes.splice(
-        index,
-        0,
-        newNode
-      )
-  )
+function insert(state, newNode, parentId, index) {
+	return state.updateIn(
+		tree.getById(state, parentId).concat('childNodes'),
+		childNodes => childNodes.splice(index, 0, newNode)
+	);
 }
 ```
 
@@ -113,106 +80,93 @@ npm install immutable-treeutils
 Import the module and provide some state. Examples in the docs below refer to this data structure:
 
 ```javascript
-const Immutable = require('immutable')
+const Immutable = require('immutable');
 // import Immutable from 'immutable';
-const TreeUtils = require('immutable-treeutils')
+const TreeUtils = require('immutable-treeutils');
 // import TreeUtils from 'immutable-treeutils';
 
-let treeUtils = new TreeUtils()
+let treeUtils = new TreeUtils();
 
 let data = Immutable.fromJS({
-  id: 'root',
-  name: 'My Documents',
-  type: 'folder',
-  childNodes: [
-    {
-      id: 'node-1',
-      name: 'Pictures',
-      type: 'folder',
-      childNodes: [
-        {
-          id: 'node-2',
-          name: 'Me in Paris',
-          type: 'image'
-        },
-        {
-          id: 'node-3',
-          name: 'Barbecue July 2015',
-          type: 'image'
-        }
-      ]
-    },
-    {
-      id: 'node-4',
-      name: 'Music',
-      type: 'folder',
-      childNodes: [
-        {
-          id: 'node-5',
-          name:
-            'Pink Floyd - Wish You Were Here',
-          type: 'audio'
-        },
-        {
-          id: 'node-6',
-          name:
-            'The Doors - People Are Strange',
-          type: 'audio'
-        }
-      ]
-    }
-  ]
-})
+	id: 'root',
+	name: 'My Documents',
+	type: 'folder',
+	childNodes: [
+		{
+			id: 'node-1',
+			name: 'Pictures',
+			type: 'folder',
+			childNodes: [
+				{
+					id: 'node-2',
+					name: 'Me in Paris',
+					type: 'image'
+				},
+				{
+					id: 'node-3',
+					name: 'Barbecue July 2015',
+					type: 'image'
+				}
+			]
+		},
+		{
+			id: 'node-4',
+			name: 'Music',
+			type: 'folder',
+			childNodes: [
+				{
+					id: 'node-5',
+					name: 'Pink Floyd - Wish You Were Here',
+					type: 'audio'
+				},
+				{
+					id: 'node-6',
+					name: 'The Doors - People Are Strange',
+					type: 'audio'
+				}
+			]
+		}
+	]
+});
 ```
 
 ## API Docs
 
----
-
+- - -
 <sub>[See Source](https://github.com/lukasbuenger/immutable-treeutils/tree/v1.1.0/index.js)</sub>
-
----
-
+- - - 
 <a id="TreeUtils"></a>
 
-### _class_ TreeUtils
+
+
+
+### *class* TreeUtils
 
 A collection of functional tree traversal helper functions for [ImmutableJS](http://facebook.github.io/immutable-js/) data structures.
 
 **Example**
 
 ```js
-var treeUtils = new TreeUtils(
-  Immutable.Seq(['path', 'to', 'tree'])
-)
+var treeUtils = new TreeUtils(Immutable.Seq(['path', 'to', 'tree']));
 ```
 
 **With custom key accessors**
 
 ```js
-var treeUtils = new TreeUtils(
-  Immutable.Seq(['path', 'to', 'tree']),
-  '__id',
-  '__children'
-)
+var treeUtils = new TreeUtils(Immutable.Seq(['path', 'to', 'tree']), '__id', '__children');
 ```
 
-**With custom _no result_-default**
+**With custom *no result*-default**
 
 ```js
-var treeUtils = new TreeUtils(
-  Immutable.Seq(['path', 'to', 'tree']),
-  'id',
-  'children',
-  false
-)
+var treeUtils = new TreeUtils(Immutable.Seq(['path', 'to', 'tree']), 'id', 'children', false);
 ```
 
 **Note**
 The first argument of every method of a `TreeUtils` object is the state you want to analyse. I won't mention / explain it again in method descriptions bellow. The argument `idOrKeyPath` also appears in most signatures, its purpose is thoroughly explained in the docs of [byArbitrary](#TreeUtils-byArbitrary).
 
-###### Signature:
 
+###### Signature:
 ```js
 new TreeUtils(
    rootPath?: immutable.Seq,
@@ -223,26 +177,25 @@ new TreeUtils(
 ```
 
 ###### Arguments:
-
 * `rootPath` - The path to the substate of your [ImmutableJS](http://facebook.github.io/immutable-js/) state that represents the root node of your tree. Default: `Immutable.Seq()`.
 * `idKey` - The name of the key that points at unique identifiers of all nodes in your tree . Default: `'id'`.
 * `childNodesKey` - The name of the key at which child nodes can be found. Default: `'childNodes'`.
 * `noneValue` - The value that will get returned if a query doesn't return any results. Default: `undefined`.
 
 ###### Returns:
-
 * A new `TreeUtils` object
+ 
 
----
-
+- - - 
 <a id="TreeUtils-walk"></a>
 
-#### _method_ walk()
 
-Main traversal algorithm.
+
+#### *method* walk()
+
+Main traversal algorithm. Lets you walk over all nodes in the tree **in no particular order**.
 
 ###### Signature:
-
 ```js
 walk(
    state: Immutable.Iterable,
@@ -258,21 +211,21 @@ walk(
 ```
 
 ###### Arguments:
-
 * `iterator` - A function that gets passed an accumulator, the current key path and a stop function:
-  * If the iterator returns a value, this value will be kept as reduction and passed as accumulator to further iterations.
-  * If the iterator returns a `stop` call, the walk operation will return immediately, giving back any value you passed to the `stop` function.
+   * If the iterator returns a value, this value will be kept as reduction and passed as accumulator to further iterations.
+   * If the iterator returns a `stop` call, the walk operation will return immediately, giving back any value you passed to the `stop` function.
 * `path` - The key path that points at the root of the (sub)tree you want to walk over. Default: The `TreeUtils` object's `rootPath`.
 
 ###### Returns:
-
 The result of the walk operation.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-nodes"></a>
 
-#### _method_ nodes()
+
+
+#### *method* nodes()
 
 ```js
 treeUtils.nodes(state).forEach(
@@ -282,7 +235,6 @@ treeUtils.nodes(state).forEach(
 ```
 
 ###### Signature:
-
 ```
 nodes(
     state: Immutable.Iterable,
@@ -291,32 +243,26 @@ nodes(
 ```
 
 ###### Arguments:
-
 * `path` - The key path that points at the root of the (sub)tree whose descendants you want to iterate. Default: The `TreeUtils` object's `rootPath`.
 
 ###### Returns:
+An **unordered** [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point to nodes in the tree, including the root of the (sub)tree..
+ 
 
-An **unordered** [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point to nodes in the tree.
-
----
-
+- - - 
 <a id="TreeUtils-find"></a>
 
-#### _method_ find()
+
+
+#### *method* find()
 
 Returns the key path to the first node for which `compatator` returns `true`. Uses [nodes](#TreeUtils-nodes) internally and as [nodes](#TreeUtils-nodes) is an **unordered** List, you should probably use this to find unique occurences of data.
-
 ```js
-treeUtils.find(
-  state,
-  node =>
-    node.get('name') === 'Me in Paris'
-)
+treeUtils.find(state, node => node.get('name') === 'Me in Paris');
 // Seq ["childNodes", 0, "childNodes", 0]
 ```
 
 ###### Signature:
-
 ```js
 find(
    state: Immutable.Iterable,
@@ -329,32 +275,27 @@ find(
 ```
 
 ###### Arguments:
-
 * `comparator` - A function that gets passed a `node` and its `keyPath` and should return whether it fits the criteria or not.
 * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 
 ###### Returns:
-
 The key path to the first node for which `comparator` returned `true`.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-filter"></a>
 
-#### _method_ filter()
+
+
+#### *method* filter()
 
 Returns an [List](http://facebook.github.io/immutable-js/docs/#/List) of key paths pointing at the nodes for which `comparator` returned `true`.
-
 ```js
-treeUtils.filter(
-  state,
-  node => node.get('type') === 'folder'
-)
+treeUtils.filter(state, node => node.get('type') === 'folder');
 //List [ Seq[], Seq["childNodes", 0], Seq["childNodes", 1] ]
 ```
 
 ###### Signature:
-
 ```js
 filter(
     state: Immutable.Iterable,
@@ -367,24 +308,24 @@ filter(
 ```
 
 ###### Arguments:
-
 * `comparator` - A function that gets passed a `node` and its `keyPath` and should return whether it fits the criteria or not.
 * `path?` - An optional key path to the (sub)state you want to analyse: Default: The `TreeUtils` object's `rootPath`.
 
+
 ###### Returns:
-
 A [List](http://facebook.github.io/immutable-js/docs/#/List) of all the key paths that point at nodes for which `comparator` returned `true`.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-byId"></a>
 
-#### _method_ byId()
+
+
+#### *method* byId()
 
 Returns the key path to the node with id === `id`.
 
 ###### Signature:
-
 ```js
 id(
    state: Immutable.Iterable,
@@ -393,52 +334,47 @@ id(
 ```
 
 ###### Arguments:
-
 * `id` - A unique identifier
 
 ###### Returns:
-
 The key path to the node with id === `id`.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-byArbitrary"></a>
 
-#### _method_ byArbitrary()
+
+
+#### *method* byArbitrary()
 
 Returns `idOrKeyPath` if it is a [Seq](http://facebook.github.io/immutable-js/docs/#/Seq), else returns the result of [byId](#TreeUtils-byId) for `idOrKeyPath`. This is used in all other functions that work on a unique identifiers in order to reduce the number of lookup operations.
 
 ###### Signature:
-
 ```js
 byArbitrary(
    state: Immutable.Iterable,
    idOrKeyPath: string|Immutable.Seq<string|number>
 ): Immutable.Seq<string|number>
 ```
-
 ###### Returns:
-
 The key path pointing at the node found for id === `idOrKeyPath` or, if is a [Seq](http://facebook.github.io/immutable-js/docs/#/Seq), the `idOrKeyPath` itself.
 
----
+ 
 
+- - - 
 <a id="TreeUtils-id"></a>
 
-#### _method_ id()
+
+
+#### *method* id()
 
 Returns the id for the node at `keyPath`. Most useful when you want to get the id of the result of a previous tree query:
-
 ```js
-treeUtils.id(
-  state,
-  treeUtils.parent(state, 'node-3')
-)
+treeUtils.id(state, treeUtils.parent(state, 'node-3'));
 // 'node-1'
 ```
 
 ###### Signature:
-
 ```js
 id(
    state: Immutable.Iterable,
@@ -447,21 +383,21 @@ id(
 ```
 
 ###### Arguments:
-
 * `keyPath` - The absolute key path to the substate / node whose id you want to retrieve
 
 ###### Returns:
-
 The unique identifier of the node at the given key path.
 
----
+ 
 
+- - - 
 <a id="TreeUtils-nextSibling"></a>
 
-#### _method_ nextSibling()
+
+
+#### *method* nextSibling()
 
 ###### Signature:
-
 ```js
 nextSibling(
    state: Immutable.Iterable,
@@ -470,17 +406,17 @@ nextSibling(
 ```
 
 ###### Returns:
-
 Returns the next sibling node of the node at `idOrKeyPath`
+ 
 
----
-
+- - - 
 <a id="TreeUtils-previousSibling"></a>
 
-#### _method_ previousSibling()
+
+
+#### *method* previousSibling()
 
 ###### Signature:
-
 ```js
 previousSibling(
    state: Immutable.Iterable,
@@ -489,17 +425,17 @@ previousSibling(
 ```
 
 ###### Returns:
-
 Returns the previous sibling node of the node at `idOrKeyPath`
+ 
 
----
-
+- - - 
 <a id="TreeUtils-firstChild"></a>
 
-#### _method_ firstChild()
+
+
+#### *method* firstChild()
 
 ###### Signature:
-
 ```js
 firstChild(
    state: Immutable.Iterable,
@@ -508,17 +444,17 @@ firstChild(
 ```
 
 ###### Returns:
-
 Returns the first child node of the node at `idOrKeyPath`
+ 
 
----
-
+- - - 
 <a id="TreeUtils-lastChild"></a>
 
-#### _method_ lastChild()
+
+
+#### *method* lastChild()
 
 ###### Signature:
-
 ```js
 lastChild(
    state: Immutable.Iterable,
@@ -527,17 +463,17 @@ lastChild(
 ```
 
 ###### Returns:
-
 Returns the last child node of the node at `idOrKeyPath`
+ 
 
----
-
+- - - 
 <a id="TreeUtils-siblings"></a>
 
-#### _method_ siblings()
+
+
+#### *method* siblings()
 
 ###### Signature:
-
 ```js
 siblings(
    state: Immutable.Iterable,
@@ -546,17 +482,17 @@ siblings(
 ```
 
 ###### Returns:
-
 Returns a [List](http://facebook.github.io/immutable-js/docs/#/List) of key paths pointing at the sibling nodes of the node at `idOrKeyPath`
+ 
 
----
-
+- - - 
 <a id="TreeUtils-childNodes"></a>
 
-#### _method_ childNodes()
+
+
+#### *method* childNodes()
 
 ###### Signature:
-
 ```js
 childNodes(
    state: Immutable.Iterable,
@@ -565,17 +501,17 @@ childNodes(
 ```
 
 ###### Returns:
-
 Returns a [List](http://facebook.github.io/immutable-js/docs/#/List) of all child nodes of the node at `idOrKeyPath`
+ 
 
----
-
+- - - 
 <a id="TreeUtils-childAt"></a>
 
-#### _method_ childAt()
+
+
+#### *method* childAt()
 
 ###### Signature:
-
 ```js
 childAt(
    state: Immutable.Iterable,
@@ -585,17 +521,17 @@ childAt(
 ```
 
 ###### Returns:
-
 Returns the child node at position of `index` of the node at `idOrKeyPath`
+ 
 
----
-
+- - - 
 <a id="TreeUtils-descendants"></a>
 
-#### _method_ descendants()
+
+
+#### *method* descendants()
 
 ###### Signature:
-
 ```js
 descendants(
    state: Immutable.Iterable,
@@ -604,17 +540,17 @@ descendants(
 ```
 
 ###### Returns:
-
 Returns a list of key paths pointing at all descendants of the node at `idOrKeyPath`
+ 
 
----
-
+- - - 
 <a id="TreeUtils-childIndex"></a>
 
-#### _method_ childIndex()
+
+
+#### *method* childIndex()
 
 ###### Signature:
-
 ```js
 childIndex(
    state: Immutable.Iterable,
@@ -623,17 +559,17 @@ childIndex(
 ```
 
 ###### Returns:
-
 Returns the index at which the node at `idOrKeyPath` is positioned in its parent child nodes list.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-hasChildNodes"></a>
 
-#### _method_ hasChildNodes()
+
+
+#### *method* hasChildNodes()
 
 ###### Signature:
-
 ```js
 hasChildNodes(
    state: Immutable.Iterable,
@@ -642,17 +578,17 @@ hasChildNodes(
 ```
 
 ###### Returns:
-
 Returns whether the node at `idOrKeyPath` has children.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-numChildNodes"></a>
 
-#### _method_ numChildNodes()
+
+
+#### *method* numChildNodes()
 
 ###### Signature:
-
 ```js
 numChildNodes(
    state: Immutable.Iterable,
@@ -661,17 +597,17 @@ numChildNodes(
 ```
 
 ###### Returns:
-
 Returns the number of child nodes the node at `idOrKeyPath` has.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-parent"></a>
 
-#### _method_ parent()
+
+
+#### *method* parent()
 
 ###### Signature:
-
 ```js
 parent(
    state: Immutable.Iterable,
@@ -680,17 +616,17 @@ parent(
 ```
 
 ###### Returns:
-
 Returns the key path to the parent of the node at `idOrKeyPath`.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-ancestors"></a>
 
-#### _method_ ancestors()
+
+
+#### *method* ancestors()
 
 ###### Signature:
-
 ```js
 ancestors(
    state: Immutable.Iterable,
@@ -699,17 +635,17 @@ ancestors(
 ```
 
 ###### Returns:
-
 An [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point at direct ancestors of the node at `idOrKeyPath`.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-depth"></a>
 
-#### _method_ depth()
+
+
+#### *method* depth()
 
 ###### Signature:
-
 ```js
 depth(
    state: Immutable.Iterable,
@@ -718,27 +654,25 @@ depth(
 ```
 
 ###### Returns:
-
 A numeric representation of the depth of the node at `idOrKeyPath`
+ 
 
----
-
+- - - 
 <a id="TreeUtils-position"></a>
 
-#### _method_ position()
+
+
+#### *method* position()
 
 This method is a very naive attempt to calculate a unqiue numeric position descriptor that can be used to compare two nodes for their absolute position in the tree.
-
 ```js
-treeUtils.position(state, 'node-4') >
-  treeUtils.position(state, 'node-3')
+treeUtils.position(state, 'node-4') > treeUtils.position(state, 'node-3');
 // true
 ```
 
 Please note that `position` should not get used to do any comparison with the root node.
 
 ###### Signature:
-
 ```js
 position(
    state: Immutable.Iterable,
@@ -747,33 +681,27 @@ position(
 ```
 
 ###### Returns:
-
 Returns a unique numeric value that represents the absolute position of the node at `idOrKeyPath`.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-right"></a>
 
-#### _method_ right()
+
+
+#### *method* right()
 
 Returns the key path to the next node to the right. The next right node is either:
-
 * The first child node.
 * The next sibling.
 * The next sibling of the first ancestor that in fact has a next sibling.
 * The none value
 
 ```js
-var nodePath = treeUtils.byId(
-  state,
-  'root'
-)
+var nodePath = treeUtils.byId(state, 'root');
 while (nodePath) {
-  console.log(nodePath)
-  nodePath = treeUtils.right(
-    state,
-    nodePath
-  )
+   console.log(nodePath);
+   nodePath = treeUtils.right(state, nodePath);
 }
 // 'root'
 // 'node-1'
@@ -785,7 +713,6 @@ while (nodePath) {
 ```
 
 ###### Signature:
-
 ```js
 right(
    state: Immutable.Iterable,
@@ -794,33 +721,27 @@ right(
 ```
 
 ###### Returns:
-
 Returns the key path to the node to the right of the one at `idOrKeyPath`.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-left"></a>
 
-#### _method_ left()
+
+
+#### *method* left()
 
 Returns the key path to the next node to the left. The next left node is either:
-
 * The last descendant of the previous sibling node.
 * The previous sibling node.
 * The parent node.
 * The none value
 
 ```js
-var nodePath = treeUtils.lastDescendant(
-  state,
-  'root'
-)
+var nodePath = treeUtils.lastDescendant(state, 'root');
 while (nodePath) {
-  console.log(nodePath)
-  nodePath = treeUtils.left(
-    state,
-    nodePath
-  )
+   console.log(nodePath);
+   nodePath = treeUtils.left(state, nodePath);
 }
 // 'node-6'
 // 'node-5'
@@ -831,8 +752,8 @@ while (nodePath) {
 // 'root'
 ```
 
-###### Signature:
 
+###### Signature:
 ```js
 left(
    state: Immutable.Iterable,
@@ -841,32 +762,34 @@ left(
 ```
 
 ###### Returns:
-
 Returns the key path to the node to the right of the one at `idOrKeyPath`.
+ 
 
----
-
+- - - 
 <a id="TreeUtils-firstDescendant"></a>
 
-#### _method_ firstDescendant()
+
+
+#### *method* firstDescendant()
 
 Alias of [firstChild](#TreeUtils-firstChild).
+ 
 
----
-
+- - - 
 <a id="TreeUtils-lastDescendant"></a>
 
-#### _method_ lastDescendant()
+
+
+#### *method* lastDescendant()
 
 Returns the key path to the most right node in the given subtree (keypath). The last child of the most deep descendant, if that makes any sense. Look at the example:
 
 ```js
-treeUtils.lastDescendant(state, 'root')
+treeUtils.lastDescendant(state, 'root');
 // 'node-6'
 ```
 
 ###### Signature:
-
 ```js
 lastDescendant(
    state: Immutable.Iterable,
@@ -875,32 +798,30 @@ lastDescendant(
 ```
 
 ###### Returns:
-
 Returns the key path to the last descendant of the node at `idOrKeyPath`.
+ 
+
+
 
 ## Development
 
 Setup:
-
 ```
 git clone https://github.com/lukasbuenger/immutable-cursors
 npm install
 ```
 
 Run the tests:
-
 ```
 npm test
 ```
 
 Build the docs / README:
-
 ```
 npm run docs
 ```
 
 Update all local dependencies:
-
 ```
 npx ncu -a
 ```
