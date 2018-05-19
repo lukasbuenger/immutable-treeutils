@@ -1,8 +1,8 @@
-var Immutable = require('immutable')
-var Seq = Immutable.Seq
-var fromJS = Immutable.fromJS
-var is = Immutable.is
-var TreeUtils = require('./index')
+var Immutable = require('immutable');
+var Seq = Immutable.Seq;
+var fromJS = Immutable.fromJS;
+var is = Immutable.is;
+var TreeUtils = require('./index');
 
 describe('class `TreeUtils`', function() {
   var fixtures = {
@@ -51,15 +51,15 @@ describe('class `TreeUtils`', function() {
         }
       ]
     }
-  }
-  var state = fromJS(fixtures)
+  };
+  var state = fromJS(fixtures);
   var utils = new TreeUtils(
     Seq(['data'])
-  )
+  );
 
   var getValue = function(keyPath) {
-    return utils.id(state, keyPath)
-  }
+    return utils.id(state, keyPath);
+  };
 
   describe('constructor', function() {
     it('accepts a custom `none` argument', function() {
@@ -68,7 +68,7 @@ describe('class `TreeUtils`', function() {
         'id',
         'childNodes',
         false
-      )
+      );
 
       var noneValue = customUtils.find(
         state,
@@ -76,12 +76,12 @@ describe('class `TreeUtils`', function() {
           return (
             node.get('name') ===
             'Not existing'
-          )
+          );
         }
-      )
-      expect(noneValue).toBe(false)
-    })
-  })
+      );
+      expect(noneValue).toBe(false);
+    });
+  });
 
   describe('method `id`', function() {
     it('returns the id value of an absolute key path', function() {
@@ -89,22 +89,22 @@ describe('class `TreeUtils`', function() {
         getValue(
           Seq(['data', 'childNodes', 0])
         )
-      ).toEqual('2')
+      ).toEqual('2');
       expect(
         getValue(
           Seq(['data', 'childNodes', 1])
         )
-      ).toEqual('3')
-    })
+      ).toEqual('3');
+    });
 
     it('returns undefined if the key path has no id key.', function() {
       expect(
         getValue(
           Seq(['data', 'childNodes', 4])
         )
-      ).toBeUndefined()
-    })
-  })
+      ).toBeUndefined();
+    });
+  });
 
   describe('method `find`', function() {
     var findKeyPathById = function(
@@ -114,34 +114,36 @@ describe('class `TreeUtils`', function() {
       return utils.find(
         state,
         function(item) {
-          return item.get('id') === id
+          return item.get('id') === id;
         },
         seq
-      )
-    }
+      );
+    };
 
     it('returns the first key path whose item passed the comparator function.', function() {
-      var keyPath = findKeyPathById('2')
+      var keyPath = findKeyPathById(
+        '2'
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('2')
+      ).toEqual('2');
 
       var keyPath2 = findKeyPathById(
         '3'
-      )
+      );
       expect(keyPath2.toJS()).toEqual([
         'data',
         'childNodes',
         1
-      ])
+      ]);
       expect(
         getValue(keyPath2.toJS())
-      ).toEqual('3')
+      ).toEqual('3');
 
       var keyPath3 = findKeyPathById(
         '4',
@@ -152,17 +154,17 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ])
-      )
+      );
       expect(keyPath3.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath3.toJS())
-      ).toEqual('4')
+      ).toEqual('4');
 
       var keyPath4 = findKeyPathById(
         '5',
@@ -175,7 +177,7 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ])
-      )
+      );
       expect(keyPath4.toJS()).toEqual([
         'data',
         'childNodes',
@@ -184,10 +186,10 @@ describe('class `TreeUtils`', function() {
         0,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath4.toJS())
-      ).toEqual('5')
+      ).toEqual('5');
 
       var keyPath5 = findKeyPathById(
         '6',
@@ -198,17 +200,17 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           1
         ])
-      )
+      );
       expect(keyPath5.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         1
-      ])
+      ]);
       expect(
         getValue(keyPath5.toJS())
-      ).toEqual('6')
+      ).toEqual('6');
 
       var keyPath6 = findKeyPathById(
         '7',
@@ -221,7 +223,7 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ])
-      )
+      );
       expect(keyPath6.toJS()).toEqual([
         'data',
         'childNodes',
@@ -230,11 +232,11 @@ describe('class `TreeUtils`', function() {
         1,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath6.toJS())
-      ).toEqual('7')
-    })
+      ).toEqual('7');
+    });
 
     it("passes the current node's key path as second argument to the comparator", function() {
       var findSameKeyPath = function(
@@ -243,10 +245,10 @@ describe('class `TreeUtils`', function() {
         return utils.find(
           state,
           function(node, keyPath) {
-            return is(seq, keyPath)
+            return is(seq, keyPath);
           }
-        )
-      }
+        );
+      };
       expect(
         utils.id(
           state,
@@ -260,8 +262,8 @@ describe('class `TreeUtils`', function() {
             ])
           )
         )
-      ).toEqual('4')
-    })
+      ).toEqual('4');
+    });
 
     it('accepts an optional parameter `path` to restrict the haystack to a subtree.', function() {
       var keyPath = findKeyPathById(
@@ -273,10 +275,10 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ])
-      )
-      expect(keyPath).toBeUndefined()
-    })
-  })
+      );
+      expect(keyPath).toBeUndefined();
+    });
+  });
 
   describe('method `filter`', function() {
     var filterKeyPathByType = function(
@@ -288,21 +290,21 @@ describe('class `TreeUtils`', function() {
         function(item) {
           return (
             item.get('type') === type
-          )
+          );
         },
         seq
-      )
-    }
+      );
+    };
 
     it('returns a list of all key paths whose items passed the comparator function.', function() {
       var keyPaths = filterKeyPathByType(
         'paragraph'
-      )
+      );
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return m.toJS()
+            return m.toJS();
           })
       ).toEqual([
         [
@@ -324,23 +326,23 @@ describe('class `TreeUtils`', function() {
           0
         ],
         ['data', 'childNodes', 0]
-      ])
+      ]);
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return getValue(m.toJS())
+            return getValue(m.toJS());
           })
-      ).toEqual(['7', '5', '2'])
+      ).toEqual(['7', '5', '2']);
 
       var keyPaths2 = filterKeyPathByType(
         'listItem'
-      )
+      );
       expect(
         keyPaths2
           .toArray()
           .map(function(m) {
-            return m.toJS()
+            return m.toJS();
           })
       ).toEqual([
         [
@@ -357,16 +359,16 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ]
-      ])
+      ]);
 
       expect(
         keyPaths2
           .toArray()
           .map(function(m) {
-            return getValue(m.toJS())
+            return getValue(m.toJS());
           })
-      ).toEqual(['6', '4'])
-    })
+      ).toEqual(['6', '4']);
+    });
 
     it("passes the current node's key path as second argument to the comparator", function() {
       var filterDescendants = function(
@@ -378,10 +380,10 @@ describe('class `TreeUtils`', function() {
             return is(
               seq,
               keyPath.take(seq.size)
-            )
+            );
           }
-        )
-      }
+        );
+      };
       expect(
         filterDescendants(
           Seq(['data', 'childNodes', 1])
@@ -420,8 +422,8 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ]
-      ])
-    })
+      ]);
+    });
 
     it('accepts an optional parameter `path` to restrict the haystack to a subtree.', function() {
       var keyPaths = filterKeyPathByType(
@@ -433,12 +435,12 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ])
-      )
+      );
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return m.toJS()
+            return m.toJS();
           })
       ).toEqual([
         [
@@ -450,23 +452,23 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ]
-      ])
+      ]);
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return getValue(m.toJS())
+            return getValue(m.toJS());
           })
-      ).toEqual(['5'])
-    })
-  })
+      ).toEqual(['5']);
+    });
+  });
 
   describe('method `byId`', function() {
     it('returns the key path of the first item whose id equals the id parameter.', function() {
       var keyPath = utils.byId(
         state,
         '7'
-      )
+      );
 
       expect(keyPath.toJS()).toEqual([
         'data',
@@ -476,27 +478,27 @@ describe('class `TreeUtils`', function() {
         1,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('7')
+      ).toEqual('7');
 
       var keyPath2 = utils.byId(
         state,
         '4'
-      )
+      );
       expect(keyPath2.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath2.toJS())
-      ).toEqual('4')
-    })
-  })
+      ).toEqual('4');
+    });
+  });
 
   describe('method `byArbitrary`', function() {
     it('returns the key path representing an id.', function() {
@@ -510,15 +512,15 @@ describe('class `TreeUtils`', function() {
         1,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(
           utils
             .byArbitrary(state, '4')
             .toJS()
         )
-      ).toEqual('4')
-    })
+      ).toEqual('4');
+    });
 
     it('returns the key path parameter if it is an array / a key path already.', function() {
       expect(
@@ -540,7 +542,7 @@ describe('class `TreeUtils`', function() {
         1,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(
           utils
@@ -556,81 +558,81 @@ describe('class `TreeUtils`', function() {
             )
             .toJS()
         )
-      ).toEqual('4')
-    })
-  })
+      ).toEqual('4');
+    });
+  });
 
   describe('method `nextSibling`', function() {
     it('returns the next sibling node.', function() {
       var keyPath = utils.nextSibling(
         state,
         '4'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         1
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('6')
-    })
+      ).toEqual('6');
+    });
 
     it('returns undefined if the node at `id` does not have a next sibling.', function() {
       var keyPath = utils.nextSibling(
         state,
         '7'
-      )
-      expect(keyPath).toBeUndefined()
-    })
-  })
+      );
+      expect(keyPath).toBeUndefined();
+    });
+  });
 
   describe('method `previousSibling`', function() {
     it('returns the previous sibling node.', function() {
       var keyPath = utils.previousSibling(
         state,
         '6'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('4')
-    })
+      ).toEqual('4');
+    });
 
     it('returns undefined if the node at `id` does not have a previous sibling.', function() {
       var keyPath = utils.previousSibling(
         state,
         '4'
-      )
-      expect(keyPath).toBeUndefined()
-    })
-  })
+      );
+      expect(keyPath).toBeUndefined();
+    });
+  });
 
   describe('method `parent`', function() {
     it("returns the parent element's key path of the first item whose id equals the id parameter.", function() {
       var keyPath = utils.parent(
         state,
         '7'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         1
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('6')
-    })
+      ).toEqual('6');
+    });
 
     it("returns the parent parent element's key path of the first item whose id equals the id parameter.", function() {
       var keyPath = utils.parent(
@@ -638,33 +640,33 @@ describe('class `TreeUtils`', function() {
         getValue(
           utils.parent(state, '7')
         )
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         1
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('3')
-    })
-  })
+      ).toEqual('3');
+    });
+  });
 
   describe('method `childIndex`', function() {
     it('returns the index of the first item whose id equals the id parameter according to its parent list.', function() {
       var index = utils.childIndex(
         state,
         '3'
-      )
-      expect(index).toEqual(1)
+      );
+      expect(index).toEqual(1);
 
       var index2 = utils.childIndex(
         state,
         '4'
-      )
-      expect(index2).toEqual(0)
-    })
-  })
+      );
+      expect(index2).toEqual(0);
+    });
+  });
 
   describe('method `childAt`', function() {
     it('returns the composed keyPath that points at the child cursor.', function() {
@@ -672,51 +674,51 @@ describe('class `TreeUtils`', function() {
         state,
         '3',
         0
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('4')
+      ).toEqual('4');
 
       var keyPath2 = utils.childAt(
         state,
         '3',
         1
-      )
+      );
       expect(keyPath2.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         1
-      ])
+      ]);
       expect(
         getValue(keyPath2.toJS())
-      ).toEqual('6')
-    })
+      ).toEqual('6');
+    });
 
     it('returns undefined if the node at `id` has no child nodes or no child node at `index`.', function() {
       var keyPath = utils.childAt(
         state,
         '2',
         1
-      )
-      expect(keyPath).toBeUndefined()
-    })
-  })
+      );
+      expect(keyPath).toBeUndefined();
+    });
+  });
 
   describe('method `firstChild`', function() {
     it('returns the first child node.', function() {
       var keyPath = utils.firstChild(
         state,
         '4'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
@@ -725,79 +727,79 @@ describe('class `TreeUtils`', function() {
         0,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('5')
-    })
+      ).toEqual('5');
+    });
 
     it('returns undefined if the node at `id` does not have a first child.', function() {
       var keyPath = utils.firstChild(
         state,
         '2'
-      )
-      expect(keyPath).toBeUndefined()
-    })
-  })
+      );
+      expect(keyPath).toBeUndefined();
+    });
+  });
 
   describe('method `lastChild`', function() {
     it('returns the last child node.', function() {
       var keyPath = utils.lastChild(
         state,
         '1'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         1
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('3')
-    })
+      ).toEqual('3');
+    });
 
     it('returns undefined if the node at `id` does not have a last child.', function() {
       var keyPath = utils.lastChild(
         state,
         '7'
-      )
-      expect(keyPath).toBeUndefined()
-    })
-  })
+      );
+      expect(keyPath).toBeUndefined();
+    });
+  });
 
   describe('method `hasChildNodes`', function() {
     it('returns true if a node has 1 or more child nodes.', function() {
       expect(
         utils.hasChildNodes(state, '4')
-      ).toBeTruthy()
-    })
+      ).toBeTruthy();
+    });
 
     it('returns false if a node has no child nodes.', function() {
       expect(
         utils.hasChildNodes(state, '5')
-      ).toBeFalsy()
-    })
-  })
+      ).toBeFalsy();
+    });
+  });
 
   describe('method `numChildNodes`', function() {
     it('returns the number of child nodes.', function() {
       expect(
         utils.numChildNodes(state, '1')
-      ).toEqual(2)
-    })
-  })
+      ).toEqual(2);
+    });
+  });
 
   describe('method `siblings`', function() {
     it('returns list of all key paths with the same parent excluding the node itself.', function() {
       var keyPaths = utils.siblings(
         state,
         '6'
-      )
+      );
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return m.toJS()
+            return m.toJS();
           })
       ).toEqual([
         [
@@ -807,56 +809,56 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ]
-      ])
+      ]);
 
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return getValue(m.toJS())
+            return getValue(m.toJS());
           })
-      ).toEqual(['4'])
-    })
-  })
+      ).toEqual(['4']);
+    });
+  });
 
   describe('method `childNodes`', function() {
     it('returns list of all key paths which are first level descendants of the given node.', function() {
       var keyPaths = utils.childNodes(
         state,
         '1'
-      )
+      );
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return m.toJS()
+            return m.toJS();
           })
       ).toEqual([
         ['data', 'childNodes', 0],
         ['data', 'childNodes', 1]
-      ])
+      ]);
 
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return getValue(m.toJS())
+            return getValue(m.toJS());
           })
-      ).toEqual(['2', '3'])
-    })
-  })
+      ).toEqual(['2', '3']);
+    });
+  });
 
   describe('method `ancestors`', function() {
     it('returns a list of all key paths that point at the ancestor nodes of the item at `id`.', function() {
       var keyPaths = utils.ancestors(
         state,
         '7'
-      )
+      );
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return m.toJS()
+            return m.toJS();
           })
       ).toEqual([
         [
@@ -868,46 +870,46 @@ describe('class `TreeUtils`', function() {
         ],
         ['data', 'childNodes', 1],
         ['data']
-      ])
+      ]);
 
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return getValue(m.toJS())
+            return getValue(m.toJS());
           })
-      ).toEqual(['6', '3', '1'])
-    })
-  })
+      ).toEqual(['6', '3', '1']);
+    });
+  });
 
   describe('method `depth`', function() {
     it('returns a number representing the depth of the node at `id`', function() {
       expect(
         utils.depth(state, '7')
-      ).toEqual(3)
+      ).toEqual(3);
       expect(
         utils.depth(state, '6')
-      ).toEqual(2)
+      ).toEqual(2);
       expect(
         utils.depth(state, '3')
-      ).toEqual(1)
+      ).toEqual(1);
       expect(
         utils.depth(state, '1')
-      ).toEqual(0)
-    })
-  })
+      ).toEqual(0);
+    });
+  });
 
   describe('method `descendants`', function() {
     it('returns a list of all key paths that represent child nodes of the item at `id`', function() {
       var keyPaths = utils.descendants(
         state,
         '3'
-      )
+      );
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return m.toJS()
+            return m.toJS();
           })
       ).toEqual([
         [
@@ -942,84 +944,84 @@ describe('class `TreeUtils`', function() {
           'childNodes',
           0
         ]
-      ])
+      ]);
 
       expect(
         keyPaths
           .toArray()
           .map(function(m) {
-            return getValue(m.toJS())
+            return getValue(m.toJS());
           })
-      ).toEqual(['6', '7', '4', '5'])
-    })
-  })
+      ).toEqual(['6', '7', '4', '5']);
+    });
+  });
 
   describe('method `right`', function() {
     it('returns the next sibling of the node found at `id`', function() {
       var keyPath = utils.right(
         state,
         '2'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         1
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('3')
-    })
+      ).toEqual('3');
+    });
 
     it('returns the first child node if present.', function() {
       var keyPath = utils.right(
         state,
         '3'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('4')
-    })
+      ).toEqual('4');
+    });
 
     it('returns the next sibling of the first ancestor that has a next sibling', function() {
       var keyPath = utils.right(
         state,
         '5'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         1
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('6')
-    })
+      ).toEqual('6');
+    });
 
     it('returns undefined if it is the last node in the tree.', function() {
       var keyPath = utils.right(
         state,
         '7'
-      )
-      expect(keyPath).toBeUndefined()
-    })
+      );
+      expect(keyPath).toBeUndefined();
+    });
 
     it('can iterate over the whole tree.', function() {
-      var id = '1'
-      var node = utils.right(state, id)
-      var result = []
+      var id = '1';
+      var node = utils.right(state, id);
+      var result = [];
       while (node) {
-        id = utils.id(state, node)
-        result.push(id)
-        node = utils.right(state, id)
+        id = utils.id(state, node);
+        result.push(id);
+        node = utils.right(state, id);
       }
       expect(result).toEqual([
         '2',
@@ -1028,58 +1030,58 @@ describe('class `TreeUtils`', function() {
         '5',
         '6',
         '7'
-      ])
-    })
-  })
+      ]);
+    });
+  });
 
   describe('method `position`', function() {
     it('returns a number representating the position of the node in relation to all other nodes.', function() {
       var position = utils.position(
         state,
         '2'
-      )
+      );
       expect(
         typeof position === 'number'
-      ).toBeTruthy()
-    })
+      ).toBeTruthy();
+    });
 
     it('returns a higher number for nodes appear later in the tree', function() {
       expect(
         utils.position(state, '7') >
           utils.position(state, '4')
-      ).toBeTruthy()
+      ).toBeTruthy();
       expect(
         utils.position(state, '4') >
           utils.position(state, '2')
-      ).toBeTruthy()
+      ).toBeTruthy();
       expect(
         utils.position(state, '6') >
           utils.position(state, '5')
-      ).toBeTruthy()
-    })
-  })
+      ).toBeTruthy();
+    });
+  });
 
   describe('method `left`', function() {
     it('returns the previous sibling of the node found at `id`', function() {
       var keyPath = utils.left(
         state,
         '3'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('2')
-    })
+      ).toEqual('2');
+    });
 
     it('returns the latest child of the previous sibling if exists.', function() {
       var keyPath = utils.left(
         state,
         '6'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
@@ -1088,45 +1090,45 @@ describe('class `TreeUtils`', function() {
         0,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('5')
-    })
+      ).toEqual('5');
+    });
 
     it('returns the parent node if the node at `id` has no previous sibling.', function() {
       var keyPath = utils.left(
         state,
         '7'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         1,
         'childNodes',
         1
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('6')
-    })
+      ).toEqual('6');
+    });
 
     it('returns undefined if it is the last node in the tree.', function() {
       var keyPath = utils.left(
         state,
         '1'
-      )
-      expect(keyPath).toBeUndefined()
-    })
+      );
+      expect(keyPath).toBeUndefined();
+    });
 
     it('can iterate over the whole tree.', function() {
-      var id = '7'
-      var node = utils.left(state, id)
-      var result = []
+      var id = '7';
+      var node = utils.left(state, id);
+      var result = [];
       while (node) {
-        id = utils.id(state, node)
-        result.push(id)
-        node = utils.left(state, id)
+        id = utils.id(state, node);
+        result.push(id);
+        node = utils.left(state, id);
       }
       expect(result).toEqual([
         '6',
@@ -1135,33 +1137,33 @@ describe('class `TreeUtils`', function() {
         '3',
         '2',
         '1'
-      ])
-    })
-  })
+      ]);
+    });
+  });
 
   describe('method `firstDescendant`', function() {
     it('returns the first child node in the tree', function() {
       var keyPath = utils.firstDescendant(
         state,
         '1'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('2')
-    })
-  })
+      ).toEqual('2');
+    });
+  });
 
   describe('method lastDescendant`', function() {
     it('returns the last child node in the tree', function() {
       var keyPath = utils.lastDescendant(
         state,
         '1'
-      )
+      );
       expect(keyPath.toJS()).toEqual([
         'data',
         'childNodes',
@@ -1170,10 +1172,10 @@ describe('class `TreeUtils`', function() {
         1,
         'childNodes',
         0
-      ])
+      ]);
       expect(
         getValue(keyPath.toJS())
-      ).toEqual('7')
-    })
-  })
-})
+      ).toEqual('7');
+    });
+  });
+});

@@ -1,4 +1,7 @@
 language: node_js
+env:
+  - IMMUTABLE_VERSION=latest
+  - IMMUTABLE_VERSION=rc
 node_js:
   - "4"
   - "5"

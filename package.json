@@ -12,9 +12,9 @@
     "test": "node scripts/test.js"
   },
   "lint-staged": {
-    "*.{js,json,md}": [
-      "npm run docs",
+    "*.{js}": [
       "prettier --write",
+      "npm run docs",
       "git add"
     ]
   },
@@ -37,15 +37,15 @@
   "homepage":
     "https://github.com/lukasbuenger/immutable-treeutils",
   "devDependencies": {
-    "acorn": "^5.3.0",
+    "acorn": "^5.5.3",
     "glob": "^7.1.2",
     "husky": "^0.14.3",
-    "jasmine": "^2.8.0",
+    "jasmine": "^3.1.0",
     "jasmine-spec-reporter": "^4.2.1",
-    "lint-staged": "^6.0.0",
+    "lint-staged": "^7.1.1",
     "mustache": "^2.3.0",
-    "npm-check-updates": "^2.14.0",
-    "prettier": "^1.9.2"
+    "npm-check-updates": "^2.14.2",
+    "prettier": "^1.12.1"
   },
   "peerDependencies": {
     "immutable": "^4.0.0-rc.9 || >=3.8"
