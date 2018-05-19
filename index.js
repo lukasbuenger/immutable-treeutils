@@ -1,20 +1,20 @@
-var Immutable = require('immutable')
-var Seq = Immutable.Seq
-var List = Immutable.List
-var Stack = List
+var Immutable = require('immutable');
+var Seq = Immutable.Seq;
+var List = Immutable.List;
+var Stack = Immutable.Stack || List;
 
 function isV4() {
-  return typeof Seq.of === 'undefined'
+  return typeof Seq.of === 'undefined';
 }
 
 function exists(value) {
   return (
     value !== null &&
     typeof value !== 'undefined'
-  )
+  );
 }
 
-var NONE = undefined
+var NONE = undefined;
 
 /**
  * @id TreeUtils
@@ -72,14 +72,14 @@ function TreeUtils(
   childNodesKey,
   none
 ) {
-  this.rootPath = rootPath || Seq()
-  this.idKey = idKey || 'id'
+  this.rootPath = rootPath || Seq();
+  this.idKey = idKey || 'id';
   this.childNodesKey =
-    childNodesKey || 'childNodes'
+    childNodesKey || 'childNodes';
   this.none =
     typeof none !== 'undefined'
       ? none
-      : NONE
+      : NONE;
 }
 /**
  * @id TreeUtils-id
@@ -114,8 +114,8 @@ TreeUtils.prototype.id = function(
 ) {
   return state.getIn(
     keyPath.concat(this.idKey)
-  )
-}
+  );
+};
 
 /**
  * @id TreeUtils-nodes
@@ -149,21 +149,22 @@ TreeUtils.prototype.nodes = function(
   state,
   path
 ) {
-  var childNodesKey = this.childNodesKey
-  var result = List()
+  var childNodesKey = this
+    .childNodesKey;
+  var result = List();
   var stack = Stack.of(
     path || this.rootPath
-  )
+  );
   while (stack.size > 0) {
-    var keyPath = stack.first()
-    result = result.push(keyPath)
+    var keyPath = stack.first();
+    result = result.push(keyPath);
 
-    stack = stack.shift()
+    stack = stack.shift();
 
-    var item = state.getIn(keyPath)
+    var item = state.getIn(keyPath);
     var childNodes = item.get(
       childNodesKey
-    )
+    );
     if (
       childNodes &&
       childNodes.size > 0
@@ -172,18 +173,18 @@ TreeUtils.prototype.nodes = function(
         .get(childNodesKey)
         .keySeq()
         .forEach(function(i) {
-          stack = stack.push(
+          stack = stack.unshift(
             keyPath.concat(
               childNodesKey,
               i
             )
-          )
-        })
+          );
+        });
     }
   }
 
-  return result
-}
+  return result;
+};
 
 /**
  * @id TreeUtils-find
@@ -228,12 +229,12 @@ TreeUtils.prototype.find = function(
           state.getIn(keyPath),
           keyPath
         ) === true
-      )
+      );
     },
     this,
     this.none
-  )
-}
+  );
+};
 
 /**
  * @id TreeUtils-filter
@@ -279,12 +280,12 @@ TreeUtils.prototype.filter = function(
           state.getIn(keyPath),
           keyPath
         ) === true
-      )
+      );
     },
     this,
     this.node
-  )
-}
+  );
+};
 /**
  * @id TreeUtils-byId
  * @lookup byId
@@ -311,13 +312,13 @@ TreeUtils.prototype.byId = function(
   state,
   id
 ) {
-  var idKey = this.idKey
+  var idKey = this.idKey;
   return this.find(state, function(
     item
   ) {
-    return item.get(idKey) === id
-  })
-}
+    return item.get(idKey) === id;
+  });
+};
 
 /**
  * @id TreeUtils-byArbitrary
@@ -344,8 +345,8 @@ TreeUtils.prototype.byArbitrary = function(
 ) {
   return Seq.isSeq(idOrKeyPath)
     ? idOrKeyPath
-    : this.byId(state, idOrKeyPath)
-}
+    : this.byId(state, idOrKeyPath);
+};
 
 /**
  * @id TreeUtils-nextSibling
@@ -371,16 +372,16 @@ TreeUtils.prototype.nextSibling = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  )
-  var index = Number(keyPath.last())
+  );
+  var index = Number(keyPath.last());
   var nextSiblingPath = keyPath
     .skipLast(1)
-    .concat(index + 1)
+    .concat(index + 1);
   if (state.hasIn(nextSiblingPath)) {
-    return nextSiblingPath
+    return nextSiblingPath;
   }
-  return this.none
-}
+  return this.none;
+};
 
 /**
  * @id TreeUtils-previousSibling
@@ -406,15 +407,15 @@ TreeUtils.prototype.previousSibling = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  )
-  var index = Number(keyPath.last())
+  );
+  var index = Number(keyPath.last());
   if (index > 0) {
     return keyPath
       .skipLast(1)
-      .concat(index - 1)
+      .concat(index - 1);
   }
-  return this.none
-}
+  return this.none;
+};
 
 /**
  * @id TreeUtils-firstChild
@@ -440,12 +441,12 @@ TreeUtils.prototype.firstChild = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  ).concat([this.childNodesKey, 0])
+  ).concat([this.childNodesKey, 0]);
   if (state.hasIn(keyPath)) {
-    return keyPath
+    return keyPath;
   }
-  return this.none
-}
+  return this.none;
+};
 
 /**
  * @id TreeUtils-lastChild
@@ -471,15 +472,15 @@ TreeUtils.prototype.lastChild = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  ).concat([this.childNodesKey])
-  var item = state.getIn(keyPath)
+  ).concat([this.childNodesKey]);
+  var item = state.getIn(keyPath);
   if (item && item.size > 0) {
     return keyPath.concat([
       item.size - 1
-    ])
+    ]);
   }
-  return this.none
-}
+  return this.none;
+};
 
 /**
  * @id TreeUtils-siblings
@@ -505,12 +506,14 @@ TreeUtils.prototype.siblings = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  )
-  var index = Number(keyPath.last())
+  );
+  var index = Number(keyPath.last());
   var parentChildren = keyPath.skipLast(
     1
-  )
-  var item = state.getIn(parentChildren)
+  );
+  var item = state.getIn(
+    parentChildren
+  );
   if (exists(item)) {
     return item
       .keySeq()
@@ -519,11 +522,11 @@ TreeUtils.prototype.siblings = function(
           ? result.push(
               parentChildren.concat(i)
             )
-          : result
-      }, List())
+          : result;
+      }, List());
   }
-  return this.none
-}
+  return this.none;
+};
 
 /**
  * @id TreeUtils-childNodes
@@ -549,20 +552,20 @@ TreeUtils.prototype.childNodes = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  ).concat(this.childNodesKey)
-  var item = state.getIn(keyPath)
+  ).concat(this.childNodesKey);
+  var item = state.getIn(keyPath);
   if (exists(item)) {
-    var l = item.size
-    var result = List()
+    var l = item.size;
+    var result = List();
     for (var i = 0; i < l; i += 1) {
       result = result.push(
         keyPath.concat(i)
-      )
+      );
     }
-    return result
+    return result;
   }
-  return this.none
-}
+  return this.none;
+};
 
 /**
  * @id TreeUtils-childAt
@@ -590,12 +593,12 @@ TreeUtils.prototype.childAt = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  ).concat(this.childNodesKey, index)
+  ).concat(this.childNodesKey, index);
   if (state.hasIn(keyPath)) {
-    return keyPath
+    return keyPath;
   }
-  return this.none
-}
+  return this.none;
+};
 
 /**
  * @id TreeUtils-descendants
@@ -621,19 +624,19 @@ TreeUtils.prototype.descendants = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  )
-  var self = this
+  );
+  var self = this;
   return this.filter(
     state,
     function(item) {
       return (
         item.get(self.idKey) !==
         self.id(state, keyPath)
-      )
+      );
     },
     keyPath
-  )
-}
+  );
+};
 
 /**
  * @id TreeUtils-childIndex
@@ -661,8 +664,8 @@ TreeUtils.prototype.childIndex = function(
       state,
       idOrKeyPath
     ).last()
-  )
-}
+  );
+};
 
 /**
  * @id TreeUtils-hasChildNodes
@@ -688,10 +691,10 @@ TreeUtils.prototype.hasChildNodes = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  ).concat(this.childNodesKey)
-  var item = state.getIn(keyPath)
-  return exists(item) && item.size > 0
-}
+  ).concat(this.childNodesKey);
+  var item = state.getIn(keyPath);
+  return exists(item) && item.size > 0;
+};
 
 /**
  * @id TreeUtils-numChildNodes
@@ -717,10 +720,10 @@ TreeUtils.prototype.numChildNodes = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  ).concat(this.childNodesKey)
-  var item = state.getIn(keyPath)
-  return exists(item) ? item.size : 0
-}
+  ).concat(this.childNodesKey);
+  var item = state.getIn(keyPath);
+  return exists(item) ? item.size : 0;
+};
 
 /**
  * @id TreeUtils-parent
@@ -746,12 +749,12 @@ TreeUtils.prototype.parent = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  )
+  );
   if (keyPath && keyPath.size) {
-    return keyPath.slice(0, -2)
+    return keyPath.slice(0, -2);
   }
-  return this.none
-}
+  return this.none;
+};
 
 /**
  * @id TreeUtils-ancestors
@@ -774,7 +777,7 @@ TreeUtils.prototype.ancestors = function(
   state,
   idOrKeyPath
 ) {
-  var self = this
+  var self = this;
   return this.byArbitrary(
     state,
     idOrKeyPath
@@ -797,12 +800,12 @@ TreeUtils.prototype.ancestors = function(
               .takeLast(index)
               .reverse()
               .toSetSeq()
-      )
+      );
     }
-    return memo
+    return memo;
   },
-  List())
-}
+  List());
+};
 
 /**
  * @id TreeUtils-depth
@@ -830,8 +833,8 @@ TreeUtils.prototype.depth = function(
       state,
       idOrKeyPath
     ).skip(this.rootPath.size).size / 2
-  )
-}
+  );
+};
 
 /**
  * @id TreeUtils-position
@@ -862,7 +865,7 @@ TreeUtils.prototype.position = function(
   state,
   idOrKeyPath
 ) {
-  var self = this
+  var self = this;
   var order = this.byArbitrary(
     state,
     idOrKeyPath
@@ -875,15 +878,15 @@ TreeUtils.prototype.position = function(
       index >= self.rootPath.size &&
       index % 2 === 0
     ) {
-      return value.toString() + memo
+      return value.toString() + memo;
     }
-    return memo
+    return memo;
   },
-  '')
+  '');
   return Number(
     '1.'.concat(order.toString())
-  )
-}
+  );
+};
 
 /**
  * @id TreeUtils-right
@@ -927,46 +930,46 @@ TreeUtils.prototype.right = function(
   state,
   idOrKeyPath
 ) {
-  var l = this.rootPath.size
+  var l = this.rootPath.size;
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  )
+  );
   var firstChild = this.firstChild(
     state,
     keyPath
-  )
+  );
 
   if (firstChild) {
-    return firstChild
+    return firstChild;
   }
 
   var nextSibling = this.nextSibling(
     state,
     keyPath
-  )
+  );
   if (nextSibling) {
-    return nextSibling
+    return nextSibling;
   }
 
   var parent = this.parent(
     state,
     keyPath
-  )
-  var nextSiblingOfParent
+  );
+  var nextSiblingOfParent;
 
   while (parent && parent.size >= l) {
     nextSiblingOfParent = this.nextSibling(
       state,
       parent
-    )
+    );
     if (nextSiblingOfParent) {
-      return nextSiblingOfParent
+      return nextSiblingOfParent;
     }
-    parent = this.parent(state, parent)
+    parent = this.parent(state, parent);
   }
-  return this.none
-}
+  return this.none;
+};
 
 /**
  * @id TreeUtils-left
@@ -1014,11 +1017,11 @@ TreeUtils.prototype.left = function(
   var keyPath = this.byArbitrary(
     state,
     idOrKeyPath
-  )
+  );
   var lastChild = this.previousSibling(
     state,
     keyPath
-  )
+  );
 
   while (lastChild) {
     if (
@@ -1027,28 +1030,28 @@ TreeUtils.prototype.left = function(
         lastChild
       )
     ) {
-      return lastChild
+      return lastChild;
     }
     lastChild = this.lastChild(
       state,
       lastChild
-    )
+    );
   }
 
   var parent = this.parent(
     state,
     keyPath
-  )
+  );
 
   if (
     parent &&
     parent.size >= this.rootPath.size
   ) {
-    return parent
+    return parent;
   }
 
-  return this.none
-}
+  return this.none;
+};
 
 /**
  * @id TreeUtils-firstDescendant
@@ -1065,8 +1068,8 @@ TreeUtils.prototype.firstDescendant = function(
   return this.firstChild(
     state,
     idOrKeyPath
-  )
-}
+  );
+};
 
 /**
  * @id TreeUtils-lastDescendant
@@ -1099,7 +1102,7 @@ TreeUtils.prototype.lastDescendant = function(
   var keyPath = this.lastChild(
     state,
     idOrKeyPath
-  )
+  );
   while (
     keyPath &&
     this.hasChildNodes(state, keyPath)
@@ -1107,9 +1110,9 @@ TreeUtils.prototype.lastDescendant = function(
     keyPath = this.lastChild(
       state,
       keyPath
-    )
+    );
   }
-  return keyPath
-}
+  return keyPath;
+};
 
-module.exports = TreeUtils
+module.exports = TreeUtils;
