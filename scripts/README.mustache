@@ -12,7 +12,7 @@ conditions that need to be met remain:
 * Every node has to provide a unique identifier value under a key that is the same for all nodes in the tree.
 * Child nodes have to be stored in an >Immutable.List under a key that is the the same for all nodes containing children.
 
-##### Please note: 1.0.0 is out and has breaking changes.
+Supports and tested against versions `^4.0.0-rc.9 || >=3.8`.
 Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/v{{ pkg.version }}/CHANGELOG.md) for further information and migration instructions.
 
 ## Getting started
@@ -154,7 +154,7 @@ npm run docs
 
 Update all local dependencies:
 ```
-npm run update-dependencies
+npx ncu -a
 ```
 
 There's a pre-commit hook in place that keeps things in line with the [Prettier](https://github.com/prettier/prettier) guidelines. Please note that Node >= 4.2 is required for the pre-commit hooks ([lint-staged](https://github.com/okonet/lint-staged), [husky](https://github.com/typicode/husky))

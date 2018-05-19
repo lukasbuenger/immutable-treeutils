@@ -11,8 +11,7 @@ conditions that need to be met remain:
 * Every node has to provide a unique identifier value under a key that is the same for all nodes in the tree.
 * Child nodes have to be stored in an [List](http://facebook.github.io/immutable-js/docs/#/List) under a key that is the the same for all nodes containing children.
 
-##### Please note: 1.0.0 is out and has breaking changes.
-
+Supports and tested against versions `^4.0.0-rc.9 || >=3.8`.
 Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.1.0/CHANGELOG.md) for further information and migration instructions.
 
 ## Getting started
@@ -184,7 +183,7 @@ A collection of functional tree traversal helper functions for [ImmutableJS](htt
 
 ```js
 var treeUtils = new TreeUtils(
-  Immutable.Seq.of('path', 'to', 'tree')
+  Immutable.Seq(['path', 'to', 'tree'])
 )
 ```
 
@@ -192,11 +191,7 @@ var treeUtils = new TreeUtils(
 
 ```js
 var treeUtils = new TreeUtils(
-  Immutable.Seq.of(
-    'path',
-    'to',
-    'tree'
-  ),
+  Immutable.Seq(['path', 'to', 'tree']),
   '__id',
   '__children'
 )
@@ -206,11 +201,7 @@ var treeUtils = new TreeUtils(
 
 ```js
 var treeUtils = new TreeUtils(
-  Immutable.Seq.of(
-    'path',
-    'to',
-    'tree'
-  ),
+  Immutable.Seq(['path', 'to', 'tree']),
   'id',
   'children',
   false
@@ -244,36 +235,38 @@ new TreeUtils(
 
 ---
 
-<a id="TreeUtils-id"></a>
+<a id="TreeUtils-walk"></a>
 
-#### _method_ id()
+#### _method_ walk()
 
-Returns the id for the node at `keyPath`. Most useful when you want to get the id of the result of a previous tree query:
-
-```js
-treeUtils.id(
-  state,
-  treeUtils.parent(state, 'node-3')
-)
-// 'node-1'
-```
+Main traversal algorithm.
 
 ###### Signature:
 
 ```js
-id(
+walk(
    state: Immutable.Iterable,
-   keyPath: Immutable.Seq<string|number>
-): string
+   iterator: (
+     accumulator: any,
+     keyPath: Immutable.Seq<string|number>
+     stop: (
+       value: any
+     ): any
+   ): any,
+   path?: Immutable.Seq<string|number>
+): any
 ```
 
 ###### Arguments:
 
-* `keyPath` - The absolute key path to the substate / node whose id you want to retrieve
+* `iterator` - A function that gets passed an accumulator, the current key path and a stop function:
+  * If the iterator returns a value, this value will be kept as reduction and passed as accumulator to further iterations.
+  * If the iterator returns a `stop` call, the walk operation will return immediately, giving back any value you passed to the `stop` function.
+* `path` - The key path that points at the root of the (sub)tree you want to walk over. Default: The `TreeUtils` object's `rootPath`.
 
 ###### Returns:
 
-The unique identifier of the node at the given key path.
+The result of the walk operation.
 
 ---
 
@@ -303,7 +296,7 @@ nodes(
 
 ###### Returns:
 
-An **unordered** [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point to nodes in the tree, including the root of the (sub)tree.
+An **unordered** [List](http://facebook.github.io/immutable-js/docs/#/List) of all key paths that point to nodes in the tree.
 
 ---
 
@@ -427,6 +420,39 @@ byArbitrary(
 ###### Returns:
 
 The key path pointing at the node found for id === `idOrKeyPath` or, if is a [Seq](http://facebook.github.io/immutable-js/docs/#/Seq), the `idOrKeyPath` itself.
+
+---
+
+<a id="TreeUtils-id"></a>
+
+#### _method_ id()
+
+Returns the id for the node at `keyPath`. Most useful when you want to get the id of the result of a previous tree query:
+
+```js
+treeUtils.id(
+  state,
+  treeUtils.parent(state, 'node-3')
+)
+// 'node-1'
+```
+
+###### Signature:
+
+```js
+id(
+   state: Immutable.Iterable,
+   keyPath: Immutable.Seq<string|number>
+): string
+```
+
+###### Arguments:
+
+* `keyPath` - The absolute key path to the substate / node whose id you want to retrieve
+
+###### Returns:
+
+The unique identifier of the node at the given key path.
 
 ---
 
@@ -876,7 +902,7 @@ npm run docs
 Update all local dependencies:
 
 ```
-npm run update-dependencies
+npx ncu -a
 ```
 
 There's a pre-commit hook in place that keeps things in line with the [Prettier](https://github.com/prettier/prettier) guidelines. Please note that Node >= 4.2 is required for the pre-commit hooks ([lint-staged](https://github.com/okonet/lint-staged), [husky](https://github.com/typicode/husky))

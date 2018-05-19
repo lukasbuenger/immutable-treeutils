@@ -7,8 +7,6 @@
   "scripts": {
     "docs": "node scripts/docs.js",
     "precommit": "lint-staged",
-    "update-dependencies":
-      "ncu -a && rm -rf node_modules/ && npm install && npm test",
     "test": "node scripts/test.js"
   },
   "lint-staged": {

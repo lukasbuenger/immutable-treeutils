@@ -81,42 +81,39 @@ function TreeUtils(
       ? none
       : NONE
 }
+
 /**
- * @id TreeUtils-id
- * @lookup id
+ * @id TreeUtils-walk
+ * @lookup walk
  *
- * #### *method* id()
+ * #### *method* walk()
  *
- * Returns the id for the node at `keyPath`. Most useful when you want to get the id of the result of a previous tree query:
- * ```js
- * treeUtils.id(state, treeUtils.parent(state, 'node-3'));
- * // 'node-1'
- * ```
+ * Main traversal algorithm. Lets you walk over all nodes in the tree **in no particular order**.
  *
  * ###### Signature:
  * ```js
- * id(
+ * walk(
  *    state: Immutable.Iterable,
- *    keyPath: Immutable.Seq<string|number>
- * ): string
+ *    iterator: (
+ *      accumulator: any,
+ *      keyPath: Immutable.Seq<string|number>
+ *      stop: (
+ *        value: any
+ *      ): any
+ *    ): any,
+ *    path?: Immutable.Seq<string|number>
+ * ): any
  * ```
  *
  * ###### Arguments:
- * * `keyPath` - The absolute key path to the substate / node whose id you want to retrieve
+ * * `iterator` - A function that gets passed an accumulator, the current key path and a stop function:
+ *    * If the iterator returns a value, this value will be kept as reduction and passed as accumulator to further iterations.
+ *    * If the iterator returns a `stop` call, the walk operation will return immediately, giving back any value you passed to the `stop` function.
+ * * `path` - The key path that points at the root of the (sub)tree you want to walk over. Default: The `TreeUtils` object's `rootPath`.
  *
  * ###### Returns:
- * The unique identifier of the node at the given key path.
- *
+ * The result of the walk operation.
  */
-TreeUtils.prototype.id = function(
-  state,
-  keyPath
-) {
-  return state.getIn(
-    keyPath.concat(this.idKey)
-  )
-}
-
 TreeUtils.prototype.walk = function(
   state,
   iterator,
@@ -162,12 +159,12 @@ TreeUtils.prototype.walk = function(
   }
   return reduction
 }
+
 /**
  * @id TreeUtils-nodes
  * @lookup nodes
  *
  * #### *method* nodes()
- *
  *
  * ```js
  * treeUtils.nodes(state).forEach(
@@ -188,8 +185,9 @@ TreeUtils.prototype.walk = function(
  * * `path` - The key path that points at the root of the (sub)tree whose descendants you want to iterate. Default: The `TreeUtils` object's `rootPath`.
  *
  * ###### Returns:
- * An **unordered** >Immutable.List of all key paths that point to nodes in the tree.
+ * An **unordered** >Immutable.List of all key paths that point to nodes in the tree, including the root of the (sub)tree..
  */
+
 TreeUtils.prototype.nodes = function(
   state,
   path
@@ -375,6 +373,42 @@ TreeUtils.prototype.byArbitrary = function(
   return Seq.isSeq(idOrKeyPath)
     ? idOrKeyPath
     : this.byId(state, idOrKeyPath)
+}
+
+/**
+ * @id TreeUtils-id
+ * @lookup id
+ *
+ * #### *method* id()
+ *
+ * Returns the id for the node at `keyPath`. Most useful when you want to get the id of the result of a previous tree query:
+ * ```js
+ * treeUtils.id(state, treeUtils.parent(state, 'node-3'));
+ * // 'node-1'
+ * ```
+ *
+ * ###### Signature:
+ * ```js
+ * id(
+ *    state: Immutable.Iterable,
+ *    keyPath: Immutable.Seq<string|number>
+ * ): string
+ * ```
+ *
+ * ###### Arguments:
+ * * `keyPath` - The absolute key path to the substate / node whose id you want to retrieve
+ *
+ * ###### Returns:
+ * The unique identifier of the node at the given key path.
+ *
+ */
+TreeUtils.prototype.id = function(
+  state,
+  keyPath
+) {
+  return state.getIn(
+    keyPath.concat(this.idKey)
+  )
 }
 
 /**
