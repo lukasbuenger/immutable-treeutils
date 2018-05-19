@@ -49,8 +49,5 @@
   },
   "peerDependencies": {
     "immutable": "^4.0.0-rc.9 || >=3.8"
-  },
-  "dependencies": {
-    "immutable": "^4.0.0-rc.9"
   }
 }
