@@ -14,7 +14,7 @@
   "lint-staged": {
     "*.{js,json,md}": [
       "npm run docs",
-      "prettier --single-quote --no-semi --print-width 40 --write",
+      "prettier --write",
       "git add"
     ]
   },
