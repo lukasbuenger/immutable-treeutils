@@ -47,7 +47,10 @@
     "npm-check-updates": "^2.14.0",
     "prettier": "^1.9.2"
   },
+  "peerDependencies": {
+    "immutable": "^4.0.0-rc.9 || >=3.8"
+  },
   "dependencies": {
-    "immutable": ">=3.8"
+    "immutable": "^4.0.0-rc.9"
   }
 }

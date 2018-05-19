@@ -1,6 +1,11 @@
 var Immutable = require('immutable')
 var Seq = Immutable.Seq
 var List = Immutable.List
+var Stack = List
+
+function isV4() {
+  return typeof Seq.of === 'undefined'
+}
 
 function exists(value) {
   return (
@@ -23,19 +28,19 @@ var NONE = undefined
  * **Example**
  *
  * ```js
- * var treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'));
+ * var treeUtils = new TreeUtils(Immutable.Seq(['path', 'to', 'tree']));
  * ```
  *
  * **With custom key accessors**
  *
  * ```js
- * var treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'), '__id', '__children');
+ * var treeUtils = new TreeUtils(Immutable.Seq(['path', 'to', 'tree']), '__id', '__children');
  * ```
  *
  * **With custom *no result*-default**
  *
  * ```js
- * var treeUtils = new TreeUtils(Immutable.Seq.of('path', 'to', 'tree'), 'id', 'children', false);
+ * var treeUtils = new TreeUtils(Immutable.Seq(['path', 'to', 'tree']), 'id', 'children', false);
  * ```
  *
  * **Note**
@@ -146,7 +151,7 @@ TreeUtils.prototype.nodes = function(
 ) {
   var childNodesKey = this.childNodesKey
   var result = List()
-  var stack = List.of(
+  var stack = Stack.of(
     path || this.rootPath
   )
   while (stack.size > 0) {
@@ -786,10 +791,12 @@ TreeUtils.prototype.ancestors = function(
       index >= self.rootPath.size
     ) {
       return memo.push(
-        keyPath
-          .takeLast(index)
-          .reverse()
-          .toSetSeq()
+        isV4()
+          ? keyPath.take(index)
+          : keyPath
+              .takeLast(index)
+              .reverse()
+              .toSetSeq()
       )
     }
     return memo
