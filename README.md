@@ -10,7 +10,7 @@ conditions that need to be met remain:
 
 * A tree can have only one root node.
 * Every node has to provide a unique identifier value under a key that is the same for all nodes in the tree.
-* Child nodes have to be stored in an [List](http://facebook.github.io/immutable-js/docs/#/List) under a key that is the the same for all nodes containing children.
+* Child nodes have to be stored in an [List](http://facebook.github.io/immutable-js/docs/#/List) under a key that is the same for all nodes containing children.
 
 Supports and tested against ImmutableJS versions `^4.0.0-rc.9 || >=3.8`.
 Check the [changelog](https://github.com/lukasbuenger/immutable-treeutils/blob/v1.2.0/CHANGELOG.md) for further information and migration instructions.
@@ -59,7 +59,7 @@ let content = state.getIn(treeUtils.nextSibling(state, 'node-id').concat('name')
 
 ### Tree mutation
 
-[TreeUtils](#TreeUtils) doesn't provide mutation helpers, because IMHO the varietiy of use cases and implementations ist just too huge to spec a sensible API for that kind of thing. However, simple mutation functions can easily be implemented. An insert function could look something like this:
+[TreeUtils](#TreeUtils) doesn't provide mutation helpers, because IMHO the variety of use cases and implementations is just too huge to spec a sensible API for that kind of thing. However, simple mutation functions can easily be implemented. An insert function could look something like this:
 ```js
 function insert(state, newNode, parentId, index) {
 	return state.updateIn(
@@ -664,7 +664,7 @@ A numeric representation of the depth of the node at `idOrKeyPath`
 
 #### *method* position()
 
-This method is a very naive attempt to calculate a unqiue numeric position descriptor that can be used to compare two nodes for their absolute position in the tree.
+This method is a very naive attempt to calculate a unique numeric position descriptor that can be used to compare two nodes for their absolute position in the tree.
 ```js
 treeUtils.position(state, 'node-4') > treeUtils.position(state, 'node-3');
 // true
