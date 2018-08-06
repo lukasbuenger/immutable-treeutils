@@ -45,7 +45,7 @@ jrunner.addSpecFiles([
 jrunner.onComplete(function(passed) {
   console.log(
     'Tests'.concat(
-      passed ? 'passed' : 'failed',
+      passed ? ' passed' : ' failed',
       ' on immutable@',
       version,
       '.'

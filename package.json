@@ -1,8 +1,7 @@
 {
   "name": "immutable-treeutils",
   "version": "1.2.0",
-  "description":
-    "Functional tree traversal helpers for ImmutableJS data structures",
+  "description": "Functional tree traversal helpers for ImmutableJS data structures",
   "main": "index.js",
   "scripts": {
     "docs": "node scripts/docs.js",
@@ -18,32 +17,31 @@
   },
   "repository": {
     "type": "git",
-    "url":
-      "git+https://github.com/lukasbuenger/immutable-treeutils.git"
+    "url": "git+https://github.com/lukasbuenger/immutable-treeutils.git"
   },
-  "keywords": ["immutable", "tree"],
+  "keywords": [
+    "immutable",
+    "tree"
+  ],
   "author": {
     "name": "Lukas Bünger",
-    "url":
-      "https://github.com/lukasbuenger"
+    "url": "https://github.com/lukasbuenger"
   },
   "license": "MIT",
   "bugs": {
-    "url":
-      "https://github.com/lukasbuenger/immutable-treeutils/issues"
+    "url": "https://github.com/lukasbuenger/immutable-treeutils/issues"
   },
-  "homepage":
-    "https://github.com/lukasbuenger/immutable-treeutils",
+  "homepage": "https://github.com/lukasbuenger/immutable-treeutils",
   "devDependencies": {
-    "acorn": "^5.5.3",
+    "acorn": "^5.7.1",
     "glob": "^7.1.2",
     "husky": "^0.14.3",
     "jasmine": "^3.1.0",
     "jasmine-spec-reporter": "^4.2.1",
-    "lint-staged": "^7.1.1",
+    "lint-staged": "^7.2.0",
     "mustache": "^2.3.0",
     "npm-check-updates": "^2.14.2",
-    "prettier": "^1.12.1"
+    "prettier": "^1.14.0"
   },
   "peerDependencies": {
     "immutable": "^4.0.0-rc.9 || >=3.8"
