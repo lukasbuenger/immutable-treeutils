@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "declaration": true,
+    "removeComments": true,
+    "moduleResolution": "node",
+    "lib": ["es2015", "es2015.iterable"]
+  },
+  "include": ["src/**/*"],
+  "external": ["immutable"]
+}
