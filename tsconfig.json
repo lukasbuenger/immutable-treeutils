@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
+    "strict": false,
     "rootDir": "src",
-    "declaration": true,
     "removeComments": true,
+    "module": "commonjs",
+    "target": "es5",
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "lib": ["es2015", "es2015.iterable"]
   },
   "include": ["src/**/*"],

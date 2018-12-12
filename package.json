@@ -29,22 +29,19 @@
   },
   "devDependencies": {
     "dts-generator": "^2.1.0",
-    "npm-check-updates": "^2.14.3",
-    "prettier": "^1.15.2",
+    "npm-check-updates": "^2.15.0",
+    "prettier": "^1.15.3",
     "rollup": "^0.67.3",
     "rollup-plugin-typescript": "^1.0.0",
     "ts-node": "^7.0.1",
     "tslib": "^1.9.3",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.6"
+    "typescript": "^3.2.2"
   },
   "peerDependencies": {
-    "immutable": "^4.0.0-rc.12"
+    "immutable": ">=3.8"
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {
-    "immutable": "^4.0.0-rc.12"
-  }
+  ]
 }
