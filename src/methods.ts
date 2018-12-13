@@ -229,7 +229,7 @@ export function lastChild(
 
   const maybeChildNodes = state.getIn(childNodesPath)
   if (maybeChildNodes && maybeChildNodes.size > 0) {
-    return keyPath.push(maybeChildNodes.size - 1)
+    return childNodesPath.push(maybeChildNodes.size - 1)
   }
   return notSetValue
 }
@@ -446,8 +446,9 @@ export function parent(
     return notSetValue
   }
 
-  if (keyPath && keyPath.size) {
-    return keyPath.slice(0, -2)
+  const parent = keyPath.slice(0, -2)
+  if (parent.size > options.rootPath.size) {
+    return parent
   }
   return notSetValue
 }
