@@ -607,8 +607,6 @@ export function left(
   }
   const parentPath = parent(options, state, keyPath)
 
-  console.log(keyPath)
-
   if (parentPath && parentPath.size >= options.rootPath.size) {
     return parentPath
   }
