@@ -448,7 +448,7 @@ export function parent(
   }
 
   const parent = keyPath.slice(0, -2)
-  if (parent.size > options.rootPath.size) {
+  if (parent.size >= options.rootPath.size) {
     return parent
   }
   return notSetValue
@@ -606,6 +606,8 @@ export function left(
     lastChildPath = lastChild(options, state, lastChildPath)
   }
   const parentPath = parent(options, state, keyPath)
+
+  console.log(keyPath)
 
   if (parentPath && parentPath.size >= options.rootPath.size) {
     return parentPath
