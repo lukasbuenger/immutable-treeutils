@@ -421,10 +421,11 @@ export function numChildNodes(
   if (keyPath === notSetValue) {
     return notSetValue
   }
+
   const childNodesPath = keyPath.push(options.childNodesKey)
 
   const maybeChildNodes = state.getIn(childNodesPath)
-  return (maybeChildNodes && maybeChildNodes.size) || 0
+  return (maybeChildNodes && maybeChildNodes.size) || notSetValue
 }
 
 export function parent(
