@@ -67,7 +67,7 @@ export const defaultMethods = {
 
 export function TreeUtils(options: {
   [key: string]: any
-}): API<(state: State, ...args) => any> {
+}): API<(state: State, ...args: any[]) => any> {
   return APIFactory({
     options: { ...defaultOptions, ...options },
     methods: defaultMethods,
