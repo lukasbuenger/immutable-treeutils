@@ -1,4 +1,4 @@
-import test from 'tape'
+import * as test from 'tape'
 import { fromJS, List } from 'immutable'
 import {
   defaultOptions,

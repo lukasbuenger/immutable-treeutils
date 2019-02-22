@@ -23,11 +23,12 @@
   },
   "homepage": "https://github.com/lukasbuenger/immutable-treeutils",
   "scripts": {
-    "build": "yarn build:modules && yarn build:types",
+    "build": "npm run build:modules && npm run build:types",
     "build:modules": "rollup -c",
-    "build:types": "dts-generator --name immutable-treeutils --main immutable-treeutils/index --out  dist/index.d.ts --project ."
+    "build:types": "dts-generator --name immutable-treeutils --prefix immutable-treeutils --main immutable-treeutils/index --out  dist/index.d.ts --project ."
   },
   "devDependencies": {
+    "@types/tape": "^4.2.33",
     "dts-generator": "^3.0.0",
     "immutable": "^4.0.0-rc.12",
     "npm-check-updates": "^2.15.0",
