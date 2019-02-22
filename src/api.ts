@@ -1,9 +1,12 @@
 import { Map } from 'immutable'
 import { API, Options, Method, State } from './types'
 
-function bindMethods(methods, ...args): any {
+function bindMethods(
+  methods: Map<string, Method>,
+  ...args: any[]
+): any {
   return methods.reduce(
-    (acc, factory, name) => ({
+    (acc: object, factory: Function, name: string) => ({
       ...acc,
       [name]: factory.bind(null, ...args),
     }),
@@ -21,11 +24,11 @@ export function APIFactory({
   methods: { [k: string]: Method }
 }) {
   return {
-    create(): API<(state: State, ...args) => any> {
+    create(): API<(state: State, ...args: any[]) => any> {
       return bindMethods(Map(methods), options)
     },
     withState<T extends any>(state: State, reducer: Reducer<T>): T {
-      return reducer(bindMethods(methods, options, state))
+      return reducer(bindMethods(Map(methods), options, state))
     },
   }
 }
