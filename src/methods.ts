@@ -261,7 +261,7 @@ export function siblings(
     return notSetValue
   }
   return parentChildNodes.reduce(
-    (result, _, i) =>
+    (result: List<KeyPath>, _: any, i: number): List<KeyPath> =>
       i !== index
         ? result.push(parentChildNodesPath.push(i))
         : result,
@@ -295,7 +295,8 @@ export function childNodes(
   }
 
   return maybeChildNodes.reduce(
-    (acc, _, i) => acc.push(childNodesPath.push(i)),
+    (acc: List<KeyPath>, _: any, i: number): List<KeyPath> =>
+      acc.push(childNodesPath.push(i)),
     List()
   )
 }
@@ -447,9 +448,9 @@ export function parent(
     return notSetValue
   }
 
-  const parent = keyPath.slice(0, -2)
-  if (parent.size >= options.rootPath.size) {
-    return parent
+  const parentPath = keyPath.slice(0, -2)
+  if (parentPath.size >= options.rootPath.size) {
+    return parentPath
   }
   return notSetValue
 }
@@ -566,7 +567,7 @@ export function right(
   }
 
   let parentPath = parent(options, state, keyPath)
-  let nextSiblingOfParent
+  let nextSiblingOfParent: KeyPath
 
   while (parentPath && parentPath.size >= l) {
     nextSiblingOfParent = nextSibling(options, state, parentPath)
