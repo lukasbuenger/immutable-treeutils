@@ -2,6 +2,7 @@
   "compilerOptions": {
     "strict": false,
     "rootDir": "src",
+    "rootDirs": ["src", "tests"],
     "removeComments": true,
     "module": "commonjs",
     "target": "es5",
