@@ -28,16 +28,16 @@
     "build:types": "dts-generator --name immutable-treeutils --main immutable-treeutils/index --out  dist/index.d.ts --project ."
   },
   "devDependencies": {
-    "dts-generator": "^2.1.0",
+    "dts-generator": "^3.0.0",
     "npm-check-updates": "^2.15.0",
-    "prettier": "^1.15.3",
-    "rollup": "^0.67.3",
+    "prettier": "^1.16.4",
+    "rollup": "^1.2.2",
     "rollup-plugin-typescript": "^1.0.0",
-    "tape": "^4.9.1",
-    "ts-node": "^7.0.1",
+    "tape": "^4.10.1",
+    "ts-node": "^8.0.2",
     "tslib": "^1.9.3",
-    "tslint": "^5.11.0",
-    "typescript": "^3.2.2"
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3333"
   },
   "peerDependencies": {
     "immutable": ">=3.8"
