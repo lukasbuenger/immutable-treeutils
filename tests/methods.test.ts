@@ -25,6 +25,7 @@ import {
   find,
   findId,
 } from '../src/'
+import { Node } from '../src/types'
 
 const state = fromJS({
   data: {
@@ -81,13 +82,16 @@ test('method "reduceTree"', assert => {
   const _reduceTree = reduceTree.bind(null, options, state)
 
   assert.deepEqual(
-    _reduceTree((acc, val) => acc.concat(val.get('id')), []),
+    _reduceTree(
+      (acc: string[], val: Node) => acc.concat(val.get('id')),
+      []
+    ),
     ['1', '2', '3', '4', '5', '6', '7'],
     'returns a reduction of the tree.'
   )
 
   assert.deepEqual(
-    _reduceTree((_, val, _1, stop) => {
+    _reduceTree((_: any, val: Node, _1: any, stop: Function) => {
       if (val.get('id') === '3') {
         return stop(val.get('id'))
       }
@@ -102,7 +106,7 @@ test('method "filter"', assert => {
   const _filter = filter.bind(null, options, state)
 
   assert.deepEqual(
-    _filter(node => node.get('type') === 'paragraph').toJS(),
+    _filter((node: Node) => node.get('type') === 'paragraph').toJS(),
     [
       ['data', 'childNodes', 0],
       ['data', 'childNodes', 1, 'childNodes', 0, 'childNodes', 0],
@@ -118,7 +122,7 @@ test('method "find"', assert => {
   const _find = find.bind(null, options, state)
 
   assert.deepEqual(
-    _find(node => node.get('type') === 'paragraph').toJS(),
+    _find((node: Node) => node.get('type') === 'paragraph').toJS(),
     ['data', 'childNodes', 0],
     'returns the first key path whose node matches the predicate.'
   )
@@ -518,8 +522,6 @@ test('method "left"', assert => {
 })
 
 test('method "firstDescendant"', assert => {
-  const _firstChild = firstChild.bind(null, options, state)
-
   assert.equal(
     firstChild,
     firstDescendant,
