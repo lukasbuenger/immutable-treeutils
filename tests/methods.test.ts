@@ -1,4 +1,4 @@
-import * as test from 'tape'
+import test = require('tape')
 import { fromJS, List } from 'immutable'
 import {
   defaultOptions,
