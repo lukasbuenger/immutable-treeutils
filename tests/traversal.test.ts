@@ -1,4 +1,4 @@
-import * as test from 'tape'
+import test = require('tape')
 import { fromJS, List } from 'immutable'
 
 import {
@@ -42,17 +42,11 @@ test('traversal "Preorder', assert => {
     result.push(n.get('id'))
   })
 
-  assert.deepEqual(result, [
-    'F',
-    'B',
-    'A',
-    'D',
-    'C',
-    'E',
-    'G',
-    'I',
-    'H',
-  ])
+  assert.deepEqual(
+    result,
+    ['F', 'B', 'A', 'D', 'C', 'E', 'G', 'I', 'H'],
+    'Walks nodes in correctly in  pre-order'
+  )
 
   assert.end()
 })
@@ -64,17 +58,11 @@ test('traversal "ReversePreorder', assert => {
     result.push(n.get('id'))
   })
 
-  assert.deepEqual(result, [
-    'F',
-    'G',
-    'I',
-    'H',
-    'B',
-    'D',
-    'E',
-    'C',
-    'A',
-  ])
+  assert.deepEqual(
+    result,
+    ['F', 'G', 'I', 'H', 'B', 'D', 'E', 'C', 'A'],
+    'Walks nodes in correctly in  reverse pre-order'
+  )
 
   assert.end()
 })
@@ -86,17 +74,11 @@ test('traversal "PostOrder', assert => {
     result.push(n.get('id'))
   })
 
-  assert.deepEqual(result, [
-    'A',
-    'C',
-    'E',
-    'D',
-    'B',
-    'H',
-    'I',
-    'G',
-    'F',
-  ])
+  assert.deepEqual(
+    result,
+    ['A', 'C', 'E', 'D', 'B', 'H', 'I', 'G', 'F'],
+    'Walks nodes in correctly in post-order'
+  )
 
   assert.end()
 })
@@ -107,17 +89,11 @@ test('traversal "ReversePostOrder', assert => {
     result.push(n.get('id'))
   })
 
-  assert.deepEqual(result, [
-    'H',
-    'I',
-    'G',
-    'E',
-    'C',
-    'D',
-    'A',
-    'B',
-    'F',
-  ])
+  assert.deepEqual(
+    result,
+    ['H', 'I', 'G', 'E', 'C', 'D', 'A', 'B', 'F'],
+    'Walks nodes in correctly in reverse post-order'
+  )
 
   assert.end()
 })
@@ -129,17 +105,11 @@ test('traversal "InOrder', assert => {
     result.push(n.get('id'))
   })
 
-  assert.deepEqual(result, [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'H',
-    'I',
-    'G',
-  ])
+  assert.deepEqual(
+    result,
+    ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'I', 'G'],
+    'Walks nodes in correctly in in-order'
+  )
 
   assert.end()
 })
@@ -151,17 +121,11 @@ test('traversal "ReverseInOrder', assert => {
     result.push(n.get('id'))
   })
 
-  assert.deepEqual(result, [
-    'H',
-    'I',
-    'G',
-    'F',
-    'E',
-    'D',
-    'C',
-    'B',
-    'A',
-  ])
+  assert.deepEqual(
+    result,
+    ['H', 'I', 'G', 'F', 'E', 'D', 'C', 'B', 'A'],
+    'Walks nodes in correctly in reverse in-order'
+  )
 
   assert.end()
 })
@@ -173,17 +137,11 @@ test('traversal "BFS', assert => {
     result.push(n.get('id'))
   })
 
-  assert.deepEqual(result, [
-    'F',
-    'B',
-    'G',
-    'A',
-    'D',
-    'I',
-    'C',
-    'E',
-    'H',
-  ])
+  assert.deepEqual(
+    result,
+    ['F', 'B', 'G', 'A', 'D', 'I', 'C', 'E', 'H'],
+    'Walks nodes in correctly when applying breadth-first-search'
+  )
 
   assert.end()
 })
@@ -195,17 +153,11 @@ test('traversal "ReverseBFS', assert => {
     result.push(n.get('id'))
   })
 
-  assert.deepEqual(result, [
-    'F',
-    'G',
-    'B',
-    'I',
-    'D',
-    'A',
-    'H',
-    'E',
-    'C',
-  ])
+  assert.deepEqual(
+    result,
+    ['F', 'G', 'B', 'I', 'D', 'A', 'H', 'E', 'C'],
+    'Walks nodes in correctly when applying reverse breadth-first-search'
+  )
 
   assert.end()
 })
