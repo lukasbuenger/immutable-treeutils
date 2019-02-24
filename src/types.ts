@@ -26,7 +26,11 @@ export type Options = BaseOptions & {
   traversalMethod: TraversalMethod
 }
 
-export type Method = (options: Options, state: State, ...args) => any
+export type Method = (
+  options: Options,
+  state: State,
+  ...args: any[]
+) => any
 
 export type API<T extends Function> = {
   [k: string]: T
