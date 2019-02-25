@@ -1,4 +1,3 @@
-export { APIFactory } from './api'
 export { PreOrder, ReversePreOrder } from './traversal/preorder'
 export { PostOrder, ReversePostOrder } from './traversal/postorder'
 export { InOrder, ReverseInOrder } from './traversal/inorder'
@@ -30,4 +29,10 @@ export {
   right,
   siblings,
 } from './methods'
-export { defaultOptions, defaultMethods, TreeUtils } from './lib'
+
+export {
+  defaultOptions,
+  defaultMethods,
+  TreeUtils,
+  APIFactory,
+} from './lib'
