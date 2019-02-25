@@ -104,7 +104,7 @@ export function findId<T extends any>(
           options,
           state,
           (acc, node, keyPath, stop) =>
-            node.get(options.idKey) === idOrKeyPath
+            node.getIn(options.idPath) === idOrKeyPath
               ? stop(keyPath)
               : acc,
           notSetValue,
@@ -119,7 +119,7 @@ export function getId<T extends any>(
   keyPath: KeyPath,
   notSetValue?: T
 ): string | T {
-  return state.getIn(keyPath.push(options.idKey), notSetValue)
+  return state.getIn(keyPath.concat(options.idPath), notSetValue)
 }
 
 export function nextSibling<T extends any>(
@@ -199,7 +199,7 @@ export function firstChild<T extends any>(
     return notSetValue
   }
   const safeKeyPath = <KeyPath>keyPath
-  const firstChildPath = safeKeyPath.push(options.childNodesKey, 0)
+  const firstChildPath = safeKeyPath.concat(options.childNodesPath, 0)
 
   if (state.hasIn(firstChildPath)) {
     return firstChildPath
@@ -226,7 +226,7 @@ export function lastChild<T extends any>(
     return notSetValue
   }
   const safeKeyPath = <KeyPath>keyPath
-  const childNodesPath = safeKeyPath.push(options.childNodesKey)
+  const childNodesPath = safeKeyPath.concat(options.childNodesPath)
 
   const maybeChildNodes = state.getIn(childNodesPath)
   if (maybeChildNodes && maybeChildNodes.size > 0) {
@@ -288,7 +288,7 @@ export function childNodes(
   if (keyPath === notSetValue) {
     return notSetValue
   }
-  const childNodesPath = keyPath.push(options.childNodesKey)
+  const childNodesPath = keyPath.concat(options.childNodesPath)
   const maybeChildNodes = state.getIn(childNodesPath)
 
   if (!maybeChildNodes) {
@@ -322,7 +322,7 @@ export function childAt<T extends any>(
     return notSetValue
   }
   const safeKeyPath = <KeyPath>keyPath
-  const childPath = safeKeyPath.push(options.childNodesKey, index)
+  const childPath = safeKeyPath.concat(options.childNodesPath, index)
 
   if (state.hasIn(childPath)) {
     return childPath
@@ -357,7 +357,7 @@ export function descendants<T extends any>(
   return filter(
     options,
     state,
-    n => n.get(options.idKey) !== id,
+    n => n.getIn(options.idPath) !== id,
     safeKeyPath
   )
 }
@@ -396,7 +396,7 @@ export function hasChildNodes(
     return false
   }
 
-  const childNodesPath = keyPath.push(options.childNodesKey)
+  const childNodesPath = keyPath.concat(options.childNodesPath)
   const maybeChildNodes = state.getIn(childNodesPath)
   return Boolean(
     maybeChildNodes &&
@@ -424,7 +424,7 @@ export function numChildNodes<T extends any>(
     return notSetValue
   }
   const safeKeyPath = <KeyPath>keyPath
-  const childNodesPath = safeKeyPath.push(options.childNodesKey)
+  const childNodesPath = safeKeyPath.concat(options.childNodesPath)
 
   const maybeChildNodes = state.getIn(childNodesPath)
   return (maybeChildNodes && maybeChildNodes.size) || notSetValue

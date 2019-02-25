@@ -36,7 +36,7 @@ test('function "TreeUtils"', assert => {
 
   const customOptionsApi = TreeUtils({
     rootPath: List(['data']),
-    idKey: '_id',
+    idPath: List(['_id']),
   })
 
   assert.deepEqual(
@@ -46,7 +46,11 @@ test('function "TreeUtils"', assert => {
   )
 
   const customMethod: Method = (opts, s, num) => {
-    assert.equal(opts.idKey, 'id', 'custom methods receive opts.')
+    assert.deepEqual(
+      opts.idPath.toJS(),
+      ['id'],
+      'custom methods receive opts.'
+    )
     assert.equal(state, s, 'custom methods receive state.')
     assert.equal(num, 8, 'custom methods receive rest args.')
     return 'I was called!'
@@ -76,7 +80,7 @@ test('function "TreeUtils"', assert => {
 test('method "withState"', assert => {
   const customOptionsApi = TreeUtils({
     rootPath: List(['data']),
-    idKey: '_id',
+    idPath: List(['_id']),
   })
 
   const result = customOptionsApi.withState(

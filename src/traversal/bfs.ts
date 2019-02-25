@@ -14,7 +14,7 @@ function visit(
 ): boolean | void {
   while (queue.size > 0) {
     const [node, keyPath] = queue.first()
-    const childNodesPath = keyPath.push(options.childNodesKey)
+    const childNodesPath = keyPath.concat(options.childNodesPath)
 
     queue = queue.shift()
 
@@ -22,7 +22,7 @@ function visit(
       return false
     }
 
-    const childNodes: List<any> = node.get(options.childNodesKey)
+    const childNodes: List<any> = node.getIn(options.childNodesPath)
     if (!childNodes) {
       continue
     }
@@ -45,14 +45,14 @@ function visitReverse(
 ): boolean | void {
   while (queue.size > 0) {
     const [node, keyPath] = queue.first()
-    const childNodesPath = keyPath.push(options.childNodesKey)
+    const childNodesPath = keyPath.concat(options.childNodesPath)
     queue = queue.shift()
 
     if (iterator(node, keyPath) === false) {
       return false
     }
 
-    const childNodes: List<any> = node.get(options.childNodesKey)
+    const childNodes: List<any> = node.getIn(options.childNodesPath)
     if (!childNodes) {
       continue
     }

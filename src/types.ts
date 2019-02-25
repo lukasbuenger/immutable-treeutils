@@ -11,8 +11,8 @@ export type BaseIterator = (
 
 export type BaseOptions = {
   rootPath: KeyPath
-  childNodesKey: string
-  idKey: string
+  childNodesPath: KeyPath
+  idPath: KeyPath
 }
 
 export type TraversalMethod = (

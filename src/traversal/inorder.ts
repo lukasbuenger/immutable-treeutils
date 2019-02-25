@@ -13,9 +13,9 @@ function visit(
   node: Node,
   keyPath: KeyPath
 ): boolean | void {
-  const childNodesPath = keyPath.push(options.childNodesKey)
+  const childNodesPath = keyPath.concat(options.childNodesPath)
 
-  const childNodes: List<any> = node.get(options.childNodesKey)
+  const childNodes: List<any> = node.getIn(options.childNodesPath)
   if (!childNodes) {
     return iterator(node, keyPath)
   }
@@ -67,9 +67,9 @@ function visitReverse(
   node: Node,
   keyPath: KeyPath
 ): boolean | void {
-  const childNodesPath = keyPath.push(options.childNodesKey)
+  const childNodesPath = keyPath.concat(options.childNodesPath)
 
-  const childNodes: List<any> = node.get(options.childNodesKey)
+  const childNodes: List<any> = node.getIn(options.childNodesPath)
   if (!childNodes) {
     return iterator(node, keyPath)
   }

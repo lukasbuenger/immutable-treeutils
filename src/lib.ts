@@ -63,8 +63,8 @@ export function APIFactory(options: Options, methods: API<Method>) {
 
 export const defaultOptions: Options = {
   rootPath: List([]),
-  childNodesKey: 'childNodes',
-  idKey: 'id',
+  childNodesPath: List(['childNodes']),
+  idPath: List(['id']),
   traversalMethod: PreOrder,
 }
 
@@ -97,9 +97,7 @@ export const defaultMethods = {
 }
 
 export function TreeUtils(
-  options: {
-    [key: string]: any
-  } = {},
+  options: Partial<Options> = {},
   methods: API<Method> = {}
 ): API<Function> {
   return APIFactory(

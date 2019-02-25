@@ -14,8 +14,8 @@ import {
 
 const options = {
   rootPath: List(),
-  idKey: 'id',
-  childNodesKey: 'childNodes',
+  idPath: List(['id']),
+  childNodesPath: List(['childNodes']),
 }
 
 const state = fromJS({
