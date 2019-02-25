@@ -1,5 +1,8 @@
-.idea
 node_modules
 .DS_Store
-npm-debug.log
-build
+.vscode
+dist
+*.log
+
+yarn.lock
+package-lock.json

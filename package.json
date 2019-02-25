@@ -1,24 +1,11 @@
 {
   "name": "immutable-treeutils",
-  "version": "1.2.0",
   "description": "Functional tree traversal helpers for ImmutableJS data structures",
-  "main": "index.js",
-  "scripts": {
-    "docs": "node scripts/docs.js",
-    "precommit": "lint-staged",
-    "test": "node scripts/test.js"
-  },
-  "lint-staged": {
-    "*.{js}": [
-      "prettier --write",
-      "npm run docs",
-      "git add"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lukasbuenger/immutable-treeutils.git"
-  },
+  "version": "2.0.0-beta.0",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
   "keywords": [
     "immutable",
     "tree"
@@ -27,23 +14,39 @@
     "name": "Lukas Bünger",
     "url": "https://github.com/lukasbuenger"
   },
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukasbuenger/immutable-treeutils.git"
+  },
   "bugs": {
     "url": "https://github.com/lukasbuenger/immutable-treeutils/issues"
   },
   "homepage": "https://github.com/lukasbuenger/immutable-treeutils",
+  "scripts": {
+    "build": "npm run build:modules && npm run build:types",
+    "build:modules": "rollup -c",
+    "build:types": "dts-generator --name immutable-treeutils --prefix immutable-treeutils --main immutable-treeutils/index --out  dist/index.d.ts --project .",
+    "test": "ts-node tests/index.test | faucet"
+  },
   "devDependencies": {
-    "acorn": "^5.7.1",
-    "glob": "^7.1.2",
-    "husky": "^0.14.3",
-    "jasmine": "^3.1.0",
-    "jasmine-spec-reporter": "^4.2.1",
-    "lint-staged": "^7.2.0",
-    "mustache": "^2.3.0",
-    "npm-check-updates": "^2.14.2",
-    "prettier": "^1.14.0"
+    "@types/tape": "^4.2.33",
+    "dts-generator": "^2.1.0",
+    "faucet": "0.0.1",
+    "immutable": "^4.0.0-rc.12",
+    "npm-check-updates": "^2.15.0",
+    "prettier": "^1.16.4",
+    "rollup": "^1.2.2",
+    "rollup-plugin-typescript": "^1.0.0",
+    "tape": "^4.10.1",
+    "ts-node": "^8.0.2",
+    "tslib": "^1.9.3",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3333"
   },
   "peerDependencies": {
-    "immutable": "^4.0.0-rc.9 || >=3.8"
-  }
+    "immutable": ">=3.8"
+  },
+  "files": [
+    "dist"
+  ]
 }
