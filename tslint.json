@@ -2,7 +2,6 @@
   "defaultSeverity": "error",
   "rules": {
     "no-shadowed-variable": true,
-    "no-unsafe-any": true,
     "no-var-keyword": true
   }
 }
