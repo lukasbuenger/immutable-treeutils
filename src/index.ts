@@ -3,7 +3,6 @@ export { PostOrder, ReversePostOrder } from './traversal/postorder'
 export { InOrder, ReverseInOrder } from './traversal/inorder'
 export { BFS, ReverseBFS } from './traversal/bfs'
 export {
-  firstDescendant,
   ancestors,
   childAt,
   childIndex,
@@ -14,6 +13,7 @@ export {
   find,
   findId,
   firstChild,
+  firstDescendant,
   getId,
   hasChildNodes,
   lastChild,
@@ -26,6 +26,7 @@ export {
   position,
   previousSibling,
   reduceTree,
+  resolve,
   right,
   siblings,
 } from './methods'
@@ -33,6 +34,6 @@ export {
 export {
   defaultOptions,
   defaultMethods,
-  TreeUtils,
   APIFactory,
+  TreeUtils,
 } from './lib'

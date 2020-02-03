@@ -1,7 +1,6 @@
 import { Options, API, State, Method } from './types'
 import { PreOrder } from './traversal/preorder'
 import {
-  firstDescendant,
   ancestors,
   childAt,
   childIndex,
@@ -12,6 +11,7 @@ import {
   find,
   findId,
   firstChild,
+  firstDescendant,
   getId,
   hasChildNodes,
   lastChild,
@@ -24,6 +24,7 @@ import {
   position,
   previousSibling,
   reduceTree,
+  resolve,
   right,
   siblings,
 } from './methods'
@@ -70,7 +71,6 @@ export const defaultOptions: Options = {
 }
 
 export const defaultMethods = {
-  firstDescendant,
   ancestors,
   childAt,
   childIndex,
@@ -81,6 +81,7 @@ export const defaultMethods = {
   find,
   findId,
   firstChild,
+  firstDescendant,
   getId,
   hasChildNodes,
   lastChild,
@@ -93,6 +94,7 @@ export const defaultMethods = {
   position,
   previousSibling,
   reduceTree,
+  resolve,
   right,
   siblings,
 }

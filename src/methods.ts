@@ -10,6 +10,15 @@ type Reducer<T> = (
   stop?: Stop
 ) => T
 
+export function resolve<T extends any>(
+  options: Options,
+  state: State,
+  path: KeyPath,
+  notSetValue?: T
+) {
+  return get(state, path, notSetValue)
+}
+
 export function reduceTree<T extends any>(
   options: Options,
   state: State,

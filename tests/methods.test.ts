@@ -21,6 +21,7 @@ import {
   left,
   filter,
   reduceTree,
+  resolve,
   firstDescendant,
   find,
   findId,
@@ -77,6 +78,24 @@ const options = {
   ...defaultOptions,
   rootPath: ['data'],
 }
+
+test('method "resolve"', assert => {
+  const _resolve = resolve.bind(null, options, state)
+
+  assert.deepEqual(
+    _resolve(['data', 'childNodes', 0, 'name']),
+    'Paragraph',
+    'returns the data the cursor points to.'
+  )
+
+  assert.deepEqual(
+    _resolve(['data', 'childNodes', 7, 'name'], 0),
+    0,
+    'returns a default value if no data was found at the cursor.'
+  )
+
+  assert.end()
+})
 
 test('method "reduceTree"', assert => {
   const _reduceTree = reduceTree.bind(null, options, state)
