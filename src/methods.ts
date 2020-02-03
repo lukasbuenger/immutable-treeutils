@@ -55,7 +55,7 @@ export function nodes(
   return reduceTree<QuerySet>(
     options,
     state,
-    (acc, _, keyPath) => acc.concat(keyPath),
+    (acc, _, keyPath) => acc.concat([keyPath]),
     [],
     path
   )

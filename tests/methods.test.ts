@@ -3,6 +3,7 @@ import { set } from 'lodash'
 import {
   defaultOptions,
   getId,
+  nodes,
   nextSibling,
   previousSibling,
   parent,
@@ -159,6 +160,26 @@ test('method "find"', assert => {
     _find(noOp),
     undefined,
     'returns undefined if the predicate never returns true.'
+  )
+
+  assert.end()
+})
+
+test('method "nodes"', assert => {
+  const _nodes = nodes.bind(null, options, state)
+
+  assert.deepEqual(
+    _nodes(),
+    [
+      ['data'],
+      ['data', 'childNodes', 0],
+      ['data', 'childNodes', 1],
+      ['data', 'childNodes', 1, 'childNodes', 0],
+      ['data', 'childNodes', 1, 'childNodes', 0, 'childNodes', 0],
+      ['data', 'childNodes', 1, 'childNodes', 1],
+      ['data', 'childNodes', 1, 'childNodes', 1, 'childNodes', 0],
+    ],
+    'returns a QuerySet containing keypaths to all node in the tree.'
   )
 
   assert.end()
