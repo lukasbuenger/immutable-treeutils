@@ -6,7 +6,7 @@ import {
   defaultMethods,
   defaultOptions,
 } from '../src'
-import { Methods, Options, State } from './types'
+import { Methods, Options, State } from './base'
 
 const state = {
   data: {

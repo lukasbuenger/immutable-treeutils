@@ -5,7 +5,7 @@ import {
   State,
   Node,
   KeyPath,
-} from '../types'
+} from '../base'
 
 function visit(
   options: BaseOptions,

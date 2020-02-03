@@ -1,3 +1,7 @@
+/**
+ * This is the doc comment for file1.ts
+ * @packageDocumentation
+ */
 import get from 'lodash/get'
 import {
   BaseOptions,
@@ -5,7 +9,7 @@ import {
   State,
   Node,
   KeyPath,
-} from '../types'
+} from '../base'
 
 function visit(
   options: BaseOptions,
@@ -73,6 +77,12 @@ function visitReverse(
   }
 }
 
+/**
+ * Iterates over a given tree using a [Pre-Order algorithm](https://en.wikipedia.org/wiki/Tree_traversal#Pre-order_(NLR)).
+ *
+ * @param iterator
+ * @param rootPath
+ */
 export function PreOrder(
   options: BaseOptions,
   state: State,

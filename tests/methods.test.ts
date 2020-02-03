@@ -28,7 +28,7 @@ import {
   find,
   findId,
 } from '../src/'
-import { Node } from '../src/types'
+import { Node } from './base'
 
 const state = {
   data: {
@@ -484,13 +484,25 @@ test('method "position"', assert => {
   assert.deepEqual(
     position(options, state, '7'),
     221,
-    'returns a naive numerical position indicator.'
+    'returns a pre-ordered naive numerical position indicator.'
+  )
+
+  assert.deepEqual(
+    position(options, state, '1'),
+    0,
+    'returns 0 for the root.'
   )
 
   assert.deepEqual(
     position(options2, state2, 'd'),
     21,
     'can handle deeply nested childNodes arrays.'
+  )
+
+  assert.deepEqual(
+    position(options2, state2, 'a'),
+    0,
+    'returns 0 for the root of state2.'
   )
 
   assert.end()

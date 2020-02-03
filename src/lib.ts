@@ -4,7 +4,7 @@ import {
   Methods,
   Apply,
   AppliedMethods,
-} from './types'
+} from './base'
 import { PreOrder } from './traversal/preorder'
 import {
   ancestors,
