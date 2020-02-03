@@ -98,20 +98,28 @@ test('method "resolve"', assert => {
 })
 
 test('method "reduceTree"', assert => {
-  const _reduceTree = reduceTree.bind(null, options, state)
-
   assert.deepEqual(
-    _reduceTree((acc: string[], val: Node) => acc.concat(val.id), []),
+    reduceTree(
+      options,
+      state,
+      (acc: string[], val: Node) => acc.concat(val.id),
+      []
+    ),
     ['1', '2', '3', '4', '5', '6', '7'],
     'returns a reduction of the tree.'
   )
 
   assert.deepEqual(
-    _reduceTree((_: any, val: Node, _1: any, stop: Function) => {
-      if (val.id === '3') {
-        return stop(val.id)
-      }
-    }),
+    reduceTree(
+      options,
+      state,
+      (_: any, val: Node, _1: any, stop: Function) => {
+        if (val.id === '3') {
+          return stop(val.id)
+        }
+      },
+      undefined
+    ),
     '3',
     'returns the value passed to to the stop function.'
   )
@@ -144,13 +152,13 @@ test('method "find"', assert => {
   )
 
   const noOp = () => {
-    // void
+    return false
   }
 
   assert.deepEqual(
-    [_find(noOp), _find(noOp, null, 'foo')],
-    [undefined, 'foo'],
-    'returns notSetValue if no node matches the predicate.'
+    _find(noOp),
+    undefined,
+    'returns undefined if the predicate never returns true.'
   )
 
   assert.end()
@@ -176,12 +184,9 @@ test('method "getId"', assert => {
     'returns the id value of an absolute key path.'
   )
   assert.deepEqual(
-    [
-      _getId(['data', 'childNodes', 4]),
-      _getId(['data', 'childNodes', 4], false),
-    ],
-    [undefined, false],
-    'returns notSetValue if the key path has no id key.'
+    _getId(['data', 'childNodes', 4]),
+    undefined,
+    'returns undefined if the key path has no id key.'
   )
 
   assert.end()
@@ -195,9 +200,9 @@ test('method "nextSibling"', assert => {
     'returns the next sibling key path.'
   )
   assert.deepEqual(
-    [_nextSibling('7'), _nextSibling('7', null, 'foo')],
-    [undefined, 'foo'],
-    'returns notSetValue if the node at `id` does not have a next sibling.'
+    _nextSibling('7'),
+    undefined,
+    'returns undefined if the node at `id` does not have a next sibling.'
   )
 
   assert.end()
@@ -211,9 +216,9 @@ test('method "previousSibling"', assert => {
     'returns the previous sibling key path.'
   )
   assert.deepEqual(
-    [_previousSibling('4'), _previousSibling('4', null, 6)],
-    [undefined, 6],
-    'returns notSetValue if the node at `id` does not have a next sibling.'
+    _previousSibling('4'),
+    undefined,
+    'returns undefined if the node at `id` does not have a next sibling.'
   )
 
   assert.end()
@@ -228,9 +233,9 @@ test('method "parent"', assert => {
   )
 
   assert.deepEqual(
-    [_parent('1'), _parent('1', null, true)],
-    [undefined, true],
-    'returns notSetValue if the node has no parent (aka is the root node).'
+    _parent('1'),
+    undefined,
+    'returns undefined if the node has no parent (aka is the root node).'
   )
 
   assert.end()
@@ -245,9 +250,9 @@ test('method "childIndex"', assert => {
   )
 
   assert.deepEqual(
-    [_childIndex('1'), _childIndex('1', null, false)],
-    [undefined, false],
-    'returns notSetValue if no child index can be derived (aka is probably the root node).'
+    _childIndex('1'),
+    -1,
+    'returns -1 if no child index can be derived (aka is probably the root node).'
   )
 
   assert.end()
@@ -262,9 +267,9 @@ test('method "childAt"', assert => {
     'returns the key path to the node at child index'
   )
   assert.deepEqual(
-    [_childAt('4', 2), _childAt('4', 2, null, false)],
-    [undefined, false],
-    'returns notSetValue if there is no child node at the given index.'
+    _childAt('4', 2),
+    undefined,
+    'returns undefined if there is no child node at the given index.'
   )
   assert.end()
 })
@@ -279,9 +284,9 @@ test('method "firstChild"', assert => {
   )
 
   assert.deepEqual(
-    [_firstChild('7'), _firstChild('7', null, false)],
-    [undefined, false],
-    'returns notSetValue if there is no first child (aka the node has no children).'
+    _firstChild('7'),
+    undefined,
+    'returns undefined if there is no first child (aka the node has no children).'
   )
   assert.end()
 })
@@ -296,9 +301,9 @@ test('method "lastChild"', assert => {
   )
 
   assert.deepEqual(
-    [_lastChild('7'), _lastChild('7', null, false)],
-    [undefined, false],
-    'returns notSetValue if there is no last child (aka the node has no children).'
+    _lastChild('7'),
+    undefined,
+    'returns undefined if there is no last child (aka the node has no children).'
   )
   assert.end()
 })
@@ -331,9 +336,9 @@ test('method "numChildNodes"', assert => {
   )
 
   assert.deepEqual(
-    [_numChildNodes('2'), _numChildNodes('2', null, 'foo')],
-    [undefined, 'foo'],
-    'returns notSetValue if the node has no value at childNodesKey.'
+    _numChildNodes('2'),
+    -1,
+    'returns -1 if the node has no value at childNodesKey.'
   )
 
   assert.end()
@@ -349,9 +354,9 @@ test('method "siblings"', assert => {
   )
 
   assert.deepEqual(
-    [_siblings('7'), _siblings('19', null, 'foo')],
-    [[], 'foo'],
-    'returns notSetValue if the node does not exist, empty list if node has no siblings.'
+    _siblings('7'),
+    [],
+    'returns an empty QuerySet if the node does not exist or has no siblings.'
   )
   assert.end()
 })
@@ -374,12 +379,9 @@ test('method "childNodes"', assert => {
   )
 
   assert.deepEqual(
-    [
-      childNodes(options, stateWithEmptyChildNodes, '2'),
-      _childNodes('19', null, 'foo'),
-    ],
-    [[], 'foo'],
-    'returns notSetValue if the node does not exist or has no value at childNodesKey, empty list if node has no childNodes.'
+    childNodes(options, stateWithEmptyChildNodes, '2'),
+    [],
+    'returns an empty QuerySet if the node does either not exist, has no value at childNodesKey or has no childNodes.'
   )
   assert.end()
 })
@@ -398,9 +400,9 @@ test('method "ancestors"', assert => {
   )
 
   assert.deepEqual(
-    [_ancestors('1'), _ancestors('19', null, 100)],
-    [[], 100],
-    'returns notSetValue if the node does not exist, empty list if node has no ancestors.'
+    _ancestors('1'),
+    [],
+    'returns an empty QuerySet if the node does not exist or has no ancestors.'
   )
   assert.end()
 })
@@ -415,9 +417,9 @@ test('method "depth"', assert => {
   )
 
   assert.equal(
-    _depth('8', null, 'MEEEP'),
-    'MEEEP',
-    'returns notSetValue if the node does not exist.'
+    _depth('8'),
+    -1,
+    'returns -1 if the node does not exist.'
   )
 
   assert.end()
@@ -438,9 +440,9 @@ test('method "descendants"', assert => {
   )
 
   assert.deepEqual(
-    [_descendants('7'), _descendants('19', null, 100)],
-    [[], 100],
-    'returns notSetValue if the node does not exist, empty list if node has no descendants.'
+    _descendants('7'),
+    [],
+    'returns an empty QeerySet if the node does not exist or has no descendants.'
   )
   assert.end()
 })
@@ -473,16 +475,16 @@ test('method "right"', assert => {
   )
 
   assert.deepEqual(
-    [_right('7'), _right('19', null, 100)],
-    [undefined, 100],
-    'returns notSetValue if the node has no node to the right (aka lastDescendant).'
+    _right('7'),
+    undefined,
+    'returns undefined if the node has no node to the right (aka lastDescendant).'
   )
 
   let id = '1'
   let node = _right(id)
   const result = []
   while (node) {
-    id = getId(options, state, node)
+    id = getId(options, state, node) as string
     result.push(id)
     node = _right(id)
   }
@@ -517,8 +519,8 @@ test('method "left"', assert => {
   )
 
   assert.deepEqual(
-    [_left('1'), _left('19', null, 100)],
-    [undefined, 100],
+    _left('1'),
+    undefined,
     'returns notSetValue if the node has no node to the left (aka root).'
   )
 
@@ -526,7 +528,7 @@ test('method "left"', assert => {
   let node = _left(id)
   const result = []
   while (node) {
-    id = getId(options, state, node)
+    id = getId(options, state, node) as string
     result.push(id)
     node = _left(id)
   }

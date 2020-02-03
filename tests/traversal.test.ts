@@ -35,7 +35,7 @@ const state = {
 }
 
 test('traversal "Preorder', assert => {
-  const result = []
+  const result: string[] = []
 
   PreOrder(options, state, n => {
     result.push(n.id)
@@ -51,7 +51,7 @@ test('traversal "Preorder', assert => {
 })
 
 test('traversal "ReversePreorder', assert => {
-  const result = []
+  const result: string[] = []
 
   ReversePreOrder(options, state, n => {
     result.push(n.id)
@@ -67,7 +67,7 @@ test('traversal "ReversePreorder', assert => {
 })
 
 test('traversal "PostOrder', assert => {
-  const result = []
+  const result: string[] = []
 
   PostOrder(options, state, n => {
     result.push(n.id)
@@ -82,7 +82,7 @@ test('traversal "PostOrder', assert => {
   assert.end()
 })
 test('traversal "ReversePostOrder', assert => {
-  const result = []
+  const result: string[] = []
 
   ReversePostOrder(options, state, n => {
     result.push(n.id)
@@ -98,7 +98,7 @@ test('traversal "ReversePostOrder', assert => {
 })
 
 test('traversal "InOrder', assert => {
-  const result = []
+  const result: string[] = []
 
   InOrder(options, state, n => {
     result.push(n.id)
@@ -114,7 +114,7 @@ test('traversal "InOrder', assert => {
 })
 
 test('traversal "ReverseInOrder', assert => {
-  const result = []
+  const result: string[] = []
 
   ReverseInOrder(options, state, n => {
     result.push(n.id)
@@ -130,7 +130,7 @@ test('traversal "ReverseInOrder', assert => {
 })
 
 test('traversal "BFS', assert => {
-  const result = []
+  const result: string[] = []
 
   BFS(options, state, n => {
     result.push(n.id)
@@ -146,7 +146,7 @@ test('traversal "BFS', assert => {
 })
 
 test('traversal "ReverseBFS', assert => {
-  const result = []
+  const result: string[] = []
 
   ReverseBFS(options, state, n => {
     result.push(n.id)

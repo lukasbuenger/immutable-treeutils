@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "strict": false,
+    "strict": true,
     "rootDir": "src",
     "rootDirs": ["src", "tests"],
     "removeComments": true,
@@ -10,6 +10,5 @@
     "esModuleInterop": true,
     "lib": ["es2015", "es2015.iterable"]
   },
-  "include": ["src/**/*"],
-  "external": ["immutable"]
+  "include": ["src/**/*", "tests/**/*"]
 }
