@@ -37,8 +37,9 @@ test('Examples Introduction', assert => {
   })
 
   const tupleKeyPath = customTreeUtils.findId(tupleState, '3')
+  assert.assert(tupleKeyPath)
   assert.deepEqual(
-    customTreeUtils.resolve(tupleState, tupleKeyPath),
+    customTreeUtils.resolve(tupleState, tupleKeyPath as KeyPath),
     ['3']
   )
   assert.end()

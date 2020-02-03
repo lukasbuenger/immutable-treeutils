@@ -12,6 +12,7 @@ import {
   firstChild,
   lastChild,
   hasChildNodes,
+  position,
   numChildNodes,
   siblings,
   childNodes,
@@ -78,6 +79,39 @@ const state = {
 const options = {
   ...defaultOptions,
   rootPath: ['data'],
+}
+
+const state2 = {
+  props: {
+    id: 'a',
+    nodes: [
+      {
+        props: {
+          id: 'b',
+          nodes: [],
+        },
+      },
+      {
+        props: {
+          id: 'c',
+          nodes: [
+            {
+              props: {
+                id: 'd',
+                nodes: [],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+
+const options2 = {
+  ...defaultOptions,
+  childNodesPath: ['props', 'nodes'],
+  idPath: ['props', 'id'],
 }
 
 test('method "resolve"', assert => {
@@ -265,6 +299,12 @@ test('method "parent"', assert => {
     'returns undefined if the node is the root node.'
   )
 
+  assert.deepEqual(
+    parent(options2, state2, 'd'),
+    ['props', 'nodes', 1],
+    'respects the childNodesPath length when assuming the parent.'
+  )
+
   assert.end()
 })
 
@@ -431,6 +471,28 @@ test('method "ancestors"', assert => {
     [],
     'returns an empty QuerySet if the node does not exist or has no ancestors.'
   )
+
+  assert.deepEqual(
+    ancestors(options2, state2, 'd'),
+    [['props', 'nodes', 1], []],
+    'respects childNodesPath length when assuming tree levels.'
+  )
+  assert.end()
+})
+
+test('method "position"', assert => {
+  assert.deepEqual(
+    position(options, state, '7'),
+    221,
+    'returns a naive numerical position indicator.'
+  )
+
+  assert.deepEqual(
+    position(options2, state2, 'd'),
+    21,
+    'can handle deeply nested childNodes arrays.'
+  )
+
   assert.end()
 })
 
@@ -447,6 +509,12 @@ test('method "depth"', assert => {
     _depth('8'),
     -1,
     'returns -1 if the node does not exist.'
+  )
+
+  assert.equal(
+    depth(options2, state2, 'd'),
+    2,
+    'can handle deeply nested childNodes arrays.'
   )
 
   assert.end()

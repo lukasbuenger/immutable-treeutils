@@ -1,7 +1,12 @@
 import test from 'tape'
 
-import { TreeUtils, defaultMethods } from '../src'
-import { API, Method } from '../src/types'
+import {
+  TreeUtils,
+  APIFactory,
+  defaultMethods,
+  defaultOptions,
+} from '../src'
+import { Methods, Options, State } from './types'
 
 const state = {
   data: {
@@ -22,7 +27,7 @@ const state = {
   },
 }
 
-const hasDefaultMethods = (api: API<Function>) =>
+const hasDefaultMethods = (api: Methods) =>
   Object.keys(defaultMethods).every(n => !!api[n])
 
 test('factory "TreeUtils"', assert => {
@@ -44,7 +49,7 @@ test('factory "TreeUtils"', assert => {
     'accepts custom options.'
   )
 
-  const customMethod: Method = (opts, s, num) => {
+  const customMethod = (opts: Options, s: State, num: number) => {
     assert.deepEqual(
       opts.idPath,
       ['id'],
@@ -55,12 +60,9 @@ test('factory "TreeUtils"', assert => {
     return 'I was called!'
   }
 
-  const customMethodsApi = TreeUtils(
-    {},
-    {
-      customMethod,
-    }
-  )
+  const customMethodsApi = APIFactory(defaultOptions, {
+    customMethod,
+  })
 
   assert.assert(
     customMethodsApi.customMethod,
@@ -82,16 +84,13 @@ test('method "withState"', assert => {
     idPath: ['_id'],
   })
 
-  const result = customOptionsApi.withState(
-    state,
-    (api: API<Function>) => {
-      assert.assert(
-        hasDefaultMethods(api),
-        'passes complete api to callback.'
-      )
-      return api.findId('D')
-    }
-  )
+  const result = customOptionsApi.withState(state, (api: Methods) => {
+    assert.assert(
+      hasDefaultMethods(api),
+      'passes complete api to callback.'
+    )
+    return api.findId('D')
+  })
 
   assert.deepEqual(
     result,

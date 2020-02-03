@@ -363,12 +363,14 @@ export function parent(
   path?: KeyPath
 ) {
   const keyPath = findId(options, state, idOrKeyPath, path)
-
   if (!keyPath) {
     return
   }
 
-  const parentPath: KeyPath = keyPath.slice(0, -2)
+  const parentPath: KeyPath = keyPath.slice(
+    0,
+    -1 * (options.childNodesPath.length + 1)
+  )
   if (parentPath.length >= options.rootPath.length) {
     return parentPath
   }
@@ -385,9 +387,10 @@ export function ancestors(
   if (!keyPath) {
     return []
   }
+  const numKeysPerLevel = options.childNodesPath.length + 1
   return keyPath.reduceRight(
     (acc: QuerySet, _: any, i: number) =>
-      (i - options.rootPath.length) % 2 === 0 &&
+      (i - options.rootPath.length) % numKeysPerLevel === 0 &&
       i >= options.rootPath.length
         ? acc.concat([keyPath.slice(0, i)])
         : acc,
@@ -406,7 +409,11 @@ export function depth(
   if (!keyPath) {
     return -1
   }
-  return Math.floor(keyPath.slice(options.rootPath.length).length / 2)
+  const numKeysPerLevel = options.childNodesPath.length + 1
+
+  return Math.floor(
+    keyPath.slice(options.rootPath.length).length / numKeysPerLevel
+  )
 }
 
 export function position(
@@ -420,14 +427,15 @@ export function position(
   if (!keyPath) {
     return -1
   }
-  const order = keyPath.reduceRight(
-    (acc: string, value: string | number, index) =>
-      index >= options.rootPath.length && index % 2 === 0
-        ? value.toString().concat(acc)
-        : acc,
-    ''
-  )
-  return Number('1.'.concat(order.toString()))
+  const pathLength = options.childNodesPath.length
+  return keyPath
+    .slice(options.rootPath.length)
+    .reduce((acc: number, value: string | number, index) => {
+      if (index % (pathLength + 1) === pathLength) {
+        return acc * 10 + Number(value) + 1
+      }
+      return acc
+    }, 0)
 }
 
 export function right(

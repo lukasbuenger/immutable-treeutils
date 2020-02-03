@@ -25,12 +25,15 @@ export type Options = BaseOptions & {
   traversalMethod: TraversalMethod
 }
 
-export type Method = (
-  options: Options,
-  state: State,
-  ...args: any[]
-) => any
+export type Apply<TMethod> = TMethod extends (
+  v: any,
+  ...args: infer U
+) => infer O
+  ? (...args: U) => O
+  : never
 
-export type API<T extends Function> = {
-  [k: string]: T
+export type Methods = Record<string, Function>
+
+export type AppliedMethods<T extends Methods> = {
+  [K in keyof T]: Apply<T[K]>
 }

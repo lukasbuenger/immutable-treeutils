@@ -1,4 +1,10 @@
-import { Options, API, State, Method } from './types'
+import {
+  Options,
+  State,
+  Methods,
+  Apply,
+  AppliedMethods,
+} from './types'
 import { PreOrder } from './traversal/preorder'
 import {
   ancestors,
@@ -29,32 +35,36 @@ import {
   siblings,
 } from './methods'
 
-function bindMethods(
-  methods: API<Function>,
-  ...args: any[]
-): API<Function> {
+function bindMethods<T extends Methods, V>(methods: T, v: V) {
   return Object.keys(methods).reduce(
     (acc: Record<string, any>, methodName: string) => {
       return {
         ...acc,
-        [methodName]: methods[methodName].bind(null, ...args),
+        [methodName]: methods[methodName].bind(null, v),
       }
     },
     {}
-  )
+  ) as AppliedMethods<T>
 }
 
-type Reducer<T> = (api: API<Function>) => T
+type Reducer<T extends Methods, R> = (api: T) => R
 
-function withState<T extends any>(
-  methods: API<Function>,
+function withState<TMethods extends Methods, TResult>(
+  methods: TMethods,
   state: State,
-  reducer: Reducer<T>
-): T {
+  reducer: Reducer<AppliedMethods<TMethods>, TResult>
+) {
   return reducer(bindMethods(methods, state))
 }
 
-export function APIFactory(options: Options, methods: API<Method>) {
+type API<T extends Methods> = AppliedMethods<T> & {
+  withState: Apply<typeof withState>
+}
+
+export function APIFactory<T extends Methods>(
+  options: Options,
+  methods: T
+): API<T> {
   const boundMethods = bindMethods(methods, options)
   const boundWithState = withState.bind(null, boundMethods)
   return {
@@ -100,11 +110,7 @@ export const defaultMethods = {
 }
 
 export function TreeUtils(
-  options: Partial<Options> = {},
-  methods: API<Method> = {}
-): API<Function> {
-  return APIFactory(
-    { ...defaultOptions, ...options },
-    { ...defaultMethods, ...methods }
-  )
+  options: Partial<Options> = {}
+): API<typeof defaultMethods> {
+  return APIFactory({ ...defaultOptions, ...options }, defaultMethods)
 }
