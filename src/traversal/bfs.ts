@@ -74,9 +74,9 @@ export function BFS(
   options: BaseOptions,
   state: State,
   iterator: BaseIterator,
-  path: KeyPath = null
+  rootPath?: KeyPath
 ): void {
-  const keyPath = path || options.rootPath
+  const keyPath = rootPath || options.rootPath
   const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
   const queue: Array<[Node, KeyPath]> = [[rootNode, keyPath]]
   visit(options, iterator, queue)
@@ -86,9 +86,9 @@ export function ReverseBFS(
   options: BaseOptions,
   state: State,
   iterator: BaseIterator,
-  path: KeyPath = null
+  rootPath?: KeyPath
 ): void {
-  const keyPath = path || options.rootPath
+  const keyPath = rootPath || options.rootPath
   const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
   const queue: Array<[Node, KeyPath]> = [[rootNode, keyPath]]
   visitReverse(options, iterator, queue)

@@ -119,7 +119,7 @@ export function InOrder(
   options: BaseOptions,
   state: State,
   iterator: BaseIterator,
-  rootPath: KeyPath = null
+  rootPath?: KeyPath
 ): void {
   const keyPath = rootPath || options.rootPath
   const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
@@ -130,7 +130,7 @@ export function ReverseInOrder(
   options: BaseOptions,
   state: State,
   iterator: BaseIterator,
-  rootPath: KeyPath = null
+  rootPath?: KeyPath
 ): void {
   const keyPath = rootPath || options.rootPath
   const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
