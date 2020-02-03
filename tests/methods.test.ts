@@ -170,7 +170,13 @@ test('method "findId"', assert => {
   assert.deepEqual(
     _findId('2'),
     ['data', 'childNodes', 0],
-    'returns the first key path whose node matches the predicate.'
+    'returns the key path to the node with the given id.'
+  )
+
+  assert.deepEqual(
+    _findId('27'),
+    undefined,
+    'returns undefined if no node was found.'
   )
 
   assert.end()
@@ -235,7 +241,7 @@ test('method "parent"', assert => {
   assert.deepEqual(
     _parent('1'),
     undefined,
-    'returns undefined if the node has no parent (aka is the root node).'
+    'returns undefined if the node is the root node.'
   )
 
   assert.end()
@@ -252,7 +258,7 @@ test('method "childIndex"', assert => {
   assert.deepEqual(
     _childIndex('1'),
     -1,
-    'returns -1 if no child index can be derived (aka is probably the root node).'
+    'returns -1 if the node at `id` has no parent.'
   )
 
   assert.end()
@@ -286,7 +292,7 @@ test('method "firstChild"', assert => {
   assert.deepEqual(
     _firstChild('7'),
     undefined,
-    'returns undefined if there is no first child (aka the node has no children).'
+    'returns undefined if there is no first child.'
   )
   assert.end()
 })
@@ -303,7 +309,7 @@ test('method "lastChild"', assert => {
   assert.deepEqual(
     _lastChild('7'),
     undefined,
-    'returns undefined if there is no last child (aka the node has no children).'
+    'returns undefined if there is no last child.'
   )
   assert.end()
 })
