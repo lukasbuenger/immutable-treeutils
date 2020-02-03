@@ -1,4 +1,5 @@
-import { get, last } from 'lodash'
+import get from 'lodash/get'
+import last from 'lodash/last'
 import { Node, KeyPath, Options, State, QuerySet } from './types'
 
 type Stop = (v: any) => any

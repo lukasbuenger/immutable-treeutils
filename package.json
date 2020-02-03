@@ -29,6 +29,8 @@
     "test": "ts-node tests/index.test | faucet"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.0",
     "@types/lodash": "^4.14.149",
     "@types/tape": "^4.2.33",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
@@ -45,6 +47,7 @@
     "npm-check-updates": "^4.0.1",
     "prettier": "^1.19.1",
     "rollup": "^1.31.0",
+    "rollup-plugin-terser": "^5.2.0",
     "rollup-plugin-typescript": "^1.0.1",
     "tape": "^4.13.0",
     "ts-node": "^8.6.2",
