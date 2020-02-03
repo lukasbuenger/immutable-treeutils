@@ -1,5 +1,4 @@
-import test = require('tape')
-import { fromJS, List } from 'immutable'
+import test from 'tape'
 
 import {
   PreOrder,
@@ -13,12 +12,12 @@ import {
 } from '../src'
 
 const options = {
-  rootPath: List(),
-  idPath: List(['id']),
-  childNodesPath: List(['childNodes']),
+  rootPath: [],
+  idPath: ['id'],
+  childNodesPath: ['childNodes'],
 }
 
-const state = fromJS({
+const state = {
   id: 'F',
   childNodes: [
     {
@@ -33,130 +32,130 @@ const state = fromJS({
       childNodes: [{ id: 'I', childNodes: [{ id: 'H' }] }],
     },
   ],
-})
+}
 
 test('traversal "Preorder', assert => {
-  let result = []
+  const result = []
 
   PreOrder(options, state, n => {
-    result.push(n.get('id'))
+    result.push(n.id)
   })
 
   assert.deepEqual(
     result,
     ['F', 'B', 'A', 'D', 'C', 'E', 'G', 'I', 'H'],
-    'Walks nodes in correctly in  pre-order'
+    'Walks nodes in correct order in  pre-order'
   )
 
   assert.end()
 })
 
 test('traversal "ReversePreorder', assert => {
-  let result = []
+  const result = []
 
   ReversePreOrder(options, state, n => {
-    result.push(n.get('id'))
+    result.push(n.id)
   })
 
   assert.deepEqual(
     result,
     ['F', 'G', 'I', 'H', 'B', 'D', 'E', 'C', 'A'],
-    'Walks nodes in correctly in  reverse pre-order'
+    'Walks nodes in correct order in  reverse pre-order'
   )
 
   assert.end()
 })
 
 test('traversal "PostOrder', assert => {
-  let result = []
+  const result = []
 
   PostOrder(options, state, n => {
-    result.push(n.get('id'))
+    result.push(n.id)
   })
 
   assert.deepEqual(
     result,
     ['A', 'C', 'E', 'D', 'B', 'H', 'I', 'G', 'F'],
-    'Walks nodes in correctly in post-order'
+    'Walks nodes in correct order in post-order'
   )
 
   assert.end()
 })
 test('traversal "ReversePostOrder', assert => {
-  let result = []
+  const result = []
 
   ReversePostOrder(options, state, n => {
-    result.push(n.get('id'))
+    result.push(n.id)
   })
 
   assert.deepEqual(
     result,
     ['H', 'I', 'G', 'E', 'C', 'D', 'A', 'B', 'F'],
-    'Walks nodes in correctly in reverse post-order'
+    'Walks nodes in correct order in reverse post-order'
   )
 
   assert.end()
 })
 
 test('traversal "InOrder', assert => {
-  let result = []
+  const result = []
 
   InOrder(options, state, n => {
-    result.push(n.get('id'))
+    result.push(n.id)
   })
 
   assert.deepEqual(
     result,
     ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'I', 'G'],
-    'Walks nodes in correctly in in-order'
+    'Walks nodes in correct order in in-order'
   )
 
   assert.end()
 })
 
 test('traversal "ReverseInOrder', assert => {
-  let result = []
+  const result = []
 
   ReverseInOrder(options, state, n => {
-    result.push(n.get('id'))
+    result.push(n.id)
   })
 
   assert.deepEqual(
     result,
     ['H', 'I', 'G', 'F', 'E', 'D', 'C', 'B', 'A'],
-    'Walks nodes in correctly in reverse in-order'
+    'Walks nodes in correct order in reverse in-order'
   )
 
   assert.end()
 })
 
 test('traversal "BFS', assert => {
-  let result = []
+  const result = []
 
   BFS(options, state, n => {
-    result.push(n.get('id'))
+    result.push(n.id)
   })
 
   assert.deepEqual(
     result,
     ['F', 'B', 'G', 'A', 'D', 'I', 'C', 'E', 'H'],
-    'Walks nodes in correctly when applying breadth-first-search'
+    'Walks nodes in correct order when applying breadth-first-search'
   )
 
   assert.end()
 })
 
 test('traversal "ReverseBFS', assert => {
-  let result = []
+  const result = []
 
   ReverseBFS(options, state, n => {
-    result.push(n.get('id'))
+    result.push(n.id)
   })
 
   assert.deepEqual(
     result,
     ['F', 'G', 'B', 'I', 'D', 'A', 'H', 'E', 'C'],
-    'Walks nodes in correctly when applying reverse breadth-first-search'
+    'Walks nodes in correct order when applying reverse breadth-first-search'
   )
 
   assert.end()

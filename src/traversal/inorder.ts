@@ -1,4 +1,4 @@
-import { List } from 'immutable'
+import { get } from 'lodash'
 import {
   BaseOptions,
   BaseIterator,
@@ -15,12 +15,12 @@ function visit(
 ): boolean | void {
   const childNodesPath = keyPath.concat(options.childNodesPath)
 
-  const childNodes: List<any> = node.getIn(options.childNodesPath)
+  const childNodes: [] = get(node, options.childNodesPath)
   if (!childNodes) {
     return iterator(node, keyPath)
   }
 
-  const numChildNodes: number = childNodes.size
+  const numChildNodes = childNodes.length
   if (!numChildNodes) {
     return iterator(node, keyPath)
   }
@@ -28,12 +28,12 @@ function visit(
   const edge: number = Math.ceil(numChildNodes / 2)
 
   let ret: boolean | void
-  for (let i: number = 0; i < edge; i++) {
+  for (let i = 0; i < edge; i++) {
     ret = visit(
       options,
       iterator,
-      childNodes.get(i),
-      childNodesPath.push(i)
+      childNodes[i],
+      childNodesPath.concat(i)
     )
     if (ret === false) {
       return false
@@ -52,8 +52,8 @@ function visit(
     ret = visit(
       options,
       iterator,
-      childNodes.get(i),
-      childNodesPath.push(i)
+      childNodes[i],
+      childNodesPath.concat(i)
     )
     if (ret === false) {
       return false
@@ -69,12 +69,12 @@ function visitReverse(
 ): boolean | void {
   const childNodesPath = keyPath.concat(options.childNodesPath)
 
-  const childNodes: List<any> = node.getIn(options.childNodesPath)
+  const childNodes: [] = get(node, options.childNodesPath)
   if (!childNodes) {
     return iterator(node, keyPath)
   }
 
-  const numChildNodes: number = childNodes.size
+  const numChildNodes = childNodes.length
   if (!numChildNodes) {
     return iterator(node, keyPath)
   }
@@ -86,8 +86,8 @@ function visitReverse(
     ret = visitReverse(
       options,
       iterator,
-      childNodes.get(i),
-      childNodesPath.push(i)
+      childNodes[i],
+      childNodesPath.concat(i)
     )
     if (ret === false) {
       return false
@@ -106,8 +106,8 @@ function visitReverse(
     ret = visitReverse(
       options,
       iterator,
-      childNodes.get(i),
-      childNodesPath.push(i)
+      childNodes[i],
+      childNodesPath.concat(i)
     )
     if (ret === false) {
       return false
@@ -122,7 +122,7 @@ export function InOrder(
   rootPath: KeyPath = null
 ): void {
   const keyPath = rootPath || options.rootPath
-  const rootNode = state.getIn(keyPath)
+  const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
   visit(options, iterator, rootNode, keyPath)
 }
 
@@ -133,6 +133,6 @@ export function ReverseInOrder(
   rootPath: KeyPath = null
 ): void {
   const keyPath = rootPath || options.rootPath
-  const rootNode = state.getIn(keyPath)
+  const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
   visitReverse(options, iterator, rootNode, keyPath)
 }

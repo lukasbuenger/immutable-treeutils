@@ -1,4 +1,3 @@
-import { List, Map } from 'immutable'
 import { Options, API, State, Method } from './types'
 import { PreOrder } from './traversal/preorder'
 import {
@@ -33,11 +32,13 @@ function bindMethods(
   methods: API<Function>,
   ...args: any[]
 ): API<Function> {
-  return Map(methods).reduce(
-    (acc: object, factory: Function, name: string) => ({
-      ...acc,
-      [name]: factory.bind(null, ...args),
-    }),
+  return Object.keys(methods).reduce(
+    (acc: Record<string, any>, methodName: string) => {
+      return {
+        ...acc,
+        [methodName]: methods[methodName].bind(null, ...args),
+      }
+    },
     {}
   )
 }
@@ -62,9 +63,9 @@ export function APIFactory(options: Options, methods: API<Method>) {
 }
 
 export const defaultOptions: Options = {
-  rootPath: List([]),
-  childNodesPath: List(['childNodes']),
-  idPath: List(['id']),
+  rootPath: [],
+  childNodesPath: ['childNodes'],
+  idPath: ['id'],
   traversalMethod: PreOrder,
 }
 

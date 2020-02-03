@@ -1,4 +1,4 @@
-import { List } from 'immutable'
+import { get } from 'lodash'
 import {
   BaseOptions,
   BaseIterator,
@@ -10,30 +10,31 @@ import {
 function visit(
   options: BaseOptions,
   iterator: BaseIterator,
-  queue: List<[Node, KeyPath]>
+  queue: Array<[Node, KeyPath]>
 ): boolean | void {
-  while (queue.size > 0) {
-    const [node, keyPath] = queue.first()
+  while (queue.length > 0) {
+    const [node, keyPath] = queue[0]
     const childNodesPath = keyPath.concat(options.childNodesPath)
 
-    queue = queue.shift()
+    queue.shift()
 
     if (iterator(node, keyPath) === false) {
       return false
     }
 
-    const childNodes: List<any> = node.getIn(options.childNodesPath)
+    const childNodes: Array<any> = get(node, options.childNodesPath)
     if (!childNodes) {
       continue
     }
 
-    const numChildNodes: number = childNodes.size
+    const numChildNodes: number = childNodes.length
     if (!numChildNodes) {
       continue
     }
 
-    for (let i: number = 0; i < numChildNodes; i++) {
-      queue = queue.push([childNodes.get(i), childNodesPath.push(i)])
+    for (let i = 0; i < numChildNodes; i++) {
+      childNodesPath.push(i)
+      queue.push([childNodes[i], childNodesPath.concat(i)])
     }
   }
 }
@@ -41,29 +42,30 @@ function visit(
 function visitReverse(
   options: BaseOptions,
   iterator: BaseIterator,
-  queue: List<[Node, KeyPath]>
+  queue: Array<[Node, KeyPath]>
 ): boolean | void {
-  while (queue.size > 0) {
-    const [node, keyPath] = queue.first()
+  while (queue.length > 0) {
+    const [node, keyPath] = queue[0]
     const childNodesPath = keyPath.concat(options.childNodesPath)
-    queue = queue.shift()
+
+    queue.shift()
 
     if (iterator(node, keyPath) === false) {
       return false
     }
 
-    const childNodes: List<any> = node.getIn(options.childNodesPath)
+    const childNodes: Array<any> = get(node, options.childNodesPath)
     if (!childNodes) {
       continue
     }
 
-    const numChildNodes: number = childNodes.size
+    const numChildNodes: number = childNodes.length
     if (!numChildNodes) {
       continue
     }
 
     for (let i: number = numChildNodes - 1; i >= 0; i--) {
-      queue = queue.push([childNodes.get(i), childNodesPath.push(i)])
+      queue.push([childNodes[i], childNodesPath.concat(i)])
     }
   }
 }
@@ -75,10 +77,8 @@ export function BFS(
   path: KeyPath = null
 ): void {
   const keyPath = path || options.rootPath
-  const queue: List<[Node, KeyPath]> = List().push([
-    state.getIn(keyPath),
-    keyPath,
-  ])
+  const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
+  const queue: Array<[Node, KeyPath]> = [[rootNode, keyPath]]
   visit(options, iterator, queue)
 }
 
@@ -89,9 +89,7 @@ export function ReverseBFS(
   path: KeyPath = null
 ): void {
   const keyPath = path || options.rootPath
-  const queue: List<[Node, KeyPath]> = List().push([
-    state.getIn(keyPath),
-    keyPath,
-  ])
+  const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
+  const queue: Array<[Node, KeyPath]> = [[rootNode, keyPath]]
   visitReverse(options, iterator, queue)
 }

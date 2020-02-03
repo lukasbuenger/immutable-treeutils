@@ -1,4 +1,4 @@
-import { List } from 'immutable'
+import { get } from 'lodash'
 import {
   BaseOptions,
   BaseIterator,
@@ -14,7 +14,7 @@ function visit(
   keyPath: KeyPath
 ): boolean | void {
   const childNodesPath = keyPath.concat(options.childNodesPath)
-  const childNodes: List<any> = node.getIn(options.childNodesPath)
+  const childNodes: [] = get(node, options.childNodesPath)
 
   let ret: boolean | void = iterator(node, keyPath)
 
@@ -22,17 +22,17 @@ function visit(
     return ret
   }
 
-  const numChildNodes: number = childNodes.size
+  const numChildNodes: number = childNodes.length
   if (!numChildNodes) {
     return
   }
 
-  for (let i: number = 0; i < numChildNodes; i++) {
+  for (let i = 0; i < numChildNodes; i++) {
     ret = visit(
       options,
       iterator,
-      childNodes.get(i),
-      childNodesPath.push(i)
+      childNodes[i],
+      childNodesPath.concat(i)
     )
     if (ret === false) {
       return false
@@ -47,7 +47,7 @@ function visitReverse(
   keyPath: KeyPath
 ): boolean | void {
   const childNodesPath = keyPath.concat(options.childNodesPath)
-  const childNodes: List<any> = node.getIn(options.childNodesPath)
+  const childNodes: [] = get(node, options.childNodesPath)
 
   let ret: boolean | void = iterator(node, keyPath)
 
@@ -55,7 +55,7 @@ function visitReverse(
     return ret
   }
 
-  const numChildNodes: number = childNodes.size
+  const numChildNodes: number = childNodes.length
   if (!numChildNodes) {
     return
   }
@@ -64,8 +64,8 @@ function visitReverse(
     ret = visitReverse(
       options,
       iterator,
-      childNodes.get(i),
-      childNodesPath.push(i)
+      childNodes[i],
+      childNodesPath.concat(i)
     )
     if (ret === false) {
       return false
@@ -80,7 +80,7 @@ export function PreOrder(
   rootPath?: KeyPath
 ): void {
   const keyPath = rootPath || options.rootPath
-  const rootNode = state.getIn(keyPath)
+  const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
   visit(options, iterator, rootNode, keyPath)
 }
 
@@ -91,6 +91,6 @@ export function ReversePreOrder(
   rootPath?: KeyPath
 ): void {
   const keyPath = rootPath || options.rootPath
-  const rootNode = state.getIn(keyPath)
+  const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
   visitReverse(options, iterator, rootNode, keyPath)
 }

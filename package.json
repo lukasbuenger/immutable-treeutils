@@ -29,22 +29,27 @@
     "test": "ts-node tests/index.test | faucet"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.149",
     "@types/tape": "^4.2.33",
-    "dts-generator": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "dts-generator": "^3.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.2",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "faucet": "0.0.1",
     "immutable": "^4.0.0-rc.12",
-    "npm-check-updates": "^2.15.0",
-    "prettier": "^1.16.4",
-    "rollup": "^1.2.2",
-    "rollup-plugin-typescript": "^1.0.0",
-    "tape": "^4.10.1",
-    "ts-node": "^8.0.2",
-    "tslib": "^1.9.3",
-    "tslint": "^5.12.1",
-    "typescript": "^3.3.3333"
-  },
-  "peerDependencies": {
-    "immutable": ">=3.8"
+    "lodash": "^4.17.15",
+    "npm-check-updates": "^4.0.1",
+    "prettier": "^1.19.1",
+    "rollup": "^1.31.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "tape": "^4.13.0",
+    "ts-node": "^8.6.2",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.5"
   },
   "files": [
     "dist"

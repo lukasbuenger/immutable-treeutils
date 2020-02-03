@@ -1,10 +1,9 @@
-import test = require('tape')
-import { fromJS, List } from 'immutable'
+import test from 'tape'
 
 import { TreeUtils, defaultMethods } from '../src'
 import { API, Method } from '../src/types'
 
-const state = fromJS({
+const state = {
   data: {
     _id: 'F',
     childNodes: [
@@ -21,12 +20,12 @@ const state = fromJS({
       },
     ],
   },
-})
+}
 
 const hasDefaultMethods = (api: API<Function>) =>
   Object.keys(defaultMethods).every(n => !!api[n])
 
-test('function "TreeUtils"', assert => {
+test('factory "TreeUtils"', assert => {
   const defaultApi = TreeUtils()
 
   assert.assert(
@@ -35,19 +34,19 @@ test('function "TreeUtils"', assert => {
   )
 
   const customOptionsApi = TreeUtils({
-    rootPath: List(['data']),
-    idPath: List(['_id']),
+    rootPath: ['data'],
+    idPath: ['_id'],
   })
 
   assert.deepEqual(
-    customOptionsApi.findId(state, 'G').toJS(),
+    customOptionsApi.findId(state, 'G'),
     ['data', 'childNodes', 1],
     'accepts custom options.'
   )
 
   const customMethod: Method = (opts, s, num) => {
     assert.deepEqual(
-      opts.idPath.toJS(),
+      opts.idPath,
       ['id'],
       'custom methods receive opts.'
     )
@@ -79,8 +78,8 @@ test('function "TreeUtils"', assert => {
 
 test('method "withState"', assert => {
   const customOptionsApi = TreeUtils({
-    rootPath: List(['data']),
-    idPath: List(['_id']),
+    rootPath: ['data'],
+    idPath: ['_id'],
   })
 
   const result = customOptionsApi.withState(
@@ -95,7 +94,7 @@ test('method "withState"', assert => {
   )
 
   assert.deepEqual(
-    result.toJS(),
+    result,
     ['data', 'childNodes', 0, 'childNodes', 1],
     'returns result of callback.'
   )

@@ -1,5 +1,5 @@
-import test = require('tape')
-import { fromJS, List } from 'immutable'
+import test from 'tape'
+import { set } from 'lodash'
 import {
   defaultOptions,
   getId,
@@ -27,7 +27,7 @@ import {
 } from '../src/'
 import { Node } from '../src/types'
 
-const state = fromJS({
+const state = {
   data: {
     name: 'Article',
     type: 'article',
@@ -71,29 +71,26 @@ const state = fromJS({
       },
     ],
   },
-})
+}
 
 const options = {
   ...defaultOptions,
-  rootPath: List(['data']),
+  rootPath: ['data'],
 }
 
 test('method "reduceTree"', assert => {
   const _reduceTree = reduceTree.bind(null, options, state)
 
   assert.deepEqual(
-    _reduceTree(
-      (acc: string[], val: Node) => acc.concat(val.get('id')),
-      []
-    ),
+    _reduceTree((acc: string[], val: Node) => acc.concat(val.id), []),
     ['1', '2', '3', '4', '5', '6', '7'],
     'returns a reduction of the tree.'
   )
 
   assert.deepEqual(
     _reduceTree((_: any, val: Node, _1: any, stop: Function) => {
-      if (val.get('id') === '3') {
-        return stop(val.get('id'))
+      if (val.id === '3') {
+        return stop(val.id)
       }
     }),
     '3',
@@ -106,7 +103,7 @@ test('method "filter"', assert => {
   const _filter = filter.bind(null, options, state)
 
   assert.deepEqual(
-    _filter((node: Node) => node.get('type') === 'paragraph').toJS(),
+    _filter((node: Node) => node.type === 'paragraph'),
     [
       ['data', 'childNodes', 0],
       ['data', 'childNodes', 1, 'childNodes', 0, 'childNodes', 0],
@@ -122,12 +119,14 @@ test('method "find"', assert => {
   const _find = find.bind(null, options, state)
 
   assert.deepEqual(
-    _find((node: Node) => node.get('type') === 'paragraph').toJS(),
+    _find((node: Node) => node.type === 'paragraph'),
     ['data', 'childNodes', 0],
     'returns the first key path whose node matches the predicate.'
   )
 
-  const noOp = () => {}
+  const noOp = () => {
+    // void
+  }
 
   assert.deepEqual(
     [_find(noOp), _find(noOp, null, 'foo')],
@@ -142,7 +141,7 @@ test('method "findId"', assert => {
   const _findId = findId.bind(null, options, state)
 
   assert.deepEqual(
-    _findId('2').toJS(),
+    _findId('2'),
     ['data', 'childNodes', 0],
     'returns the first key path whose node matches the predicate.'
   )
@@ -153,14 +152,14 @@ test('method "findId"', assert => {
 test('method "getId"', assert => {
   const _getId = getId.bind(null, options, state)
   assert.equal(
-    _getId(List(['data', 'childNodes', 0])),
+    _getId(['data', 'childNodes', 0]),
     '2',
     'returns the id value of an absolute key path.'
   )
   assert.deepEqual(
     [
-      _getId(List(['data', 'childNodes', 4])),
-      _getId(List(['data', 'childNodes', 4]), false),
+      _getId(['data', 'childNodes', 4]),
+      _getId(['data', 'childNodes', 4], false),
     ],
     [undefined, false],
     'returns notSetValue if the key path has no id key.'
@@ -172,7 +171,7 @@ test('method "getId"', assert => {
 test('method "nextSibling"', assert => {
   const _nextSibling = nextSibling.bind(null, options, state)
   assert.deepEqual(
-    _nextSibling('4').toJS(),
+    _nextSibling('4'),
     ['data', 'childNodes', 1, 'childNodes', 1],
     'returns the next sibling key path.'
   )
@@ -188,7 +187,7 @@ test('method "nextSibling"', assert => {
 test('method "previousSibling"', assert => {
   const _previousSibling = previousSibling.bind(null, options, state)
   assert.deepEqual(
-    _previousSibling('6').toJS(),
+    _previousSibling('6'),
     ['data', 'childNodes', 1, 'childNodes', 0],
     'returns the previous sibling key path.'
   )
@@ -204,7 +203,7 @@ test('method "previousSibling"', assert => {
 test('method "parent"', assert => {
   const _parent = parent.bind(null, options, state)
   assert.deepEqual(
-    _parent('7').toJS(),
+    _parent('7'),
     ['data', 'childNodes', 1, 'childNodes', 1],
     'returns the parent key path.'
   )
@@ -239,7 +238,7 @@ test('method "childAt"', assert => {
   const _childAt = childAt.bind(null, options, state)
 
   assert.deepEqual(
-    _childAt('3', 0).toJS(),
+    _childAt('3', 0),
     ['data', 'childNodes', 1, 'childNodes', 0],
     'returns the key path to the node at child index'
   )
@@ -255,7 +254,7 @@ test('method "firstChild"', assert => {
   const _firstChild = firstChild.bind(null, options, state)
 
   assert.deepEqual(
-    _firstChild('4').toJS(),
+    _firstChild('4'),
     ['data', 'childNodes', 1, 'childNodes', 0, 'childNodes', 0],
     'returns the first child key path'
   )
@@ -272,7 +271,7 @@ test('method "lastChild"', assert => {
   const _lastChild = lastChild.bind(null, options, state)
 
   assert.deepEqual(
-    _lastChild('1').toJS(),
+    _lastChild('1'),
     ['data', 'childNodes', 1],
     'returns the last child key path'
   )
@@ -285,7 +284,7 @@ test('method "lastChild"', assert => {
   assert.end()
 })
 
-test('methods "hasChildNodes"', assert => {
+test('method "hasChildNodes"', assert => {
   const _hasChildNodes = hasChildNodes.bind(null, options, state)
 
   assert.equal(
@@ -303,7 +302,7 @@ test('methods "hasChildNodes"', assert => {
   assert.end()
 })
 
-test('methods "numChildNodes"', assert => {
+test('method "numChildNodes"', assert => {
   const _numChildNodes = numChildNodes.bind(null, options, state)
 
   assert.equal(
@@ -325,13 +324,13 @@ test('method "siblings"', assert => {
   const _siblings = siblings.bind(null, options, state)
 
   assert.deepEqual(
-    _siblings('6').toJS(),
+    _siblings('6'),
     [['data', 'childNodes', 1, 'childNodes', 0]],
     'returns a list of all sibling key paths.'
   )
 
   assert.deepEqual(
-    [_siblings('7').toJS(), _siblings('19', null, 'foo')],
+    [_siblings('7'), _siblings('19', null, 'foo')],
     [[], 'foo'],
     'returns notSetValue if the node does not exist, empty list if node has no siblings.'
   )
@@ -340,13 +339,14 @@ test('method "siblings"', assert => {
 
 test('method "childNodes"', assert => {
   const _childNodes = childNodes.bind(null, options, state)
-  const stateWithEmptyChildNodes = state.setIn(
+  const stateWithEmptyChildNodes = set(
+    state,
     ['data', 'childNodes', 0, 'childNodes'],
-    List()
+    []
   )
 
   assert.deepEqual(
-    _childNodes('3').toJS(),
+    _childNodes('3'),
     [
       ['data', 'childNodes', 1, 'childNodes', 0],
       ['data', 'childNodes', 1, 'childNodes', 1],
@@ -356,7 +356,7 @@ test('method "childNodes"', assert => {
 
   assert.deepEqual(
     [
-      childNodes(options, stateWithEmptyChildNodes, '2').toJS(),
+      childNodes(options, stateWithEmptyChildNodes, '2'),
       _childNodes('19', null, 'foo'),
     ],
     [[], 'foo'],
@@ -369,7 +369,7 @@ test('method "ancestors"', assert => {
   const _ancestors = ancestors.bind(null, options, state)
 
   assert.deepEqual(
-    _ancestors('7').toJS(),
+    _ancestors('7'),
     [
       ['data', 'childNodes', 1, 'childNodes', 1],
       ['data', 'childNodes', 1],
@@ -379,7 +379,7 @@ test('method "ancestors"', assert => {
   )
 
   assert.deepEqual(
-    [_ancestors('1').toJS(), _ancestors('19', null, 100)],
+    [_ancestors('1'), _ancestors('19', null, 100)],
     [[], 100],
     'returns notSetValue if the node does not exist, empty list if node has no ancestors.'
   )
@@ -408,7 +408,7 @@ test('method "descendants"', assert => {
   const _descendants = descendants.bind(null, options, state)
 
   assert.deepEqual(
-    _descendants('3').toJS(),
+    _descendants('3'),
     [
       ['data', 'childNodes', 1, 'childNodes', 0],
       ['data', 'childNodes', 1, 'childNodes', 0, 'childNodes', 0],
@@ -419,7 +419,7 @@ test('method "descendants"', assert => {
   )
 
   assert.deepEqual(
-    [_descendants('7').toJS(), _descendants('19', null, 100)],
+    [_descendants('7'), _descendants('19', null, 100)],
     [[], 100],
     'returns notSetValue if the node does not exist, empty list if node has no descendants.'
   )
@@ -430,25 +430,25 @@ test('method "right"', assert => {
   const _right = right.bind(null, options, state)
 
   assert.deepEqual(
-    _right('3').toJS(),
+    _right('3'),
     ['data', 'childNodes', 1, 'childNodes', 0],
     'if exists, returns first child key path.'
   )
 
   assert.deepEqual(
-    _right('2').toJS(),
+    _right('2'),
     ['data', 'childNodes', 1],
     'if exists, returns next sibling key path.'
   )
 
   assert.deepEqual(
-    _right('5').toJS(),
+    _right('5'),
     ['data', 'childNodes', 1, 'childNodes', 1],
     'if exists, returns the next sibling of the first ancestor that has a next sibling.'
   )
 
   assert.deepEqual(
-    _right('5').toJS(),
+    _right('5'),
     ['data', 'childNodes', 1, 'childNodes', 1],
     'if exists, returns the next sibling of the first ancestor that has a next sibling.'
   )
@@ -480,19 +480,19 @@ test('method "left"', assert => {
   const _left = left.bind(null, options, state)
 
   assert.deepEqual(
-    _left('6').toJS(),
+    _left('6'),
     ['data', 'childNodes', 1, 'childNodes', 0, 'childNodes', 0],
     'if exists, returns the last descendant key path of a previous sibling node.'
   )
 
   assert.deepEqual(
-    _left('3').toJS(),
+    _left('3'),
     ['data', 'childNodes', 0],
     'if exists, returns previous sibling key path.'
   )
 
   assert.deepEqual(
-    _left('2').toJS(),
+    _left('2'),
     ['data'],
     'if exists, returns parent key path.'
   )

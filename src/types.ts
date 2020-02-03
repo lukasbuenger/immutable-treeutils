@@ -1,8 +1,7 @@
-import { List, Collection } from 'immutable'
-export type KeyPath = List<string | number>
-export type QuerySet = List<KeyPath>
-export type State = Collection<any, any>
-export type Node = Collection<any, any>
+export type KeyPath = Array<string | number>
+export type QuerySet = Array<KeyPath>
+export type State = Record<any, any>
+export type Node = Record<any, any>
 
 export type BaseIterator = (
   node: Node,
