@@ -1,8 +1,8 @@
-export { PreOrder, ReversePreOrder } from './traversal/preorder'
-export { PostOrder, ReversePostOrder } from './traversal/postorder'
-export { InOrder, ReverseInOrder } from './traversal/inorder'
-export { BFS, ReverseBFS } from './traversal/bfs'
-export {
+import { PreOrder, ReversePreOrder } from './traversal/preorder'
+import { PostOrder, ReversePostOrder } from './traversal/postorder'
+import { InOrder, ReverseInOrder } from './traversal/inorder'
+import { BFS, ReverseBFS } from './traversal/bfs'
+import {
   ancestors,
   childAt,
   childIndex,
@@ -31,9 +31,49 @@ export {
   siblings,
 } from './methods'
 
-export {
+import {
   defaultOptions,
   defaultMethods,
   APIFactory,
   TreeUtils,
 } from './lib'
+export {
+  PreOrder,
+  ReversePreOrder,
+  PostOrder,
+  ReversePostOrder,
+  InOrder,
+  ReverseInOrder,
+  BFS,
+  ReverseBFS,
+  ancestors,
+  childAt,
+  childIndex,
+  childNodes,
+  depth,
+  descendants,
+  filter,
+  find,
+  findId,
+  firstChild,
+  firstDescendant,
+  getId,
+  hasChildNodes,
+  lastChild,
+  lastDescendant,
+  left,
+  nextSibling,
+  nodes,
+  numChildNodes,
+  parent,
+  position,
+  previousSibling,
+  reduceTree,
+  resolve,
+  right,
+  siblings,
+  defaultOptions,
+  defaultMethods,
+  APIFactory,
+  TreeUtils,
+}

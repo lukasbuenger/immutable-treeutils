@@ -9,6 +9,11 @@ import { Node, KeyPath, Options, State, QuerySet } from './base'
  */
 export type Stop<T> = (v: T) => T
 
+/**
+ * Signature of functions that want to act as reducers to [[reduceTree]]
+ *
+ * @typeparam T Inherited by type `T` cast on the higher-order [[reduceTree]] function.
+ */
 export type TreeReducer<T> = (
   accumulator: T,
   node: Node,
@@ -37,17 +42,30 @@ export function resolve<T extends any>(
  *
  * It basically works like most reduction procedures in JavaScript, with two prominent exceptions:
  *
- * **Exception 1: Cancel further traversal**
+ * **Exception 1: Early (immediate) cancelletaion**
  *
  * Your reducer function gets passed a [[Stop]] function to prevent further iterating over the tree and return immediately.
- * If you give said [[Stop]] function an argument, it will get returned as result of the reduction.
+ * If you give said [[Stop]] function an argument, this argument will get returned as result of the reduction.
  *
- * For examples for both procedure types (full traversal and early abortion), check out the source of the [[find]] and [[filter]] methods respectively.
+ * For examples for both procedure types (full traversal and early cancellation), check out the source of the [[find]] and [[filter]] methods respectively.
  *
- * **Exception 2: The initial value**
- * The way I use
- * It might be counter-intuitive for many and even tool-breaking for others (I'm thinking of people using [ESLint's `no-undefinded` rule](https://eslint.org/docs/rules/no-undefined)),
- * but as of now, I don't see a better way of typing [reduceTree]
+ * **Exception 2: The mandatory `initial` argument**
+ *
+ * As you can see in the function signature, this method actually *expects* an initial value (as opposed to [your regular reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Syntax)),
+ * even if that means passing it `undefined` explicitly.
+ *
+ * In plain JS, and if you don't need to provide a `path` argument, it probably won't matter too much,
+ * but if you're using VS Code and/or TypeScript and your linting settings are sensitive enough,
+ * you're expected to give this method an initial value.
+ *
+ * I'm aware of the fact that this might be counter-intuitive to some and even tool-breaking for others
+ * (I'm thinking of people using [ESLint's `no-undefinded` rule](https://eslint.org/docs/rules/no-undefined)),
+ * but I really can't have implicit initial values on reducers any more in my life at all, ever again.
+ * If something is supposed to start from an unknown and potentially even might end up returning an unknown after all,
+ * let's give it that to start with and do it in plain sight too.
+ *
+ * Needless to say that if you have any issues related to this design decision which are *not* related to any design decision
+ * but to practical stuff like the possible ESLint inconvenience from above, please file an issue and I'll gladly fix it somehow.
  *
  * @typeparam T A type which should describe a union of all types your reduction is possibly going to accept *and* return.
  * Inferred from `initial` if `T` is not explicitly provided. If you're not sure that your reduction is going to be invariant
@@ -383,7 +401,7 @@ export function childAt(
 
 /**
  * Returns a [[QuerySet]] with paths to all descendant nodes of `idOrKeyPath`.
- * Doesn`t include the path of `idOrKeyPath` itself.
+ * Doesn't include the path of `idOrKeyPath` itself.
  */
 export function descendants(
   options: Options,
@@ -499,7 +517,7 @@ export function parent(
  * Returns a [[QuerySet]] with paths to all ancestors of `idOrKeyPath`.
  * The order of the result is from the closest ancestor to the top-most one, which is always the root.
  *
- * **Please note:** The resulting [[QuerySet]] will always include all ancestors until the root path defined in the passed [[Options]] object.
+ * **Please note:** The resulting [[QuerySet]] will consider possible ancestors in relation to the root path defined in the passed [[Options]] object.
  * The optional `path` argument will merely narrow down the traversed nodes when checking for `idOrKeyPath`.
  */
 export function ancestors(

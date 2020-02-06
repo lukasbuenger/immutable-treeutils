@@ -7,6 +7,12 @@ import {
   KeyPath,
 } from '../base'
 
+/**
+ * @hidden
+ *
+ * This is the recursiive function for the breadth-first algo.
+ * It pushes and reads from a queue, which allows for deferring deeper nested roots.
+ */
 function visit(
   options: BaseOptions,
   iterator: BaseIterator,
@@ -39,6 +45,11 @@ function visit(
   }
 }
 
+/**
+ * @hidden
+ *
+ * This is the reverse version of [[visit]] in this same file.
+ */
 function visitReverse(
   options: BaseOptions,
   iterator: BaseIterator,
@@ -69,7 +80,11 @@ function visitReverse(
     }
   }
 }
-
+/**
+ * Starts a single iteration over all nodes in the tree by using a breadth-first algorithm.
+ * [[include:index.md]]
+ *
+ */
 export function BFS(
   options: BaseOptions,
   state: State,
