@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "rootDir": "../src",
+    "removeComments": false,
+    "declaration": true,
+    "declarationDir": "../dist",
+    "module": "esnext",
+    "target": "es3",
+    "esModuleInterop": true,
+    "lib": ["es2015", "es2015.iterable"]
+  },
+  "include": ["../src/**/*"]
+}

@@ -1,7 +1,7 @@
 import test from 'tape'
 
 import { TreeUtils } from '../src'
-import { Node, KeyPath } from './base'
+import { Node, KeyPath } from '../src/base'
 
 test('Examples Introduction', assert => {
   const state = {

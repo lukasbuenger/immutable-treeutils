@@ -28,7 +28,7 @@ import {
   find,
   findId,
 } from '../src/'
-import { Node } from './base'
+import { Node } from '../src/base'
 
 const state = {
   data: {
