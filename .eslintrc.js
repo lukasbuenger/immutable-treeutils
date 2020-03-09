@@ -15,17 +15,11 @@ module.exports = {
     node: true,
     es6: true,
   },
-  globals: {
-    process: true,
-  },
   rules: {
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-use-before-define': [
-      'error',
-      { functions: false },
-    ],
-    'no-undef': 'off',
-    'no-shadow': 'error',
+    '@typescript-eslint/explicit-function-return-type': 'off', // In favor of inferred return types
+    '@typescript-eslint/no-explicit-any': 'off', // Some anys simply can't be avoided here
+    '@typescript-eslint/no-use-before-define': 'error', // This instead of ...
+    'no-undef': 'off', // ...this
+    'no-shadow': 'error', // Most important ESLint rule of all times
   },
 }
