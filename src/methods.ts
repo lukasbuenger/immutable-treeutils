@@ -1,7 +1,7 @@
 import get from 'lodash/get'
 import last from 'lodash/last'
 import {
-  Node,
+  TreeNode,
   KeyPath,
   Options,
   State,
@@ -124,7 +124,7 @@ export function nodes(
 export function find(
   options: Options,
   state: State,
-  comparator: (v: Node, k: KeyPath) => boolean,
+  comparator: (v: TreeNode, k: KeyPath) => boolean,
   path?: KeyPath
 ) {
   return reduceTree<KeyPath | undefined>(
@@ -143,7 +143,7 @@ export function find(
 export function filter(
   options: Options,
   state: State,
-  comparator: (v: Node, k: KeyPath) => boolean,
+  comparator: (v: TreeNode, k: KeyPath) => boolean,
   path?: KeyPath
 ) {
   return reduceTree<QuerySet>(
@@ -197,7 +197,7 @@ export function getId(
   options: Options,
   state: State,
   keyPath: KeyPath
-): string | undefined {
+): string | number | undefined {
   return get(state, keyPath.concat(options.idPath))
 }
 

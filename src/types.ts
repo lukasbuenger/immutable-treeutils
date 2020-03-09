@@ -1,10 +1,10 @@
 export type KeyPath = Array<string | number>
 export type QuerySet = Array<KeyPath>
 export type State = Record<any, any>
-export type Node = Record<any, any>
+export type TreeNode = Record<any, any>
 
 export type BaseIterator = (
-  node: Node,
+  node: TreeNode,
   keyPath: KeyPath
 ) => boolean | void
 
@@ -64,7 +64,7 @@ export type Stop<T> = (v: T) => T
  */
 export type TreeReducer<T> = (
   accumulator: T,
-  node: Node,
+  node: TreeNode,
   keyPath: KeyPath,
   stop: Stop<T>
 ) => T

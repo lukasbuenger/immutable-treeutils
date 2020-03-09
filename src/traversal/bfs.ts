@@ -3,7 +3,7 @@ import {
   BaseOptions,
   BaseIterator,
   State,
-  Node,
+  TreeNode,
   KeyPath,
 } from '../types'
 
@@ -16,7 +16,7 @@ import {
 function visit(
   options: BaseOptions,
   iterator: BaseIterator,
-  queue: Array<[Node, KeyPath]>
+  queue: Array<[TreeNode, KeyPath]>
 ): boolean | void {
   while (queue.length > 0) {
     const [node, keyPath] = queue[0]
@@ -53,7 +53,7 @@ function visit(
 function visitReverse(
   options: BaseOptions,
   iterator: BaseIterator,
-  queue: Array<[Node, KeyPath]>
+  queue: Array<[TreeNode, KeyPath]>
 ): boolean | void {
   while (queue.length > 0) {
     const [node, keyPath] = queue[0]
@@ -91,7 +91,7 @@ export function BFS(
 ): void {
   const keyPath = rootPath || options.rootPath
   const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
-  const queue: Array<[Node, KeyPath]> = [[rootNode, keyPath]]
+  const queue: Array<[TreeNode, KeyPath]> = [[rootNode, keyPath]]
   visit(options, iterator, queue)
 }
 
@@ -106,6 +106,6 @@ export function ReverseBFS(
 ): void {
   const keyPath = rootPath || options.rootPath
   const rootNode = keyPath.length > 0 ? get(state, keyPath) : state
-  const queue: Array<[Node, KeyPath]> = [[rootNode, keyPath]]
+  const queue: Array<[TreeNode, KeyPath]> = [[rootNode, keyPath]]
   visitReverse(options, iterator, queue)
 }

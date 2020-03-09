@@ -7,14 +7,14 @@ import {
   BaseOptions,
   BaseIterator,
   State,
-  Node,
+  TreeNode,
   KeyPath,
 } from '../types'
 
 function visit(
   options: BaseOptions,
   iterator: BaseIterator,
-  node: Node,
+  node: TreeNode,
   keyPath: KeyPath
 ): boolean | void {
   const childNodesPath = keyPath.concat(options.childNodesPath)
@@ -47,7 +47,7 @@ function visit(
 function visitReverse(
   options: BaseOptions,
   iterator: BaseIterator,
-  node: Node,
+  node: TreeNode,
   keyPath: KeyPath
 ): boolean | void {
   const childNodesPath = keyPath.concat(options.childNodesPath)
