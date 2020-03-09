@@ -27,8 +27,8 @@ import {
   firstDescendant,
   find,
   findId,
+  Node,
 } from '../src/'
-import { Node } from '../src/base'
 
 const state = {
   data: {

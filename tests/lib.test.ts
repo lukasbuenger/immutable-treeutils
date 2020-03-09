@@ -5,8 +5,10 @@ import {
   APIFactory,
   defaultMethods,
   defaultOptions,
+  Methods,
+  Options,
+  State,
 } from '../src'
-import { Methods, Options, State } from '../src/base'
 
 const state = {
   data: {
