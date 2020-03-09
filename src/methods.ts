@@ -1,25 +1,14 @@
 import get from 'lodash/get'
 import last from 'lodash/last'
-import { Node, KeyPath, Options, State, QuerySet } from './base'
-
-/**
- * Signature of the function passed to a [[TreeReducer]] to immediately abort a [[reduceTree]] procedure and return `T`.
- *
- * @typeparam T The type the stop function should abort with. Inferred.
- */
-export type Stop<T> = (v: T) => T
-
-/**
- * Signature of functions that want to act as reducers to [[reduceTree]]
- *
- * @typeparam T Inherited by type `T` cast on the higher-order [[reduceTree]] function.
- */
-export type TreeReducer<T> = (
-  accumulator: T,
-  node: Node,
-  keyPath: KeyPath,
-  stop: Stop<T>
-) => T
+import {
+  Node,
+  KeyPath,
+  Options,
+  State,
+  QuerySet,
+  Stop,
+  TreeReducer,
+} from './types'
 
 /**
  * Resolve a [[KeyPath]] on a [[State]]. You can pass in a default value to handle nil cases.

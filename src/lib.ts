@@ -2,9 +2,10 @@ import {
   Options,
   State,
   Methods,
-  Apply,
   AppliedMethods,
-} from './base'
+  StateReducer,
+  API,
+} from './types'
 import { PreOrder } from './traversal/preorder'
 import {
   ancestors,
@@ -47,18 +48,12 @@ function bindMethods<T extends Methods, V>(methods: T, v: V) {
   ) as AppliedMethods<T>
 }
 
-type Reducer<T extends Methods, R> = (api: T) => R
-
 function withState<TMethods extends Methods, TResult>(
   methods: TMethods,
   state: State,
-  reducer: Reducer<AppliedMethods<TMethods>, TResult>
+  reducer: StateReducer<AppliedMethods<TMethods>, TResult>
 ) {
   return reducer(bindMethods(methods, state))
-}
-
-type API<T extends Methods> = AppliedMethods<T> & {
-  withState: Apply<typeof withState>
 }
 
 export function APIFactory<T extends Methods>(

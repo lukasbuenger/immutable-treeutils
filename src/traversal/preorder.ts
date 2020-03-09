@@ -9,7 +9,7 @@ import {
   State,
   Node,
   KeyPath,
-} from '../base'
+} from '../types'
 
 function visit(
   options: BaseOptions,

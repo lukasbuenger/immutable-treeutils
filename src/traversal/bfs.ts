@@ -5,12 +5,12 @@ import {
   State,
   Node,
   KeyPath,
-} from '../base'
+} from '../types'
 
 /**
  * @hidden
  *
- * This is the recursiive function for the breadth-first algo.
+ * This is the recursive function for the breadth-first algo.
  * It pushes and reads from a queue, which allows for deferring deeper nested roots.
  */
 function visit(
@@ -82,8 +82,6 @@ function visitReverse(
 }
 /**
  * Starts a single iteration over all nodes in the tree by using a breadth-first algorithm.
- * [[include:index.md]]
- *
  */
 export function BFS(
   options: BaseOptions,
@@ -97,6 +95,9 @@ export function BFS(
   visit(options, iterator, queue)
 }
 
+/**
+ * Starts a single iteration over all nodes in the tree by using a reverse breadth-first algorithm.
+ */
 export function ReverseBFS(
   options: BaseOptions,
   state: State,

@@ -5,8 +5,13 @@ import {
   State,
   Node,
   KeyPath,
-} from '../base'
+} from '../types'
 
+/**
+ * @hidden
+ *
+ * This is the recursive function for the in-order algo.
+ */
 function visit(
   options: BaseOptions,
   iterator: BaseIterator,
@@ -61,6 +66,11 @@ function visit(
   }
 }
 
+/**
+ * @hidden
+ *
+ * This is the reverse version of [[visit]] in this same file.
+ */
 function visitReverse(
   options: BaseOptions,
   iterator: BaseIterator,
@@ -115,6 +125,9 @@ function visitReverse(
   }
 }
 
+/**
+ * Starts a single iteration over all nodes in the tree by using a in-order algorithm.
+ */
 export function InOrder(
   options: BaseOptions,
   state: State,
@@ -126,6 +139,9 @@ export function InOrder(
   visit(options, iterator, rootNode, keyPath)
 }
 
+/**
+ * Starts a single iteration over all nodes in the tree by using a reverse in-order algorithm.
+ */
 export function ReverseInOrder(
   options: BaseOptions,
   state: State,
