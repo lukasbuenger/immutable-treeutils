@@ -20,7 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE
 
-Additionaly, this software ships with bundled parts of [Lodash](https://github.com/lodash/lodash) subject to the following terms as of February 2020:
+Additionaly, this software ships with bundled parts of Lodash <https://github.com/lodash/lodash/> subject to the following terms as of February 2020:
 
 The MIT License
 
